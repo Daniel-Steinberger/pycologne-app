@@ -43,7 +43,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">PyMove3D -- 2014</a>
+          <a class="navbar-brand" href="/">PyMove3D -- 2014</a>
         </div>
         <div class="navbar-collapse collapse">
           <!--ul class="nav navbar-nav">
@@ -64,10 +64,15 @@
             </li>
           </ul-->
           <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="/competition">Competition</a></li>
-            <li><a href="/task">Task</a></li>
-            <li><a href="/submission">Submission</a></li>
-            <li><a href="/coursematerial">Course material</a></li>
+             {% for href, caption in [('/competition', 'Competition'),
+	                          ('/task', 'Task'),
+                                  ('/submission', 'Submission'),
+	                          ('/coursematerial', 'Coursematerial'),
+	  ]:
+	  %}
+          {%- if href[1:] == act -%} 
+          <li class="active">{% else %} <li>{% endif %}<a href="{{ href }}" >{{ caption }}</a></li>
+          {% endfor %}
           </ul>
         </div><!--/.nav-collapse -->
       </div>
