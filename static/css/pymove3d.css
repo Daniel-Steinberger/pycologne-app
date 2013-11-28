@@ -8,15 +8,17 @@ h1 {text-align: center;}
 	-webkit-box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
 	-moz-box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
 	-o-box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
-	
+	border: 1px solid #9f998c;
 /* for the Epidemic */	
 	filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=3,MakeShadow=true,ShadowOpacity=0.30);
 	-ms-filter: "progid:DXImageTransform.Microsoft.Blur(PixelRadius=3,MakeShadow=true,ShadowOpacity=0.30)";
 	zoom: 1;}}
 	
-.dropdown-menue {background-color: #9f9a8b;}
+.dropdown-menue {
+background-color: #9f9a8b;}
 .navbar {
   background-color: #e9e2d0;
+  border: 1px solid transparent;
 }
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
@@ -32,3 +34,7 @@ h1 {text-align: center;}
   /*background-color: #ce4b68;*/
   /*background-color: #9f998c;*/
 }
+
+.flags {
+  padding: 5px 0 0 5px;
+  float: right;}
