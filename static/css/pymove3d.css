@@ -1,1 +1,13 @@
 h1 {text-align: center;}
+.navbar-brand {font-weight: 800; font-size: 24px;}
+.container {
+
+	box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+	-moz-box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+	-o-box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+	
+/* for the Epidemic */	
+	filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=3,MakeShadow=true,ShadowOpacity=0.30);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Blur(PixelRadius=3,MakeShadow=true,ShadowOpacity=0.30)";
+	zoom: 1;}}
