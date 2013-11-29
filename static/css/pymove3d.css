@@ -1,30 +1,36 @@
 @font-face {
-    font-family: 'afta_serifitalic';
-    src: url('/fonts/aftaserifthin-italic-webfont.eot');
-    src: url('/fonts/aftaserifthin-italic-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/fonts/aftaserifthin-italic-webfont.woff') format('woff'),
-         url('/fonts/aftaserifthin-italic-webfont.ttf') format('truetype'),
-         url('/fonts/aftaserifthin-italic-webfont.svg#afta_serifitalic') format('svg');
+    font-family: 'gandhi_serifbold';
+    src: url('../fonts/gandhiserif-bold-webfont.eot');
+    src: url('../fonts/gandhiserif-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/gandhiserif-bold-webfont.woff') format('woff'),
+         url('../fonts/gandhiserif-bold-webfont.ttf') format('truetype'),
+         url('../fonts/gandhiserif-bold-webfont.svg#gandhi_serifbold') format('svg');
     font-weight: normal;
     font-style: normal;
+
 }
+
+
+
+
 @font-face {
-    font-family: '/fonts/afta_serifregular';
-    src: url('/fonts/aftaserifthin-regular-webfont.eot');
-    src: url('/fonts/aftaserifthin-regular-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/fonts/aftaserifthin-regular-webfont.woff') format('woff'),
-         url('/fonts/aftaserifthin-regular-webfont.ttf') format('truetype'),
-         url('/fonts/aftaserifthin-regular-webfont.svg#afta_serifregular') format('svg');
+    font-family: 'gandhi_serifregular';
+    src: url('../fonts/gandhiserif-regular-webfont.eot');
+    src: url('../fonts/gandhiserif-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/gandhiserif-regular-webfont.woff') format('woff'),
+         url('../fonts/gandhiserif-regular-webfont.ttf') format('truetype'),
+         url('../fonts/gandhiserif-regular-webfont.svg#gandhi_serifregular') format('svg');
     font-weight: normal;
     font-style: normal;
+
 }
 
 body {background-color: #e9e2d0;}
 
 h1 {text-align: center;}
 .navbar-brand {
-  font-weight: 800; font-size: 24px;
-  font-family: 'afta_serifitalic';}
+  font-weight: 600; font-size: 24px;
+  font-family: 'gandhi_serifbold'}
 .container {
 
 	box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
