@@ -21,13 +21,24 @@
 
 }
 
+/**.btn-lg {
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.33;
+  border-radius: 6px;
+}**/
+
 .jumbotron img {
   float: left;
+  border-right: 10px solid transparent;
+  position: relative;
+  left: -50px;
+  
 }
 
 body {background-color: #e9e2d0;}
 
-h1 {text-align: center;}
+.jumbotron h1 {text-align: center; font-size: 40px;}
 .navbar-brand {
   font-weight: 600; font-size: 24px;
   font-family: 'gandhi_serifbold'}
