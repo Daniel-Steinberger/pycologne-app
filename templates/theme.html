@@ -33,9 +33,9 @@
   <body>
 
     <div class="container">
-<img class="flags" src="/static/images/flags/de.png" />
-<img class ="flags" src="/static/images/flags/gb.png" />
-<img class="flags" src="/static/images/flags/it.png" />
+<img class="flags" src="/static/images/flags/de.png" alt="deutsch" />
+<img class ="flags" src="/static/images/flags/gb.png" alt="english" />
+<img class="flags" src="/static/images/flags/it.png" alt="italiano" />
 <br style="clear: both;" />
       <!-- Static navbar -->
       <div class="navbar navbar-default" role="navigation">
@@ -84,12 +84,10 @@
       <div class="jumbotron">
        	{% block jumbotron %}{% endblock %}
       </div>
-      <div id="footer"><div class="separator"><img src="static/images/python-logo.png" /></div><h3>Places for Sponsors</h3></div>
-
-	{% block body %}{% endblock %}
-
+       	{% block body %}{% endblock %}{% include "footer.html" %}
+      
     </div> <!-- /container -->
-
+     
 
     <!-- Bootstrap core JavaScript
     ================================================== -->

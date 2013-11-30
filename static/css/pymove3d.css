@@ -9,10 +9,6 @@
     font-style: normal;
 
 }
-
-
-
-
 @font-face {
     font-family: 'gandhi_serifregular';
     src: url('../fonts/gandhiserif-regular-webfont.eot');
@@ -23,6 +19,10 @@
     font-weight: normal;
     font-style: normal;
 
+}
+
+.jumbotron img {
+  float: left;
 }
 
 body {background-color: #e9e2d0;}
@@ -63,6 +63,7 @@ background-color: #9f9a8b;}
   /*background-color: #01e9ff;*/
   /*background-color: #ce4b68;*/
   /*background-color: #9f998c;*/
+  min-height:250px;
 }
 
 .flags {
@@ -71,7 +72,7 @@ background-color: #9f9a8b;}
   
 #footer {
 background: #e9e2d0;
-height: 80px;
+height: 180px;
 }
 .separator {
     width: 100%;
