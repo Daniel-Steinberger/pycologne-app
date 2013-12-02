@@ -43,7 +43,7 @@ font-size:16px}
 .navbar-brand {
   font-weight: 600; font-size: 24px;
   font-family: 'gandhi_serifbold';
-  background-color: #F8F8F8;
+  background-color: #E7E7E7;
   border-bottom: 1px solid transparent;}
 
 .container {
@@ -61,7 +61,7 @@ font-size:16px}
 .dropdown-menue {
 background-color: #9f9a8b;}
 .navbar {
-  background-color: #F8F8F8;
+  background-color: #E7E7E7;
   border: 1px solid transparent;
 }
 .navbar-default .navbar-nav > .active > a,
