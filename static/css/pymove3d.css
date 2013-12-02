@@ -42,7 +42,7 @@ body {background-color: #e9e2d0;}
 .navbar-brand {
   font-weight: 600; font-size: 24px;
   font-family: 'gandhi_serifbold';
-  background-color: #133F52;
+  background-color: #8ad643;
   border-bottom: 1px solid transparent;}
 
 .container {
@@ -60,7 +60,7 @@ body {background-color: #e9e2d0;}
 .dropdown-menue {
 background-color: #9f9a8b;}
 .navbar {
-  background-color: #133F52;
+  background-color: #9f998c;;
   border: 1px solid transparent;
 }
 .navbar-default .navbar-nav > .active > a,
