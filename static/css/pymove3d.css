@@ -31,11 +31,11 @@
 .jumbotron img {
   float: left;
   border-right: 10px solid transparent;
-  position: relative;
-  left: -50px;
-  
+  border-bottom: 10px solid transparent;
+  display: block;
+  height: auto;
 }
-
+.clear {clear:both;}
 body {background-color: #e9e2d0;
 font-size:16px}
 
@@ -78,7 +78,7 @@ background-color: #9f9a8b;}
   /*background-color: #01e9ff;*/
   /*background-color: #ce4b68;*/
   /*background-color: #9f998c;*/
-  min-height:250px;
+  /*min-height:250px;*/
 }
 
 .flags {
