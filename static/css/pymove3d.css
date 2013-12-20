@@ -1,65 +1,56 @@
+body {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+/* Typo
+------------------------------------ */
 @font-face {
-    font-family: 'gandhi_serifbold';
-    src: url('../fonts/gandhiserif-bold-webfont.eot');
-    src: url('../fonts/gandhiserif-bold-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/gandhiserif-bold-webfont.woff') format('woff'),
-         url('../fonts/gandhiserif-bold-webfont.ttf') format('truetype'),
-         url('../fonts/gandhiserif-bold-webfont.svg#gandhi_serifbold') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
+  font-family: 'gandhi_serifbold';
+  src: url('../fonts/gandhiserif-bold-webfont.eot');
+  src: url('../fonts/gandhiserif-bold-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/gandhiserif-bold-webfont.woff') format('woff'), url('../fonts/gandhiserif-bold-webfont.ttf') format('truetype'), url('../fonts/gandhiserif-bold-webfont.svg#gandhi_serifbold') format('svg');
+  font-weight: normal;
+  font-style: normal;
 }
 @font-face {
-    font-family: 'gandhi_serifregular';
-    src: url('../fonts/gandhiserif-regular-webfont.eot');
-    src: url('../fonts/gandhiserif-regular-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/gandhiserif-regular-webfont.woff') format('woff'),
-         url('../fonts/gandhiserif-regular-webfont.ttf') format('truetype'),
-         url('../fonts/gandhiserif-regular-webfont.svg#gandhi_serifregular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
+  font-family: 'gandhi_serifregular';
+  src: url('../fonts/gandhiserif-regular-webfont.eot');
+  src: url('../fonts/gandhiserif-regular-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/gandhiserif-regular-webfont.woff') format('woff'), url('../fonts/gandhiserif-regular-webfont.ttf') format('truetype'), url('../fonts/gandhiserif-regular-webfont.svg#gandhi_serifregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
 }
-
-/**.btn-lg {
-  padding: 10px 16px;
-  font-size: 18px;
-  line-height: 1.33;
-  border-radius: 6px;
-}**/
-
-.jumbotron img {
-  float: left;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid transparent;
-  display: block;
-  height: auto;
+/* Utilities
+------------------------------------ */
+.separator {
+  width: 100%;
+  border-bottom: 1px solid #ff9a20;
+  text-align: center;
+  height: 22px;
+  margin-bottom: 15px;
 }
-.clear {clear:both;}
-body {background-color: #e9e2d0;
-font-size:16px}
+.separator img {
+  line-height: 43px;
+  padding: 0 10px;
+  background: #e9e2d0;
+  /* Farbe des Elements darunter */
 
-.jumbotron h1 {text-align: center; font-size: 40px;}
+  display: inline-block;
+  color: #dbe2e3;
+}
+/* Navigation
+------------------------------------ */
+.navbar {
+  margin-bottom: 20px;
+}
 .navbar-brand {
-  font-weight: 600; font-size: 24px;
+  font-weight: 600;
+  font-size: 24px;
   font-family: 'gandhi_serifbold';
   background-color: #e9e2d0;
-  border-bottom: 1px solid transparent;}
-
-.container {
-
-	box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
-	-webkit-box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
-	-moz-box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
-	-o-box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
-	border: 1px solid #9f998c;
-/* for the Epidemic */	
-	filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=3,MakeShadow=true,ShadowOpacity=0.30);
-	-ms-filter: "progid:DXImageTransform.Microsoft.Blur(PixelRadius=3,MakeShadow=true,ShadowOpacity=0.30)";
-	zoom: 1;}}
-	
+  border-bottom: 1px solid transparent;
+}
 .dropdown-menue {
-background-color: #9f9a8b;}
+  background-color: #9f9a8b;
+}
 .navbar {
   background-color: #e9e2d0;
   border: 1px solid transparent;
@@ -67,39 +58,30 @@ background-color: #9f9a8b;}
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
-  
   background-color: transparent;
   border-bottom: 1px solid #bf1339;
 }
-
-.jumbotron {
-
-  background-color: #e5edf1;
-  /*background-color: #01e9ff;*/
-  /*background-color: #ce4b68;*/
-  /*background-color: #9f998c;*/
-  /*min-height:250px;*/
+/* Content
+------------------------------------ */
+.jumbotron img {
+  float: left;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  display: block;
+  height: auto;
 }
-
+.jumbotron h1 {
+  text-align: center;
+  font-size: 40px;
+}
+.jumbotron {
+  background-color: #e5edf1;
+}
 .flags {
   padding: 5px 0 0 5px;
-  float: right;}
-  
-#footer {
-background: #e9e2d0;
-height: 180px;
+  float: right;
 }
-.separator {
-    width: 100%;
-    border-bottom: 1px solid #ff9a20;
-    text-align: center;
-    height: 22px;
-    margin-bottom: 15px;
+/* Footer
+------------------------------------ */#footer {
+  background: #e9e2d0;
 }
-.separator img {
-    line-height: 43px;
-    padding: 0 10px;
-    background: #e9e2d0; /* Farbe des Elements darunter */
-    display: inline-block;
-    /*margin-top: 20px;*/
-    color: #dbe2e3;
