@@ -39,6 +39,15 @@ def submission():
 def coursematerial():
     return render_template("coursematerial.html", act="coursematerial")
 
+@app.route("/imprint")
+def imprint():
+    return render_template("imprint.html", act="imprint")
+
+@app.route("/pivacy")
+def privacy():
+    return render_template("privacy.html", act="privacy")
+
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template("404.html"), 404
