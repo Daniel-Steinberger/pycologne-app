@@ -1,0 +1,30 @@
+{% extends _("en/theme.html") %}
+
+{% block jumbotron %}
+<!-- default jumbotron -->
+ {% include _("en/jumbotron-coursematerial.html") %}
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <div class="col-lg-12">
+    <h2>
+      Das Kursmaterial
+    </h2>
+    <p>Es kann Dir auf unterschiedlichste Art & Weise nützlich sein. 
+      Wenn Du eine der folgenden Fragen mit "Ja" beantworten kannst:</p>
+    <ul>
+      <li>Du möchtest am Wettbewerb teilnehmen?</li>
+      <li>Du bist Anfänger sowohl mit Python als auch mit Blender?</li>
+      <li>Du bist ein Lehrer und willst das Material im Unterricht einsetzen?</li>
+    </ul>
+    <p>Dann ist der folgende Link für Dich …    </p>
+    <p>
+      <a class="btn btn-lg btn-primary" 
+	 href="http://pymove3d.sudile.com" 
+	 role="button">Startseite zum Kursmaterial</a>
+    </p>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<!--meta http-equiv="X-UA-Compatible" content="IE=edge"-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico')}}">
+
+<title>PyMove3D -- 2014</title>
+
+<!-- Bootstrap core CSS -->
+<link href="/static/css/bootstrap.css" rel="stylesheet">
+
+<!-- Just for debugging purposes. Don't actually copy this line! -->
+<!--[if lt IE 9]><script src="/static/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+      <![endif]-->
+    </head>
+
+    <body>
+      <div id="wrap">
+        <header>
+         <!-- Fixed navbar -->
+         <div class="navbar navbar-default" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="/"><img class="logo" src="/static/images/PyMove3D.png" title="PyMove3D" alt="logo pymove3d" /></a>
+            </div>
+            <div class="collapse navbar-collapse">
+              <ul class="nav navbar-nav">
+               {% for href, caption in [('/competition', 'Competition'),
+               ('/task', 'Task'),
+               ('/submission', 'Submission'),
+               ('/coursematerial', 'Coursematerial'),
+               ]:
+               %}
+               {%- if href[1:] == act -%} 
+               <li class="active">{% else %} <li>{% endif %}<a href="{{ href }}" >{{ caption }}</a></li>
+               {% endfor %}
+             </ul>
+             <ul class="nav navbar-nav navbar-right">
+              <li class="active"><a href="./"> <img class="flags" src="/static/images/flags/de.png" alt="deutsch" />
+              </a></li>
+              <li><a href="../navbar-static-top/"><img class ="flags" src="/static/images/flags/gb.png" alt="english" />
+              </a></li>
+              <li><a href="../navbar-fixed-top/"><img class="flags" src="/static/images/flags/it.png" alt="italiano" />
+              </a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </header>
+    <div id="main">
+
+      {% block body %}{% endblock %}
+    </div><!-- /main -->
+  </div> <!-- /wrap -->
+  {% include _("en/footer.html") %}
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/static/js/jquery-1.10.2.min.js"></script>
+    <script src="static/js/bootstrap.js"></script>
+     <script type="text/javascript">
+      $(document).ready(function() {
+  $('#myCarousel').carousel({
+  interval: 5000
+  })
+    
+    $('#myCarousel').on('slid.bs.carousel', function() {
+      //alert("slid");
+  });
+    
+    
+});
+    </script>
+
+  </body>
+  </html>

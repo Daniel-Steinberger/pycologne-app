@@ -7,45 +7,48 @@ from flask import send_from_directory
 import logging
 from logging import Formatter
 
-from flask.ext.babel import gettext
+from flask.ext.babel import gettext as _
 from flask.ext.babel import Babel
+
+from config import LANGUAGES
+
 
 app = Flask(__name__)
 babel = Babel(app)
 
 @babel.localeselector
 def get_locale():
-    return "en" #request.accept_languages.best_match(LANGUAGES.keys())
+    return request.accept_languages.best_match(LANGUAGES.keys())
 
 @app.route("/")
 
-@app.route("/index")
+@app.route(_("/index"))
 def index():
-    return render_template("index.html")
+    return render_template(_("en/index.html"))
 
-@app.route("/competition")
+@app.route(_("/competition"))
 def competition():
-    return render_template("competition.html", act="competition")
+    return render_template(_("en/competition.html"), act="competition")
 
-@app.route("/task")
+@app.route(_("/task"))
 def task():
-    return render_template("task.html", act="task")
+    return render_template(_("en/task.html"), act="task")
 
-@app.route("/submission")
+@app.route(_("/submission"))
 def submission():
-    return render_template("submission.html", act="submission")
+    return render_template(_("en/submission.html"), act="submission")
 
-@app.route("/coursematerial")
+@app.route(_("/coursematerial"))
 def coursematerial():
-    return render_template("coursematerial.html", act="coursematerial")
+    return render_template(_("en/coursematerial.html"), act="coursematerial")
 
-@app.route("/imprint")
+@app.route(_("/imprint"))
 def imprint():
-    return render_template("imprint.html", act="imprint")
+    return render_template(_("en/imprint.html"), act="imprint")
 
-@app.route("/privacy")
+@app.route(_("/privacy"))
 def privacy():
-    return render_template("privacy.html", act="privacy")
+    return render_template(_("en/privacy.html"), act="privacy")
 
 
 @app.errorhandler(404)
