@@ -43,7 +43,7 @@ def coursematerial():
 def imprint():
     return render_template("imprint.html", act="imprint")
 
-@app.route("/pivacy")
+@app.route("/privacy")
 def privacy():
     return render_template("privacy.html", act="privacy")
 
