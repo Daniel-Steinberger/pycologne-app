@@ -12,7 +12,8 @@ from flask.ext.babel import Babel
 
 from config import LANGUAGES
 
-LANGUAGE_SELECTED = None
+LANGUAGE_SELECTED = "de"
+#ToDo after engelish is implemented set LANGUAGE_SELECTED = None
 
 app = Flask(__name__)
 babel = Babel(app)
