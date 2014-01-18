@@ -11,6 +11,7 @@ from flask.ext.babel import gettext as _
 from flask.ext.babel import Babel
 
 from config import LANGUAGES
+from sayings import get_saying
 
 LANGUAGE_SELECTED = "de"
 #ToDo after engelish is implemented set LANGUAGE_SELECTED = None
@@ -27,7 +28,10 @@ def get_locale():
 @app.route("/")
 @app.route("/index")
 def index():
-    return render_template(get_locale() + "/index.html")
+    saying, author = get_saying()
+    return render_template(get_locale() + "/index.html", 
+                           saying = saying,
+                           author = author)
 
 @app.route('/de')
 def de():
