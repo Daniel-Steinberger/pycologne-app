@@ -12,12 +12,26 @@ from flask.ext.babel import Babel
 
 from config import LANGUAGES
 from sayings import get_saying
+from jinja2 import Environment, FileSystemLoader
 
 LANGUAGE_SELECTED = "de"
 #ToDo after engelish is implemented set LANGUAGE_SELECTED = None
 
 app = Flask(__name__)
 babel = Babel(app)
+
+def get_topmenue():
+    
+    topmenue = [('/competition', _('Competition')),
+                ('/task', _('Task')),
+                ('/submission', _('Submission')),
+                ('/coursematerial', _('Coursematerial')),
+                ]
+    
+    return topmenue
+
+app.jinja_env.globals.update(get_topmenue=get_topmenue)
+
 
 @babel.localeselector
 def get_locale():
