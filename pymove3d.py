@@ -21,7 +21,6 @@ app = Flask(__name__)
 babel = Babel(app)
 
 def get_topmenue():
-    
     topmenue = [('/competition', _('Competition')),
                 ('/task', _('Task')),
                 ('/submission', _('Submission')),
