@@ -6019,12 +6019,26 @@ img {
 .col-yellow {
   background: rgba(253, 201, 26, 0.6);
 }
+.module-course {
+  background-color: #f5f5f5;
+}
 /* Footer
 ------------------------------------ */#footer {
   height: 60px;
-  background-color: #f5f5f5;
 }
 #footer > .container {
   padding-left: 15px;
   padding-right: 15px;
+}
+.carousel-control.left {
+  background-image: none;
+  filter: 0;
+}
+.carousel-control.right {
+  background-image: none;
+  filter: 0;
+}
+.module-imprint {
+  border-top: 1px solid #f5f5f5;
+  padding: 20px 0;
 }
