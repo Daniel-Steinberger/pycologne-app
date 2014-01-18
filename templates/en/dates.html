@@ -1,0 +1,56 @@
+{% extends "theme.html" %} 
+
+{% block jumbotron %}
+<!-- default jumbotron -->
+ {% include "jumbotron-competition.html" %}
+{% endblock %}
+
+
+{% block body %}
+<div class="container">
+ <div class="col-lg-12">
+     <h2>Dates</h2>
+     <table class="table table-striped">
+         <tbody>
+             <tr>
+                 <td><b>Datum</b></td>
+                 <td><b>Ort</b></td>
+                 <td><b>Aktivität</b></td>
+             </tr>
+             <tr>
+                 <td>01.-03.02</td>
+                 <td>Berlin</td>
+                 <td>Kurs/Workshop</td>
+             </tr>
+             <tr>
+                 <td>13.-14.03</td>
+                 <td>Chemnitz</td>
+                 <td>Kurs/Workshop</td>
+             </tr>
+             <tr>
+                 <td>29.-30.03</td>
+                 <td>Köln</td>
+                 <td>Biercamp</td>
+             </tr>
+             <tr>
+                 <td></td>
+                 <td></td>
+                 <td></td>
+             </tr>
+             <tr>
+                 <td></td>
+                 <td></td>
+                 <td></td>
+             </tr>
+             <tr>
+                 <td></td>
+                 <td></td>
+                 <td></td>
+             </tr>
+         <tbody>
+     </table>
+     
+     
+ </div>
+</div>
+{% endblock %}

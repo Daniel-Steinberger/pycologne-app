@@ -52,15 +52,22 @@ def imprint():
 def privacy():
     return render_template(get_locale() + "/privacy.html", act="privacy")
 
+
 @app.route(_("/competition-2013"))
 def competition_2013():
-    return render_template(get_locale() + "/archive/competitions/2013/comptetition_2013.html", 
+    return render_template(get_locale() + "/archive/competitions/2013/comptetition_2013.html",
                            act="coursematerial")
 
 @app.route(_("/competition-2014"))
 def competition_2014():
-    return render_template(get_locale() + "archive/competitions/2014/competition_2014.html", 
+    return render_template(get_locale() + "archive/competitions/2014/competition_2014.html",
                            act="coursematerial")
+
+@app.route(_("/dates"))
+def dates():
+    return render_template(get_locale() + "/dates.html",
+                           act="dates")
+
 
 @app.errorhandler(404)
 def page_not_found(e):
