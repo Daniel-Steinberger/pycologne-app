@@ -39,7 +39,7 @@
               <a class="navbar-brand" href="/"><img class="logo" src="/static/images/PyMove3D.png" title="PyMove3D" alt="logo pymove3d" /></a>
             </div>
             <div class="collapse navbar-collapse">
-              <ul class="nav navbar-nav">
+              <ul class="nav navbar-nav navbar-right">
                {% for href, caption in [('/competition', 'Competition'),
                ('/task', 'Task'),
                ('/submission', 'Submission'),
@@ -49,15 +49,9 @@
                {%- if href[1:] == act -%} 
                <li class="active">{% else %} <li>{% endif %}<a href="{{ href }}" >{{ caption }}</a></li>
                {% endfor %}
+               <li class="module-language"><a class="link-yellow" href="./de">DE</a></li>
+              <li><a class="link-yellow" href="./en">EN</a></li>
              </ul>
-             <ul class="nav navbar-nav navbar-right">
-              <li class="active"><a href="./"> <img class="flags" src="/static/images/flags/de.png" alt="deutsch" />
-              </a></li>
-              <li><a href="../navbar-static-top/"><img class ="flags" src="/static/images/flags/gb.png" alt="english" />
-              </a></li>
-              <li><a href="../navbar-fixed-top/"><img class="flags" src="/static/images/flags/it.png" alt="italiano" />
-              </a></li>
-            </ul>
           </div><!--/.nav-collapse -->
         </div>
       </div>

@@ -59,17 +59,21 @@ img {
 margin-bottom: 0px;
 border-bottom:3px solid #f0f0f0;
 }
+a.link-yellow {color:@yellow !important;text-decoration:underline;}
+a.link-yellow:hover {color:@gray-dark !important;text-decoration:none;}
 /* Module
 ------------------------------------ */
 .module-gallery {
     background: url('../images/python_blender.jpg') no-repeat 0px -200px;
     background-size: 2000px 884px;
+    max-width: 100% !important;
 }
 .module-gallery .module-content {
-    height: 440px;
+    height: 300px;
     position: relative;
 }
 .col-yellow {background:@yellow-light;}
+li.module-language a:first-child {border-right:1px solid @blue;}
 .module-course {background-color: #f5f5f5;}
 /* Footer
 ------------------------------------ */ 
