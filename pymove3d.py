@@ -12,6 +12,7 @@ from flask.ext.babel import Babel
 
 from config import LANGUAGES
 
+LANGUAGE_SELECTED = None
 
 app = Flask(__name__)
 babel = Babel(app)
@@ -19,14 +20,25 @@ babel = Babel(app)
 @babel.localeselector
 def get_locale():
     """ToDo: if translation is completed, switch to en """
-    return request.accept_languages.best_match(LANGUAGES.keys()) or 'de'
+    return LANGUAGE_SELECTED or request.accept_languages.best_match(LANGUAGES.keys()) or 'de'
 
 
 @app.route("/")
-
 @app.route("/index")
 def index():
     return render_template(get_locale() + "/index.html")
+
+@app.route('/de')
+def de():
+    global LANGUAGE_SELECTED
+    LANGUAGE_SELECTED = "de"
+    return render_template("/de/index.html")
+
+@app.route('/en')
+def en():
+    global LANGUAGE_SELECTED
+    LANGUAGE_SELECTED = "en"
+    return render_template("/en/index.html")
 
 @app.route("/competition")
 def competition():
