@@ -18,7 +18,8 @@ babel = Babel(app)
 
 @babel.localeselector
 def get_locale():
-    return request.accept_languages.best_match(LANGUAGES.keys())
+    """ToDo: if translation is completed, switch to en """
+    return request.accept_languages.best_match(LANGUAGES.keys()) or 'de'
 
 
 @app.route("/")
@@ -45,12 +46,21 @@ def coursematerial():
 
 @app.route("/imprint")
 def imprint():
-    return render_template(get_locale () + "/imprint.html", act="imprint")
+    return render_template(get_locale() + "/imprint.html", act="imprint")
 
 @app.route("/privacy")
 def privacy():
     return render_template(get_locale() + "/privacy.html", act="privacy")
 
+@app.route(_("/competition-2013"))
+def competition_2013():
+    return render_template(get_locale() + "/archive/competitions/2013/comptetition_2013.html", 
+                           act="coursematerial")
+
+@app.route(_("/competition-2014"))
+def competition_2014():
+    return render_template(get_locale() + "archive/competitions/2014/competition_2014.html", 
+                           act="coursematerial")
 
 @app.errorhandler(404)
 def page_not_found(e):
