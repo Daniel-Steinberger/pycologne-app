@@ -1,21 +1,14 @@
+import os
+import codecs
+
+from docutils.core import publish_parts
 from flask import Flask
 from flask import render_template
 from flask import request
-from flask import abort, redirect, url_for
-import os
-from flask import send_from_directory
-import logging
-from logging import Formatter
-
 from flask.ext.babel import gettext as _
 from flask.ext.babel import Babel
-
 from config import LANGUAGES
 from sayings import get_saying
-from jinja2 import Environment, FileSystemLoader
-
-import codecs
-from docutils.core import publish_parts
 
 
 LANGUAGE_SELECTED = "de"
@@ -25,6 +18,7 @@ app = Flask(__name__)
 babel = Babel(app)
 
 app.config['BABEL_DEFAULT_LOCALE'] = 'de'
+
 
 def get_content(filename):
     content = u""
@@ -36,11 +30,11 @@ def get_content(filename):
     return content
 
 def get_topmenue():
-    menue =  [('/competition', _(u'Competition')),
+    menue = [('/competition', _(u'Competition')),
               ('/task', _(u'Task')),
               ('/submission', _(u'Submission')),
               ('/coursematerial', _(u'Coursematerial')),
-              ]
+            ]
     return menue
 
 app.jinja_env.globals.update(get_topmenue=get_topmenue)
@@ -57,8 +51,8 @@ def get_locale():
 def index():
     saying, author = get_saying()
     return render_template("/index.html", 
-                           saying = saying,
-                           author = author,
+                           saying=saying,
+                           author=author,
                            competition_info=_(u'About Competition'),
                            dates=_(u'Dates'),
                            impressions=_(u'Impressions'))
@@ -69,8 +63,8 @@ def de():
     LANGUAGE_SELECTED = "de"
     saying, author = get_saying()
     return render_template("/index.html",
-                           saying = saying,
-                           author = author,
+                           saying=saying,
+                           author=author,
                            competition_info=_(u'About Competition'),
                            dates=_(u'Dates'),
                            impressions=_(u'Impressions'))
@@ -81,8 +75,8 @@ def en():
     global LANGUAGE_SELECTED
     LANGUAGE_SELECTED = "en"
     return render_template("/index.html",
-                           saying = saying,
-                           author = author,
+                           saying=saying,
+                           author=author,
                            competition_info=_(u'About Competition'),
                            dates=_(u'Dates'),
                            impressions=_(u'Impressions'))
