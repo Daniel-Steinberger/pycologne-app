@@ -43,7 +43,7 @@ def get_locale():
 @app.route("/index")
 def index():
     saying, author = get_saying()
-    return render_template(get_locale() + "/index.html", 
+    return render_template("/index.html", 
                            saying = saying,
                            author = author)
 
@@ -52,7 +52,7 @@ def de():
     global LANGUAGE_SELECTED
     LANGUAGE_SELECTED = "de"
     saying, author = get_saying()
-    return render_template("/de/index.html",
+    return render_template("/index.html",
                            saying = saying,
                            author = author)
 
@@ -61,7 +61,7 @@ def en():
     saying, author = get_saying()
     global LANGUAGE_SELECTED
     LANGUAGE_SELECTED = "en"
-    return render_template("/en/index.html",
+    return render_template("/index.html",
                            saying = saying,
                            author = author)
 
