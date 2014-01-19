@@ -96,7 +96,9 @@ def submission():
 
 @app.route("/coursematerial")
 def coursematerial():
-    return render_template(get_locale() + "/coursematerial.html", act="coursematerial")
+    filename = os.path.join("templates", get_locale(), "rst", "coursematerial.rst")
+    content = get_content(filename)
+    return render_template("/coursematerial.html", act="coursematerial", content=content)
 
 @app.route("/imprint")
 def imprint():
