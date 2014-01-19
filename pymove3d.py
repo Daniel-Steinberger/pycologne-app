@@ -104,7 +104,9 @@ def imprint():
 
 @app.route("/privacy")
 def privacy():
-    return render_template(get_locale() + "/privacy.html", act="privacy")
+    filename = os.path.join("templates", get_locale(), "rst", "privacy.rst")
+    content = get_content(filename)
+    return render_template("/privacy.html", act="privacy", content=content)
 
 @app.route("/competition/2013")
 def competition_2013():
