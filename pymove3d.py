@@ -109,7 +109,9 @@ def dates():
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template(get_locale() + "/404.html")
+    msg = _(u"Url: %(url)s not found" , url=request.url)
+    info = _(u"This information is not available!")
+    return render_template("404.html", msg=msg, info=info)
 
 if __name__ == "__main__":
     app.run(host='localhost', port=5014, debug=True)
