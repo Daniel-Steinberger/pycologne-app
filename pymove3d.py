@@ -23,10 +23,10 @@ babel = Babel(app)
 app.config['BABEL_DEFAULT_LOCALE'] = 'de'
 
 def get_topmenue():
-    menue =  [('/competition', u'Competition'),
-              ('/task', 'Task'),
-              ('/submission', u'Submission'),
-              ('/coursematerial', u'Coursematerial'),
+    menue =  [('/competition', _(u'Competition')),
+              ('/task', _(u'Task')),
+              ('/submission', _(u'Submission')),
+              ('/coursematerial', _(u'Coursematerial')),
               ]
     return menue
 
