@@ -20,14 +20,15 @@ LANGUAGE_SELECTED = "de"
 app = Flask(__name__)
 babel = Babel(app)
 
+app.config['BABEL_DEFAULT_LOCALE'] = 'de'
+
 def get_topmenue():
-    topmenue = [('/competition', _('Competition')),
-                ('/task', _('Task')),
-                ('/submission', _('Submission')),
-                ('/coursematerial', _('Coursematerial')),
-                ]
-    
-    return topmenue
+    menue =  [('/competition', u'Competition'),
+              ('/task', 'Task'),
+              ('/submission', u'Submission'),
+              ('/coursematerial', u'Coursematerial'),
+              ]
+    return menue
 
 app.jinja_env.globals.update(get_topmenue=get_topmenue)
 
