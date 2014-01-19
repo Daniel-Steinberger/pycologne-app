@@ -24,8 +24,17 @@ Seine Skatsimulation enthält sogar 3D Sound.
 
 .. raw:: html
 
-   <iframe width="420" height="315"
-           src="http://www.youtube.com/watch?v=BfEcIAzdv9M"
+   <iframe width="420" height="315" 
+           src="//www.youtube.com/embed/BfEcIAzdv9M" 
            frameborder="0" allowfullscreen>
    </iframe>
+
+Die Vorbereitungskurse wurden von freiwilligen Helfern, wie den Mitarbeitern 
+der Zeitschrift »Zeit Online« durchgeführt. Der Folgende Blogeintrag gibt eine kleinen Eindruck vom Erfolg der Kurse:
+
+
+`Blogeintrag zum Kurs <http://blog.zeit.de/dev/einfuehrung-programmieren-python-blender>`_
+
+
+ 
 
