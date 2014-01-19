@@ -58,7 +58,9 @@ def index():
     saying, author = get_saying()
     return render_template("/index.html", 
                            saying = saying,
-                           author = author)
+                           author = author,
+                           competition_info=_('About Competition'),
+                           dates=_('Dates'))
 
 @app.route('/de')
 def de():
@@ -67,7 +69,9 @@ def de():
     saying, author = get_saying()
     return render_template("/index.html",
                            saying = saying,
-                           author = author)
+                           author = author,
+                           competition_info=_('About Competition'),
+                           dates=_('Dates'))
 
 @app.route('/en')
 def en():
@@ -76,7 +80,9 @@ def en():
     LANGUAGE_SELECTED = "en"
     return render_template("/index.html",
                            saying = saying,
-                           author = author)
+                           author = author,
+                           competition_info=_('About Competition'),
+                           dates=_('Dates'))
 
 @app.route("/competition")
 def competition():

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-01-19 10:11+0100\n"
+"POT-Creation-Date: 2014-01-19 13:22+0100\n"
 "PO-Revision-Date: 2014-01-19 07:48+0100\n"
 "Last-Translator: Peter Koppatz <peter.koppatz@sudile.com>\n"
 "Language-Team: de <LL@li.org>\n"
@@ -17,28 +17,36 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: pymove3d.py:26
+#: pymove3d.py:39
 msgid "Competition"
 msgstr "Wettbewerb"
 
-#: pymove3d.py:27
+#: pymove3d.py:40
 msgid "Task"
 msgstr "Aufgabe"
 
-#: pymove3d.py:28
+#: pymove3d.py:41
 msgid "Submission"
 msgstr "Einreichnung"
 
-#: pymove3d.py:29
+#: pymove3d.py:42
 msgid "Coursematerial"
 msgstr "Kursmaterial"
 
-#: pymove3d.py:112
+#: pymove3d.py:62 pymove3d.py:73 pymove3d.py:84
+msgid "About Competition"
+msgstr "Der Wettbewerb"
+
+#: pymove3d.py:63 pymove3d.py:74 pymove3d.py:85
+msgid "Dates"
+msgstr "Termine"
+
+#: pymove3d.py:146
 #, python-format
 msgid "Url: %(url)s not found"
 msgstr "Url: %(url)s nicht gefunden"
 
-#: pymove3d.py:113
+#: pymove3d.py:147
 msgid "This information is not available!"
 msgstr "Diese Information ist nicht verfügbar"
 
