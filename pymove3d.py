@@ -86,7 +86,9 @@ def competition():
 
 @app.route("/task")
 def task():
-    return render_template(get_locale() + "/task.html", act="task")
+    filename = os.path.join("templates", get_locale(), "rst", "task.rst")
+    content = get_content(filename)
+    return render_template("/task.html", act="task", content=content)
 
 @app.route("/submission")
 def submission():
