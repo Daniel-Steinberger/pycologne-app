@@ -51,13 +51,19 @@ def index():
 def de():
     global LANGUAGE_SELECTED
     LANGUAGE_SELECTED = "de"
-    return render_template("/de/index.html")
+    saying, author = get_saying()
+    return render_template("/de/index.html",
+                           saying = saying,
+                           author = author)
 
 @app.route('/en')
 def en():
+    saying, author = get_saying()
     global LANGUAGE_SELECTED
     LANGUAGE_SELECTED = "en"
-    return render_template("/en/index.html")
+    return render_template("/en/index.html",
+                           saying = saying,
+                           author = author)
 
 @app.route("/competition")
 def competition():
