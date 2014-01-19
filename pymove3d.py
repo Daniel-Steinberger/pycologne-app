@@ -132,9 +132,10 @@ def dates():
 
 @app.route("/competition/2013")
 def competition_2013():
-    print get_locale() + "/archive/competitions/2013/index.html"
-    return render_template(get_locale() + "/archive/competitions/2013/index.html", 
-                           act="coursematerial")
+    filename = os.path.join("templates", get_locale(), "archive", "competitions", "2013", "rst", "2013.rst")
+    content = get_content(filename)
+    return render_template("/impressions_2013.html",
+                           act="competition_2013", content=content)
 
 @app.route("/competition/2014")
 def competition_2014():

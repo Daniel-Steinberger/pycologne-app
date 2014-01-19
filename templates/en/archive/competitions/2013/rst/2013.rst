@@ -1,0 +1,16 @@
+
+Wettbewerb 2013
+---------------
+
+Die Gewinner des Programmierwettbewerbes, zeigten auf der PyCon DE
+2013 in Köln ihre Ergebnisse. In einem Kurzvortrag wurde das Projekt
+vorgestellt und mit einem Film das Ergebnis visualisiert.
+
+.. image:: /static/images/archive/competitions/2013/contest2013a.jpg
+ :alt: Anne
+
+.. image:: /static/images/archive/competitions/2013/contest2013b.jpg
+ :alt: Valentin
+
+Anne (15 Jahre) zeigte das eine 3D-Version des »Game of life« und
+Valentin (13 Jahre) demonstrierte seine »Skat-Simulation«.
