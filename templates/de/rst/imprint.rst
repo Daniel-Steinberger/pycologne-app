@@ -2,9 +2,20 @@
 PyMove3D - Der Python Wettbewerb für Mädchen & Jungen ab 13 Jahren
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-pymove3D ist ein Internetangebot vom Python Software Verband e.V.
-Verantwortlich im Sinne des § 5 TMG und §55 I und II RStV ist:
+Der Wettbewerb ist ein Internetangebot vom Python Software Verband e.V.
 
+
+
+
+
+.. image:: /static/images/pysv-logo.png
+ :alt: Python Software Verband e.V.
+
+
+
+
+Verantwortlich im Sinne des § 5 TMG und §55 I und II RStV ist:
+--------------------------------------------------------------
 
 
 Anschrift
