@@ -14,8 +14,6 @@ Bundesdatenschutzgesetzes (BDSG) und des Telemediengesetzes (TMG). Wir
 haben technische und organisatorische Maßnahmen getroffen, die
 sicherstellen, dass die Vorschriften über den Datenschutz sowohl von
 uns als auch von externen Dienstleistern beachtet werden.
-Personenbezogene Daten
-
 
 
 Personenbezogene Daten
@@ -79,8 +77,13 @@ Benutzerfunktionen zu realisieren. Die meisten Browser sind so
 eingestellt, dass sie Cookies automatisch akzeptieren. Sie können das
 Speichern von Cookies jedoch deaktivieren oder Ihren Browser so
 einstellen, dass er Sie benachrichtigt, sobald Cookies gesendet
-werden. Kinder
+werden. 
 
+
+Kinder
+------
+
+Personen unter 18 Jahren sollten ohne Zustimmung der Eltern oder Erziehungsberechtigten keine personenbezogenen Daten an uns übermitteln. Für die Teilnahme an Wettbewerben fragen wir Namen und E-Mail Adresse ab. Weitere Angaben, wie ein Foto, Links zu Profilen in sozialen Netzwerken, Organisationen wie Schulen oder Vereine, sind freiwillig und haben keinen Einfluss auf die Abläufe Wettbewerbs.
 
 
 Soziale Netze Twitter, Facebook und Google+
@@ -101,25 +104,23 @@ Links zu anderen Websites
 Unsere Webseite bietet die Möglichkeit, sich über soziale Netze
 auszutauschen. Hierbei werden personenbezogene Daten an die Betreiber
 der Netzwerke übertragen. Um eine ungewollte Datenübermittlung zu
-verhindern verwenden wir das zwei Stufen-Verfahren des Heise Verlags.
+verhindern verwenden wir das `zwei Stufen-Verfahren des Heise Verlags <http://www.heise.de/ct/artikel/2-Klicks-fuer-mehr-Datenschutz-1333879.html>`_.
 
 
-
-Fragen und Kommentare
----------------------
+Links zu anderen Websites
+-------------------------
 
 Unser Online-Angebot enthält Links zu anderen Websites. Wir haben
 keinen Einfluss darauf, dass deren Betreiber die
 Datenschutzbestimmungen einhalten.
 
+Fragen und Kommentare
+---------------------
 
 Für Fragen, Anregungen oder Kommentare zum Thema Datenschutz wenden
 Sie sich bitte per E-Mail an den Vorstand des PySV `info@python-verband.org`_
 oder per Briefpost an den Python Software Verband e.V.,
 Schulstraße 20 15366 Neuenhagen bei Berlin
-
-
-
 
 Die rasante Entwicklung des Internet macht von Zeit zu Zeit
 Anpassungen in unserer Datenschutzerklärung erforderlich. Sie werden
