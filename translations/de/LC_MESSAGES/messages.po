@@ -23,7 +23,7 @@ msgstr "Wettbewerb"
 
 #: pymove3d.py:26
 msgid "Task"
-msgstr "Aufgaben"
+msgstr "Aufgabe"
 
 #: pymove3d.py:27
 msgid "Submission"
