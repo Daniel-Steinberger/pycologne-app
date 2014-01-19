@@ -92,7 +92,9 @@ def task():
 
 @app.route("/submission")
 def submission():
-    return render_template(get_locale() + "/submission.html", act="submission")
+    filename = os.path.join("templates", get_locale(), "rst", "submission.rst")
+    content = get_content(filename)
+    return render_template("/submission.html", act="submission", content=content)
 
 @app.route("/coursematerial")
 def coursematerial():
