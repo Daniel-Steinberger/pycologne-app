@@ -88,37 +88,44 @@ def en():
 def competition():
     filename = os.path.join("templates", get_locale(), "rst", "competition.rst")
     content = get_content(filename)
-    return render_template("/competition.html", act="competition", content=content)
+    return render_template("/content.html", act="competition", content=content)
 
 @app.route("/task")
 def task():
     filename = os.path.join("templates", get_locale(), "rst", "task.rst")
     content = get_content(filename)
-    return render_template("/task.html", act="task", content=content)
+    return render_template("/content.html", act="task", content=content)
 
 @app.route("/submission")
 def submission():
     filename = os.path.join("templates", get_locale(), "rst", "submission.rst")
     content = get_content(filename)
-    return render_template("/submission.html", act="submission", content=content)
+    return render_template("/content.html", act="submission", content=content)
 
 @app.route("/coursematerial")
 def coursematerial():
     filename = os.path.join("templates", get_locale(), "rst", "coursematerial.rst")
     content = get_content(filename)
-    return render_template("/coursematerial.html", act="coursematerial", content=content)
+    return render_template("/content.html", act="coursematerial", content=content)
 
 @app.route("/imprint")
 def imprint():
     filename = os.path.join("templates", get_locale(), "rst", "imprint.rst")
     content = get_content(filename)
-    return render_template("/imprint.html", act="imprint", content=content)
+    return render_template("/content.html", act="imprint", content=content)
 
 @app.route("/privacy")
 def privacy():
     filename = os.path.join("templates", get_locale(), "rst", "privacy.rst")
     content = get_content(filename)
-    return render_template("/privacy.html", act="privacy", content=content)
+    return render_template("/content.html", act="privacy", content=content)
+
+@app.route("/dates")
+def dates():
+    filename = os.path.join("templates", get_locale(), "rst", "dates.rst")
+    content = get_content(filename)
+    return render_template("/content.html",
+                           act="dates", content=content)
 
 @app.route("/competition/2013")
 def competition_2013():
@@ -131,15 +138,6 @@ def competition_2014():
     print get_locale() + "/archive/competitions/2014/index.html"
     return render_template(get_locale() + "/archive/competitions/2014/index.html", 
                            act="coursematerial")
-
-
-@app.route("/dates")
-def dates():
-    filename = os.path.join("templates", get_locale(), "rst", "dates.rst")
-    content = get_content(filename)
-    return render_template("/dates.html",
-                           act="dates", content=content)
-
 
 @app.errorhandler(404)
 def page_not_found(e):
