@@ -14,6 +14,10 @@ from config import LANGUAGES
 from sayings import get_saying
 from jinja2 import Environment, FileSystemLoader
 
+import codecs
+from docutils.core import publish_parts
+
+
 LANGUAGE_SELECTED = "de"
 #ToDo after engelish is implemented set LANGUAGE_SELECTED = None
 
@@ -103,8 +107,15 @@ def competition_2014():
 
 @app.route("/dates")
 def dates():
-    return render_template(get_locale() + "/dates.html",
-                           act="dates")
+    content = u""
+    filename = os.path.join("templates", get_locale(), "rst", "dates.rst")
+    if os.path.isfile(filename):
+        with codecs.open(filename, 'r', 'utf-8') as f:
+            rst_data = f.read()
+        f.close()
+        content = publish_parts(rst_data, writer_name='html')['html_body']
+    return render_template("/dates.html",
+                           act="dates", content=content)
 
 
 @app.errorhandler(404)
