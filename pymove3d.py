@@ -59,8 +59,8 @@ def index():
     return render_template("/index.html", 
                            saying = saying,
                            author = author,
-                           competition_info=_('About Competition'),
-                           dates=_('Dates'))
+                           competition_info=_(u'About Competition'),
+                           dates=_(u'Dates'))
 
 @app.route('/de')
 def de():
@@ -70,8 +70,8 @@ def de():
     return render_template("/index.html",
                            saying = saying,
                            author = author,
-                           competition_info=_('About Competition'),
-                           dates=_('Dates'))
+                           competition_info=_(u'About Competition'),
+                           dates=_(u'Dates'))
 
 @app.route('/en')
 def en():
@@ -81,8 +81,8 @@ def en():
     return render_template("/index.html",
                            saying = saying,
                            author = author,
-                           competition_info=_('About Competition'),
-                           dates=_('Dates'))
+                           competition_info=_(u'About Competition'),
+                           dates=_(u'Dates'))
 
 @app.route("/competition")
 def competition():
