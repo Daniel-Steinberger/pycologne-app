@@ -17,7 +17,7 @@ Die wichtigsten Folien sind:
 
 + Persönliche Infos, Vorstellung (die erste)
 + Zusammenfassung des Ergebnisses (die letzte).
-+ Hierfür solltest Du mind. eine Minute einplanen.
++ Hierfür solltest Du mindestens eine Minute einplanen.
 + Dann sind die restlichen zwei Minuten für die anderen Folien frei
   einteilbar.
 
@@ -123,7 +123,7 @@ Folie 5:
 Nicht vergessen:
 ----------------
 
-Die Projektbeschreibung muss auch als ausformulierten Text eingereicht
+Die Projektbeschreibung muss auch als ausformulierter Text eingereicht
 werden! Du kannst Dich am Vortrag orientieren und bei Bedarf ins
 Detail gehen. Trenne eine einführende Übersicht am Anfang von den
 Details. Wenn man die Details liest, kennt man dann bereits den
