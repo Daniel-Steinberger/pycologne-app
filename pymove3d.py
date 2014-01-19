@@ -137,10 +137,10 @@ def competition_2013():
     return render_template("/impressions_2013.html",
                            act="competition_2013", content=content)
 
+#ToDo content from rst missing
 @app.route("/competition/2014")
 def competition_2014():
-    print get_locale() + "/archive/competitions/2014/index.html"
-    return render_template(get_locale() + "/archive/competitions/2014/index.html", 
+    return render_template(get_locale() + "/archive/competitions/2014/index.html",
                            act="coursematerial")
 
 @app.errorhandler(404)
