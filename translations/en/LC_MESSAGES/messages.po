@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-01-18 20:46+0100\n"
+"POT-Creation-Date: 2014-01-19 09:05+0100\n"
 "PO-Revision-Date: 2014-01-18 20:46+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -18,23 +18,99 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: pymove3d.py:25
+#: sayings.py:5
+msgid "The Zen of Python, by Tim Peters"
+msgstr ""
+
+#: sayings.py:5 sayings.py:6 sayings.py:7 sayings.py:8 sayings.py:9
+#: sayings.py:10 sayings.py:11 sayings.py:12 sayings.py:13 sayings.py:14
+#: sayings.py:15 sayings.py:16 sayings.py:17 sayings.py:18 sayings.py:19
+#: sayings.py:20 sayings.py:21 sayings.py:22 sayings.py:23
+msgid "__Tim Peters, The Zen of Python"
+msgstr ""
+
+#: sayings.py:6
+msgid "Beautiful is better than ugly."
+msgstr ""
+
+#: sayings.py:7
+msgid "Explicit is better than implicit."
+msgstr ""
+
+#: sayings.py:8
+msgid "Simple is better than complex."
+msgstr ""
+
+#: sayings.py:9
+msgid "Complex is better than complicated."
+msgstr ""
+
+#: sayings.py:10
+msgid "Flat is better than nested."
+msgstr ""
+
+#: sayings.py:11
+msgid "Sparse is better than dense."
+msgstr ""
+
+#: sayings.py:12
+msgid "Readability counts."
+msgstr ""
+
+#: sayings.py:13
+msgid "Special cases aren't special enough to break the rules."
+msgstr ""
+
+#: sayings.py:14
+msgid "Although practicality beats purity."
+msgstr ""
+
+#: sayings.py:15
+msgid "Errors should never pass silently."
+msgstr ""
+
+#: sayings.py:16
+msgid "Unless explicitly silenced."
+msgstr ""
+
+#: sayings.py:17
+msgid "In the face of ambiguity, refuse the temptation to guess."
+msgstr ""
+
+#: sayings.py:18
+msgid "Although that way may not be obvious at first unless you're Dutch."
+msgstr ""
+
+#: sayings.py:19
+msgid "Now is better than never."
+msgstr ""
+
+#: sayings.py:20
+msgid "Although never is often better than *right* now."
+msgstr ""
+
+#: sayings.py:21
+msgid "If the implementation is hard to explain, it's a bad idea."
+msgstr ""
+
+#: sayings.py:22
+msgid "If the implementation is easy to explain, it may be a good idea."
+msgstr ""
+
+#: sayings.py:23
+msgid "Namespaces are one honking great idea -- let's do more of those!"
+msgstr ""
+
 msgid "Competition"
 msgstr ""
 
-#: pymove3d.py:26
 msgid "Task"
 msgstr ""
 
-#: pymove3d.py:27
 msgid "Submission"
 msgstr ""
 
-#: pymove3d.py:28
 msgid "Coursematerial"
 msgstr ""
 
-#: pymove3d.py:98
-msgid "/dates"
-msgstr ""
 

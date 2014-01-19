@@ -101,7 +101,7 @@ def competition_2014():
     return render_template(get_locale() + "/archive/competitions/2014/index.html", 
                            act="coursematerial")
 
-@app.route(_("/dates"))
+@app.route("/dates")
 def dates():
     return render_template(get_locale() + "/dates.html",
                            act="dates")
