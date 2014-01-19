@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-01-19 13:22+0100\n"
+"POT-Creation-Date: 2014-01-19 18:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,20 +33,24 @@ msgstr ""
 msgid "Coursematerial"
 msgstr ""
 
-#: pymove3d.py:62 pymove3d.py:73 pymove3d.py:84
+#: pymove3d.py:62 pymove3d.py:74 pymove3d.py:86
 msgid "About Competition"
 msgstr ""
 
-#: pymove3d.py:63 pymove3d.py:74 pymove3d.py:85
+#: pymove3d.py:63 pymove3d.py:75 pymove3d.py:87
 msgid "Dates"
 msgstr ""
 
-#: pymove3d.py:146
+#: pymove3d.py:64 pymove3d.py:76 pymove3d.py:88
+msgid "Impressions"
+msgstr ""
+
+#: pymove3d.py:147
 #, python-format
 msgid "Url: %(url)s not found"
 msgstr ""
 
-#: pymove3d.py:147
+#: pymove3d.py:148
 msgid "This information is not available!"
 msgstr ""
 

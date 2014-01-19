@@ -60,7 +60,8 @@ def index():
                            saying = saying,
                            author = author,
                            competition_info=_(u'About Competition'),
-                           dates=_(u'Dates'))
+                           dates=_(u'Dates'),
+                           impressions=_(u'Impressions'))
 
 @app.route('/de')
 def de():
@@ -71,7 +72,8 @@ def de():
                            saying = saying,
                            author = author,
                            competition_info=_(u'About Competition'),
-                           dates=_(u'Dates'))
+                           dates=_(u'Dates'),
+                           impressions=_(u'Impressions'))
 
 @app.route('/en')
 def en():
@@ -82,7 +84,8 @@ def en():
                            saying = saying,
                            author = author,
                            competition_info=_(u'About Competition'),
-                           dates=_(u'Dates'))
+                           dates=_(u'Dates'),
+                           impressions=_(u'Impressions'))
 
 @app.route("/competition")
 def competition():
