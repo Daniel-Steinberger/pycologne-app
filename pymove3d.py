@@ -26,6 +26,15 @@ babel = Babel(app)
 
 app.config['BABEL_DEFAULT_LOCALE'] = 'de'
 
+def get_content(filename):
+    content = u""
+    if os.path.isfile(filename):
+        with codecs.open(filename, 'r', 'utf-8') as f:
+            rst_data = f.read()
+        f.close()
+        content = publish_parts(rst_data, writer_name='html')['html_body']
+    return content
+
 def get_topmenue():
     menue =  [('/competition', _(u'Competition')),
               ('/task', _(u'Task')),
@@ -71,7 +80,9 @@ def en():
 
 @app.route("/competition")
 def competition():
-    return render_template(get_locale() + "/competition.html", act="competition")
+    filename = os.path.join("templates", get_locale(), "rst", "competition.rst")
+    content = get_content(filename)
+    return render_template("/competition.html", act="competition", content=content)
 
 @app.route("/task")
 def task():
@@ -105,15 +116,11 @@ def competition_2014():
     return render_template(get_locale() + "/archive/competitions/2014/index.html", 
                            act="coursematerial")
 
+
 @app.route("/dates")
 def dates():
-    content = u""
     filename = os.path.join("templates", get_locale(), "rst", "dates.rst")
-    if os.path.isfile(filename):
-        with codecs.open(filename, 'r', 'utf-8') as f:
-            rst_data = f.read()
-        f.close()
-        content = publish_parts(rst_data, writer_name='html')['html_body']
+    content = get_content(filename)
     return render_template("/dates.html",
                            act="dates", content=content)
 
