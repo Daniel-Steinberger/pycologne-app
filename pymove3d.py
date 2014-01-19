@@ -98,7 +98,9 @@ def coursematerial():
 
 @app.route("/imprint")
 def imprint():
-    return render_template(get_locale() + "/imprint.html", act="imprint")
+    filename = os.path.join("templates", get_locale(), "rst", "imprint.rst")
+    content = get_content(filename)
+    return render_template("/imprint.html", act="imprint", content=content)
 
 @app.route("/privacy")
 def privacy():
