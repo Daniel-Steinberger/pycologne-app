@@ -1,10 +1,6 @@
 
-Datenschutzerklärung
-=====================
-
-
-Python Software Verband e. V.
-=============================
+Datenschutzerklärung des Python Software Verband e. V.
+========================================================
 
 Der Python Software Verband e. V. (nachfolgend als PySV bezeichnet)
 nimmt den Schutz personenbezogener Daten sehr ernst. Wir möchten, dass
@@ -88,18 +84,6 @@ Personen unter 18 Jahren sollten ohne Zustimmung der Eltern oder Erziehungsberec
 
 Soziale Netze Twitter, Facebook und Google+
 -------------------------------------------
-
-Personen unter 18 Jahren sollten ohne Zustimmung der Eltern oder
-Erziehungsberechtigten keine personenbezogenen Daten an uns
-übermitteln. Für die Teilnahme an Wettbewerben fragen wir Namen und
-E-Mail Adresse ab. Weitere Angaben, wie ein Foto, Links zu Profilen in
-sozialen Netzwerken, Organisationen wie Schulen oder Vereine, sind
-freiwillig und haben keinen Einfluss auf die Abläufe Wettbewerbs.
-
-
-
-Links zu anderen Websites
--------------------------
 
 Unsere Webseite bietet die Möglichkeit, sich über soziale Netze
 auszutauschen. Hierbei werden personenbezogene Daten an die Betreiber
