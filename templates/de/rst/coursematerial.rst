@@ -19,6 +19,6 @@ Dann sind die folgenden Links für Dich.
 
 
 .. _sudile.com: http://pymove3d.sudile.com/
-.. _pysv.org: http://pymove3d.pysv.org/course
+.. _pysv.org: http://pymove3d.pysv.org/python_course
 
 
