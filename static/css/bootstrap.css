@@ -6018,6 +6018,12 @@ a.link-yellow:hover {
   color: #333333 !important;
   text-decoration: none;
 }
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  border-bottom: 1px dotted #0e394f;
+  color: #125883;
+}
 /* Module
 ------------------------------------ */
 .module-gallery {
