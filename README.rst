@@ -21,6 +21,16 @@ Now that this is complete, you can run pymove3d in that environment::
 
     python ./pymove3d.py
 
+Testing and developing is done with::
+
+   pip install -r requirements-dev.txt
+
+Now you have additional packages for development and testing:
+
+ - pep8
+ - py.test
+ - selenium
+
 
 
     
