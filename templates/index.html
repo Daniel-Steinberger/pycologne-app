@@ -9,19 +9,28 @@
 	<h4 class="" style="color:white;">3D Objekte mit Python steuern & bewegen</h4>
 	<a  href="/competition"  class="btn btn-default">{{ competition_info }}</a>
 	<a  href="{{ url_for('dates') }}" class="btn btn-default">{{ dates }} </a>
-	<a  href="{{ url_for('competition_2013') }}"  class="btn btn-default">{{ impressions }}</a>
-	<p style="padding-top:1em;color:white;">Einsendeschluss: 
-	  <span>
-	    <strong style="">1. Mai 2014</strong>
-	  </span>
-	</p>
       </div>
     </div>
   </div>  
 </div>
 
 <div class="module module-course">
-    {% include "claims.html" %}
+ <div class="container">
+ <div class="col-md-12 module-info">
+ 	<div class="col-sm-6">
+	<div class="module-heading">
+	  <h3 class="module-title">Python bewegt die Welt</h3>
+	</div>
+	<div class="module-body">
+	  <ul>
+	    <li>Python ist eine moderne Programmiersprache, die sich für fast jedes Anwendungsgebiet in
+	      der Softwareentwicklung eignet. </li>
+	    <li>Python ist dynamisch und objektorientiert und von Anfang an auf den einfachen Einstieg hin
+	      entwickelt worden.</li>
+	    <li>Python wird weltweit in vielen der bekanntesten Software Projekte eingesetzt.</li>
+	  </ul>
+	</div>
+	</div>
     <div class="col-sm-6">
       <div class="">
 	<div class="module-heading">
@@ -92,25 +101,34 @@
       </div>
       
     </div>
-    
-    <div class="col-sm-6">
-      <div class="">
-	<div class="module-heading">
-	  <h3 class="module-title">Python bewegt die Welt</h3>
-	</div>
-	<div class="module-body">
-	  <ul>
-	    <li>Python ist eine moderne Programmiersprache, die sich für fast jedes Anwendungsgebiet in
-	      der Softwareentwicklung eignet. </li>
-	    <li>Python ist dynamisch und objektorientiert und von Anfang an auf den einfachen Einstieg hin
-	      entwickelt worden.</li>
-	    <li>Python wird weltweit in vielen der bekanntesten Software Projekte eingesetzt.</li>
-	  </ul>
-	</div>
-      </div>
-    </div>
+    </div> <!-- End: module.info -->
+        {% include "claims.html" %}
 </div>
 </div><!-- course -->
-
+<div class="module module-impression">
+  <div class="container">
+    <div class="col-md-2 col-md-offset-2">  
+    	<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="112px" height="112px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve">
+<g id="Ebene_5">
+	<path fill="#FFFFFF" d="M24.7,22.381v2c0,0.115-0.097,0.268-0.214,0.268H6.515c-0.118,0-0.214-0.151-0.214-0.268v-2
+		c0-0.843,0.159-1.189,0.8-1.553c0.515-0.293,3.974-2.281,5.6-2.979v-3.015c-0.499-0.363-0.8-0.927-0.8-1.787V10.66
+		c0-1.979,1.2-3.6,3.6-3.6c2.399,0,3.601,1.621,3.601,3.6v2.388c0,0.852-0.302,1.413-0.8,1.778v3.021
+		c1.726,0.697,5.087,2.687,5.601,2.979C24.541,21.191,24.7,21.538,24.7,22.381 M6.507,19.785l0.111-0.064
+		c1.825-1.041,3.281-1.835,4.361-2.381C10.48,17.096,9.968,16.874,9.5,16.73v-2.102c0.8-0.253,0.8-0.644,0.8-1.237v-1.427
+		c0-1.377-0.73-2.504-2.4-2.504s-2.4,1.127-2.4,2.504v1.427c0,0.599,0,0.99,0.8,1.243v2.096c-1.6,0.487-3.711,1.869-4.07,2.074
+		c-0.445,0.252-0.73,0.492-0.73,1.08v1.391c0,0.08,0.067,0.187,0.15,0.187h3.54C5.336,20.805,5.693,20.248,6.507,19.785
+		 M28.771,18.805c-0.359-0.205-2.471-1.587-4.07-2.074v-2.102c0.8-0.253,0.8-0.644,0.8-1.237v-1.427
+		c0-1.377-0.729-2.504-2.399-2.504s-2.399,1.127-2.399,2.504v1.427c0,0.599,0,0.99,0.8,1.243v2.096
+		c-0.463,0.142-0.967,0.359-1.461,0.6c1.532,0.763,3.361,1.822,4.168,2.289l0.287,0.166c0.812,0.463,1.17,1.02,1.314,1.676h3.543
+		c0.082,0,0.147-0.105,0.147-0.186v-1.392C29.5,19.297,29.216,19.057,28.771,18.805"/>
+</g>
+</svg>
+    </div>
+     <div class="col-md-8">  
+    	<h3  style="padding-top:30px;">
+			<a href="{{ url_for('competition_2013') }}"  class=""> {{ impressions }} und Preisverleihung 2013</a></h3>
+    </div>
+ </div>
 {% endblock %}
 
