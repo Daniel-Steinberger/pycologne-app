@@ -20,13 +20,13 @@ babel = Babel(app)
 app.config['BABEL_DEFAULT_LOCALE'] = 'de'
 
 
-def get_content(filename, settings=None):
+def get_content(filename, overrides=None):
     content = u""
     if os.path.isfile(filename):
         with codecs.open(filename, 'r', 'utf-8') as f:
             rst_data = f.read()
         f.close()
-        content = publish_parts(rst_data, writer_name='html', settings_overwrite=settings)['html_body']
+        content = publish_parts(rst_data, writer_name='html', settings_overrides=overrides)['html_body']
     return content
 
 def get_topmenue():
@@ -114,10 +114,10 @@ def imprint():
 @app.route("/privacy")
 def privacy():
     filename = os.path.join("templates", get_locale(), "rst", "privacy.rst")
-    settings_overrides = {
-                           'initial_header_level': 2,
-                         }
-    content = get_content(filename, settings=settings_overrides)
+    overrides = {
+                 'initial_header_level': 2,
+                }
+    content = get_content(filename, overrides=overrides)
     return render_template("/content.html", act="privacy", content=content)
 
 @app.route("/dates")
