@@ -6,7 +6,7 @@ Begleitmaterial zu dieser Aufgabe findest Du unter
 `http://pymove3d.sudile.com`_ und
 `http://pymove3d.pysv.org/coursematerial`_
 
-Verwende Blender 2.68 um eine 3D Welt mit der darin enthaltenen
+Verwende Blender 2.69 um eine 3D Welt mit der darin enthaltenen
 Programmiersprache Python zu erstellen und zu verändern.
 
 Alles ist erlaubt was Du mit der Programmiersprache Python
