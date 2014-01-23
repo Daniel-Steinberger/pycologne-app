@@ -20,13 +20,13 @@ babel = Babel(app)
 app.config['BABEL_DEFAULT_LOCALE'] = 'de'
 
 
-def get_content(filename):
+def get_content(filename, settings=None):
     content = u""
     if os.path.isfile(filename):
         with codecs.open(filename, 'r', 'utf-8') as f:
             rst_data = f.read()
         f.close()
-        content = publish_parts(rst_data, writer_name='html')['html_body']
+        content = publish_parts(rst_data, writer_name='html', settings_overwrite=settings)['html_body']
     return content
 
 def get_topmenue():
@@ -50,7 +50,7 @@ def get_locale():
 @app.route("/index")
 def index():
     saying, author = get_saying()
-    return render_template("/index.html", 
+    return render_template("/index.html",
                            saying=saying,
                            author=author,
                            competition_info=_(u'About Competition'),
@@ -114,7 +114,10 @@ def imprint():
 @app.route("/privacy")
 def privacy():
     filename = os.path.join("templates", get_locale(), "rst", "privacy.rst")
-    content = get_content(filename)
+    settings_overrides = {
+                           'initial_header_level': 2,
+                         }
+    content = get_content(filename, settings=settings_overrides)
     return render_template("/content.html", act="privacy", content=content)
 
 @app.route("/dates")
@@ -132,7 +135,7 @@ def competition_2013():
 
 @app.errorhandler(404)
 def page_not_found(e):
-    msg = _(u"Url: %(url)s not found" , url=request.url)
+    msg = _(u"Url: %(url)s not found", url=request.url)
     info = _(u"This information is not available!")
     return render_template("404.html", msg=msg, info=info)
 
