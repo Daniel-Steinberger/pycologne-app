@@ -206,7 +206,7 @@ table {
   img {
     max-width: 100% !important;
   }
-  @page  {
+  @page {
     margin: 2cm .5cm;
   }
   p,
@@ -1577,7 +1577,6 @@ input[type="checkbox"] {
   margin: 4px 0 0;
   margin-top: 1px \9;
   /* IE8-9 */
-
   line-height: normal;
 }
 input[type="file"] {
@@ -5990,7 +5989,6 @@ body {
 ------------------------------------ */
 #wrap > .container {
   /*padding: 60px 15px 0;*/
-
 }
 img {
   vertical-align: middle;
@@ -6063,8 +6061,12 @@ li.module-language a:first-child {
   margin-top: -48px;
 }
 /* Footer
------------------------------------- */#footer {
+------------------------------------ */
+#footer {
   height: 60px;
+}
+.sponsor {
+  height: 50px;
 }
 #footer > .container {
   padding-left: 15px;
