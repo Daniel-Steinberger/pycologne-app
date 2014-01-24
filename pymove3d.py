@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import os
 import codecs
 
@@ -129,8 +131,29 @@ def dates():
 
 @app.route("/competition/2013")
 def competition_2013():
+    competition = _(u'Competition 2013')
+    introduction = _(u'The winners of the programming competition, '
+                     u'showed at the PyCon.DE 2013 in Cologne their results. '
+                     u'A short presentation inlcuding a movie about their work done.')
+    article = [_(u'Both students presented to the astonished audience of over 250 Python developers their work.'),
+               _(u'A long applause showed up.'
+                 u' Valentin had 9 months ago learned Python and Blender discovered earlier. '
+                 u'His Skatsimulation even includes 3D sound.'),
+               _(u'The preparatory courses were made by volunteers, such as the '
+                 u'employees of the magazine "Time Online" performed. '
+                 u'The following blog entry is a little impression of the success of the courses'),
+              ]
+    game_of_life = _(u'Anne a 15 year old girl showed a 3D-Version of the »Game of life«')
+    skat_simulation = _(u'Valentin (13 years) demomstrates his »Skat-Simulation«')
+    awards = _(u'The award ceremony')
     return render_template("/impressions_2013.html",
-                           act="competition_2013")
+                           act="competition_2013",
+                           competition=competition,
+                           introduction=introduction,
+                           article=article,
+                           game_of_life=game_of_life,
+                           skat_simulation=skat_simulation,
+                           awards=awards)
 
 
 @app.errorhandler(404)
