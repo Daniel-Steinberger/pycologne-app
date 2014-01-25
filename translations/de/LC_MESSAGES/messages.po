@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-01-24 17:09+0100\n"
+"POT-Creation-Date: 2014-01-25 09:32+0100\n"
 "PO-Revision-Date: 2014-01-19 07:48+0100\n"
 "Last-Translator: Peter Koppatz <peter.koppatz@sudile.com>\n"
 "Language-Team: de <LL@li.org>\n"
@@ -55,9 +55,9 @@ msgid ""
 "in Cologne their results. A short presentation inlcuding a movie about "
 "their work done."
 msgstr ""
-"Die Gewinner des Programmierwettbewerbes, zeigten auf der"
-" PyCon DE 2013 in Köln ihre Ergebnisse. In einem Kurzvortrag wurde das "
-"Projekt vorgestellt und mit einem  Film das Ergebnis visualisiert."
+"Die Gewinner des Programmierwettbewerbes, zeigten auf der PyCon DE 2013 "
+"in Köln ihre Ergebnisse. In einem Kurzvortrag wurde das Projekt "
+"vorgestellt und mit einem  Film das Ergebnis visualisiert."
 
 #: pymove3d.py:138
 msgid ""
@@ -82,6 +82,9 @@ msgid ""
 " the magazine \"Time Online\" performed. The following blog entry is a "
 "little impression of the success of the courses"
 msgstr ""
+"Die Vorbereitungskurse wurden von freiwilligen Helfern, wie den Mitarbeitern"
+" der Zeitschrift \"Zeit Online\" durchgeführt. Der Folgende Blogeintrag "
+"gibt eine kleinen Eindruck vom Erfolg der Kurse:"
 
 #: pymove3d.py:146
 msgid "Anne a 15 year old girl showed a 3D-Version of the »Game of life«"
@@ -93,7 +96,7 @@ msgstr "Valentin (13 Jahre) demonstrierte seine »Skat-Simulation«"
 
 #: pymove3d.py:148
 msgid "The award ceremony"
-msgstr ""
+msgstr "Die Preisverleihung"
 
 #: pymove3d.py:161
 #, python-format
@@ -186,4 +189,12 @@ msgstr ""
 #: sayings.py:23
 msgid "Namespaces are one honking great idea -- let's do more of those!"
 msgstr ""
+
+#: sayings.py:24
+msgid "I once tried Java, but it was too complicated for me, Python is easier."
+msgstr "Ich hab mal Java probiert, aber es war mir zu kompliziert, Python ist einfacher."
+
+#: sayings.py:24
+msgid "__Valentin Pratz,  novice programmers"
+msgstr "__Valentin Pratz, Programmieranfänger"
 

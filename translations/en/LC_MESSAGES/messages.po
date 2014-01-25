@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-01-24 17:09+0100\n"
+"POT-Creation-Date: 2014-01-25 09:32+0100\n"
 "PO-Revision-Date: 2014-01-18 20:46+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -180,14 +180,18 @@ msgstr ""
 msgid "Namespaces are one honking great idea -- let's do more of those!"
 msgstr ""
 
+#: sayings.py:24
+msgid "I once tried Java, but it was too complicated for me, Python is easier."
+msgstr ""
+
+#: sayings.py:24
+msgid "__Valentin Pratz,  novice programmers"
+msgstr ""
+
 #~ msgid "dates"
 #~ msgstr ""
 
 #~ msgid ""
-#~ "The winners of the programming competition, showed at the\n"
-#~ "PyCon.DE 2013 in Cologne their results."
-#~ " A short presentation inlcuding a "
-#~ "movie about their work done.\n"
 #~ msgstr ""
 
 #~ msgid "Anne a 15 year old girl showed a 3D-Version of the Â»Game of lifeÂ«"
