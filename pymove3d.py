@@ -129,6 +129,17 @@ def dates():
     return render_template("/content.html",
                            act="dates", content=content)
 
+@app.route("/prizes")
+def prizes():
+    filename = os.path.join("templates", get_locale(), "rst", "prizes.rst")
+    overrides = {
+                 'initial_header_level': 2,
+                }
+    content = get_content(filename, overrides=overrides)
+    return render_template("/content.html",act="prizes", content=content)
+
+
+
 @app.route("/competition/2013")
 def competition_2013():
     competition = _(u'Competition 2013')
