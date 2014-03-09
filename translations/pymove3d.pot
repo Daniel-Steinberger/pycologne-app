@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-01-25 09:32+0100\n"
+"POT-Creation-Date: 2014-03-09 13:51+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,73 +26,77 @@ msgid "Task"
 msgstr ""
 
 #: pymove3d.py:37
-msgid "Submission"
-msgstr ""
-
-#: pymove3d.py:38
 msgid "Coursematerial"
 msgstr ""
 
-#: pymove3d.py:58 pymove3d.py:70 pymove3d.py:82
-msgid "About Competition"
+#: pymove3d.py:38
+msgid "Submission"
+msgstr ""
+
+#: pymove3d.py:39
+msgid "Prizes"
 msgstr ""
 
 #: pymove3d.py:59 pymove3d.py:71 pymove3d.py:83
-msgid "Dates"
+msgid "About Competition"
 msgstr ""
 
 #: pymove3d.py:60 pymove3d.py:72 pymove3d.py:84
+msgid "Dates"
+msgstr ""
+
+#: pymove3d.py:61 pymove3d.py:73 pymove3d.py:85
 msgid "Impressions"
 msgstr ""
 
-#: pymove3d.py:134
+#: pymove3d.py:146
 msgid "Competition 2013"
 msgstr ""
 
-#: pymove3d.py:135
+#: pymove3d.py:147
 msgid ""
 "The winners of the programming competition, showed at the PyCon.DE 2013 "
 "in Cologne their results. A short presentation inlcuding a movie about "
 "their work done."
 msgstr ""
 
-#: pymove3d.py:138
+#: pymove3d.py:150
 msgid ""
 "Both students presented to the astonished audience of over 250 Python "
 "developers their work."
 msgstr ""
 
-#: pymove3d.py:139
+#: pymove3d.py:151
 msgid ""
 "A long applause showed up. Valentin had 9 months ago learned Python and "
 "Blender discovered earlier. His Skatsimulation even includes 3D sound."
 msgstr ""
 
-#: pymove3d.py:142
+#: pymove3d.py:154
 msgid ""
 "The preparatory courses were made by volunteers, such as the employees of"
 " the magazine \"Time Online\" performed. The following blog entry is a "
 "little impression of the success of the courses"
 msgstr ""
 
-#: pymove3d.py:146
+#: pymove3d.py:158
 msgid "Anne a 15 year old girl showed a 3D-Version of the »Game of life«"
 msgstr ""
 
-#: pymove3d.py:147
+#: pymove3d.py:159
 msgid "Valentin (13 years) demomstrates his »Skat-Simulation«"
 msgstr ""
 
-#: pymove3d.py:148
+#: pymove3d.py:160
 msgid "The award ceremony"
 msgstr ""
 
-#: pymove3d.py:161
+#: pymove3d.py:173
 #, python-format
 msgid "Url: %(url)s not found"
 msgstr ""
 
-#: pymove3d.py:162
+#: pymove3d.py:174
 msgid "This information is not available!"
 msgstr ""
 
