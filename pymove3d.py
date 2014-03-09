@@ -34,8 +34,9 @@ def get_content(filename, overrides=None):
 def get_topmenue():
     menue = [('/competition', _(u'Competition')),
               ('/task', _(u'Task')),
-              ('/submission', _(u'Submission')),
               ('/coursematerial', _(u'Coursematerial')),
+              ('/submission', _(u'Submission')),
+              ('/prizes', _(u'Prizes')),
             ]
     return menue
 
