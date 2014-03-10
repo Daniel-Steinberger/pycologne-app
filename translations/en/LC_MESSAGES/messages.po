@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-03-09 13:51+0100\n"
+"POT-Creation-Date: 2014-03-10 05:17+0100\n"
 "PO-Revision-Date: 2014-01-18 20:46+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -108,7 +108,7 @@ msgstr ""
 #: sayings.py:5 sayings.py:6 sayings.py:7 sayings.py:8 sayings.py:9
 #: sayings.py:10 sayings.py:11 sayings.py:12 sayings.py:13 sayings.py:14
 #: sayings.py:15 sayings.py:16 sayings.py:17 sayings.py:18 sayings.py:19
-#: sayings.py:20 sayings.py:21 sayings.py:22 sayings.py:23
+#: sayings.py:20 sayings.py:21 sayings.py:22
 msgid "__Tim Peters, The Zen of Python"
 msgstr ""
 
@@ -149,46 +149,42 @@ msgid "Although practicality beats purity."
 msgstr ""
 
 #: sayings.py:15
-msgid "Errors should never pass silently."
+msgid "Errors should never pass silently, unless explicitly silenced."
 msgstr ""
 
 #: sayings.py:16
-msgid "Unless explicitly silenced."
-msgstr ""
-
-#: sayings.py:17
 msgid "In the face of ambiguity, refuse the temptation to guess."
 msgstr ""
 
-#: sayings.py:18
+#: sayings.py:17
 msgid "Although that way may not be obvious at first unless you're Dutch."
 msgstr ""
 
-#: sayings.py:19
+#: sayings.py:18
 msgid "Now is better than never."
 msgstr ""
 
-#: sayings.py:20
+#: sayings.py:19
 msgid "Although never is often better than *right* now."
 msgstr ""
 
-#: sayings.py:21
+#: sayings.py:20
 msgid "If the implementation is hard to explain, it's a bad idea."
 msgstr ""
 
-#: sayings.py:22
+#: sayings.py:21
 msgid "If the implementation is easy to explain, it may be a good idea."
 msgstr ""
 
-#: sayings.py:23
+#: sayings.py:22
 msgid "Namespaces are one honking great idea -- let's do more of those!"
 msgstr ""
 
-#: sayings.py:24
+#: sayings.py:23
 msgid "I once tried Java, but it was too complicated for me, Python is easier."
 msgstr ""
 
-#: sayings.py:24
+#: sayings.py:23
 msgid "__Valentin Pratz,  novice programmers"
 msgstr ""
 
@@ -202,5 +198,11 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Valentin (13 years) demomstrates his Â»Skat-SimulationÂ«"
+#~ msgstr ""
+
+#~ msgid "Errors should never pass silently."
+#~ msgstr ""
+
+#~ msgid "Unless explicitly silenced."
 #~ msgstr ""
 

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-03-09 13:51+0100\n"
-"PO-Revision-Date: 2014-03-09 14:37+0100\n"
+"POT-Creation-Date: 2014-03-10 05:17+0100\n"
+"PO-Revision-Date: 2014-03-10 05:28+0100\n"
 "Last-Translator: Peter Koppatz <peter.koppatz@sudile.com>\n"
 "Language-Team: de <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -118,7 +118,6 @@ msgstr "Python's Zen, von Tim Peters"
 #: sayings.py:20
 #: sayings.py:21
 #: sayings.py:22
-#: sayings.py:23
 msgid "__Tim Peters, The Zen of Python"
 msgstr "__Tim Peters, Python's Zen"
 
@@ -128,7 +127,7 @@ msgstr "Lieber schön  als hässlich."
 
 #: sayings.py:7
 msgid "Explicit is better than implicit."
-msgstr "Lieber ausführlich als unausgesprochen."
+msgstr "Lieber eindeutig als nicht ausdrücklich gesagt."
 
 #: sayings.py:8
 msgid "Simple is better than complex."
@@ -140,11 +139,11 @@ msgstr "Lieber komplex als umständlich. "
 
 #: sayings.py:10
 msgid "Flat is better than nested."
-msgstr "Lieber infache Strukturen als verschachtelte."
+msgstr "Lieber einfache Strukturen als verschachtelte."
 
 #: sayings.py:11
 msgid "Sparse is better than dense."
-msgstr "Lieber spärlich als kompakt."
+msgstr "Lieber einzeln als kompakt."
 
 #: sayings.py:12
 msgid "Readability counts."
@@ -159,46 +158,45 @@ msgid "Although practicality beats purity."
 msgstr "Obwohl das Praktische die Reinheit übertrifft."
 
 #: sayings.py:15
-msgid "Errors should never pass silently."
-msgstr "Fehler sollte man nicht verschweigen."
+#, fuzzy
+msgid "Errors should never pass silently, unless explicitly silenced."
+msgstr "Fehler sollte man nicht verschweigen, es sei denn, sie werde ausdrücklich abgeschaltet."
 
 #: sayings.py:16
-msgid "Unless explicitly silenced."
-msgstr "Solange nicht ausdrücklich abgeschaltet."
-
-#: sayings.py:17
 msgid "In the face of ambiguity, refuse the temptation to guess."
 msgstr "Wenn etwas zweideutig ist, dann versuch nicht zu raten."
 
-#: sayings.py:18
+#: sayings.py:17
 msgid "Although that way may not be obvious at first unless you're Dutch."
 msgstr "Wenn die Lösung auch nicht sofort offensichtlich für Dich ist, es sei denn Du bist ein Holländer."
 
-#: sayings.py:19
+#: sayings.py:18
 msgid "Now is better than never."
 msgstr "Lieber sofort als gar nicht."
 
-#: sayings.py:20
+#: sayings.py:19
 msgid "Although never is often better than *right* now."
 msgstr "Oft ist niemals, besser als *sofort*."
 
-#: sayings.py:21
+#: sayings.py:20
 msgid "If the implementation is hard to explain, it's a bad idea."
-msgstr "Wenn die Umsetzung nicht leicht zu erklären ist, ist eine schlechte idee."
+msgstr "Wenn die Umsetzung nicht leicht zu erklären ist, ist es eine schlechte idee."
+
+#: sayings.py:21
+msgid "If the implementation is easy to explain, it may be a good idea."
+msgstr "Wenn die Umsetzung leicht zu erklären ist, könnte es eine gute Idee sein."
 
 #: sayings.py:22
-msgid "If the implementation is easy to explain, it may be a good idea."
-msgstr "Wenn die Umsetzung leicht zu erklären ist, könnte es ien gute Idee sein."
-
-#: sayings.py:23
 msgid "Namespaces are one honking great idea -- let's do more of those!"
 msgstr "Namespaces sind eine großartige Idee -- verwende mehr davon!"
 
-#: sayings.py:24
+#: sayings.py:23
 msgid "I once tried Java, but it was too complicated for me, Python is easier."
 msgstr "Ich hab mal Java probiert, aber es war mir zu kompliziert, Python ist einfacher."
 
-#: sayings.py:24
+#: sayings.py:23
 msgid "__Valentin Pratz,  novice programmers"
 msgstr "__Valentin Pratz, Programmieranfänger"
 
+#~ msgid "Unless explicitly silenced."
+#~ msgstr "Solange nicht ausdrücklich abgeschaltet."
