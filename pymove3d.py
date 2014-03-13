@@ -137,7 +137,7 @@ def prizes():
                  'initial_header_level': 2,
                 }
     content = get_content(filename, overrides=overrides)
-    return render_template("/content.html",act="prizes", content=content)
+    return render_template("/prizes.html",act="prizes", content=content)
 
 
 
