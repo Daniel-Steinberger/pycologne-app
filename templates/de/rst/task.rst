@@ -50,4 +50,4 @@ Der Inhalt der komprimierten Archivdatei Datei:
 .. _http://pymove3d.sudile.com: http://pymove3d.sudile.com/
 .. _http://pymove3d.pysv.org/coursematerial: http://pymove3d.pysv.org/coursematerial
 .. _http://pymove3d.pysv.org/competition: http://pymove3d.pysv.org/competition
-.. _kamerafahrt Funktion: http://pymove3d.pysv.org/coursematerial/stations/blender-move/e_camera_moves/e_camera_moves.html
+.. _kamerafahrt Funktion: http://pymove3d.sudile.com/stations/blender-move/e_camera_moves/e_camera_moves.html

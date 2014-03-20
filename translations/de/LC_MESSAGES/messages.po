@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2014-03-10 05:17+0100\n"
-"PO-Revision-Date: 2014-03-10 05:28+0100\n"
+"PO-Revision-Date: 2014-03-20 05:30+0100\n"
 "Last-Translator: Peter Koppatz <peter.koppatz@sudile.com>\n"
 "Language-Team: de <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -151,11 +151,11 @@ msgstr "Lesbarkeit ist das was zählt."
 
 #: sayings.py:13
 msgid "Special cases aren't special enough to break the rules."
-msgstr "Ausnahmen sind nicht nicht so speziell, um die Regeln zu brechen."
+msgstr "Ausnahmen sind nicht so speziell, um die Regeln zu brechen."
 
 #: sayings.py:14
 msgid "Although practicality beats purity."
-msgstr "Obwohl das Praktische die Reinheit übertrifft."
+msgstr "Obwohl, das Praktische übertifft die Reinheit."
 
 #: sayings.py:15
 #, fuzzy
@@ -176,11 +176,11 @@ msgstr "Lieber sofort als gar nicht."
 
 #: sayings.py:19
 msgid "Although never is often better than *right* now."
-msgstr "Oft ist niemals, besser als *sofort*."
+msgstr "Oft ist niemals besser als *sofort*."
 
 #: sayings.py:20
 msgid "If the implementation is hard to explain, it's a bad idea."
-msgstr "Wenn die Umsetzung nicht leicht zu erklären ist, ist es eine schlechte idee."
+msgstr "Wenn die Umsetzung nicht leicht zu erklären ist, ist es eine schlechte Idee."
 
 #: sayings.py:21
 msgid "If the implementation is easy to explain, it may be a good idea."
