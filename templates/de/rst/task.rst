@@ -16,7 +16,7 @@ während des Ablaufs der eingereichten Lösung nicht gestattet. Allein
 Dein Programm kontrolliert, was passiert.
 
 Filme Deine Konstruktion durch eine Kamerafahrt mit der
-bereitgestellten `kamerafahrt Funktion`_.
+bereitgestellten `Kamerafahrt`_ bzw. eine selbst erstellte Version.
 
 Dein eingereichtes Programm muss alles enthalten was Du in dieser
 Kamerafahrt zeigst.
@@ -50,4 +50,4 @@ Der Inhalt der komprimierten Archivdatei Datei:
 .. _http://pymove3d.sudile.com: http://pymove3d.sudile.com/
 .. _http://pymove3d.pysv.org/coursematerial: http://pymove3d.pysv.org/coursematerial
 .. _http://pymove3d.pysv.org/competition: http://pymove3d.pysv.org/competition
-.. _kamerafahrt Funktion: http://pymove3d.sudile.com/stations/blender-move/e_camera_moves/e_camera_moves.html
+.. _Kamerafahrt: http://pymove3d.sudile.com/stations/blender-move/e_camera_moves/e_camera_moves.html
