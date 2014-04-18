@@ -31,7 +31,7 @@ msgstr "Kursmaterial"
 
 #: pymove3d.py:38
 msgid "Submission"
-msgstr "Einreichnung"
+msgstr "Einreichung"
 
 #: pymove3d.py:39
 msgid "Prizes"
