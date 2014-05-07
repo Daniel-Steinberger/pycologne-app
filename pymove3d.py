@@ -16,6 +16,9 @@ from sayings import get_saying
 LANGUAGE_SELECTED = "de"
 #ToDo after engelish is implemented set LANGUAGE_SELECTED = None
 
+# gets the path where all stuff is located
+PYMOVE3D_PATH = os.path.dirname(os.path.abspath(__file__))
+
 app = Flask(__name__)
 babel = Babel(app)
 
@@ -23,6 +26,7 @@ app.config['BABEL_DEFAULT_LOCALE'] = 'de'
 
 
 def get_content(filename, overrides=None):
+    filename = os.path.join(PYMOVE3D_PATH, filename)
     content = u""
     if os.path.isfile(filename):
         with codecs.open(filename, 'r', 'utf-8') as f:
