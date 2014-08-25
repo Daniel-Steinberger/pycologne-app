@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-03-10 05:17+0100\n"
+"POT-Creation-Date: 2014-08-25 13:27+0200\n"
 "PO-Revision-Date: 2014-03-20 05:30+0100\n"
 "Last-Translator: Peter Koppatz <peter.koppatz@sudile.com>\n"
 "Language-Team: de <LL@li.org>\n"
@@ -17,82 +17,143 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: pymove3d.py:35
+#: pymove3d.py:39
 msgid "Competition"
 msgstr "Wettbewerb"
 
-#: pymove3d.py:36
+#: pymove3d.py:40
 msgid "Task"
 msgstr "Aufgabe"
 
-#: pymove3d.py:37
+#: pymove3d.py:41
 msgid "Coursematerial"
 msgstr "Kursmaterial"
 
-#: pymove3d.py:38
+#: pymove3d.py:42
 msgid "Submission"
 msgstr "Einreichung"
 
-#: pymove3d.py:39
+#: pymove3d.py:43
 msgid "Prizes"
 msgstr "Preise"
 
-#: pymove3d.py:59
-#: pymove3d.py:71
-#: pymove3d.py:83
+#: pymove3d.py:63 pymove3d.py:75 pymove3d.py:87
 msgid "About Competition"
 msgstr "Der Wettbewerb"
 
-#: pymove3d.py:60
-#: pymove3d.py:72
-#: pymove3d.py:84
+#: pymove3d.py:64 pymove3d.py:76 pymove3d.py:88
 msgid "Dates"
 msgstr "Termine"
 
-#: pymove3d.py:61
-#: pymove3d.py:73
-#: pymove3d.py:85
+#: pymove3d.py:65 pymove3d.py:77 pymove3d.py:89
 msgid "Impressions"
 msgstr "Impressionen"
 
-#: pymove3d.py:146
+#: pymove3d.py:150
 msgid "Competition 2013"
 msgstr "Wettbewerb 2013"
 
-#: pymove3d.py:147
-msgid "The winners of the programming competition, showed at the PyCon.DE 2013 in Cologne their results. A short presentation inlcuding a movie about their work done."
-msgstr "Die Gewinner des Programmierwettbewerbes, zeigten auf der PyCon DE 2013 in Köln ihre Ergebnisse. In einem Kurzvortrag wurde das Projekt vorgestellt und mit einem  Film das Ergebnis visualisiert."
-
-#: pymove3d.py:150
-msgid "Both students presented to the astonished audience of over 250 Python developers their work."
-msgstr "Beide Schüler präsentierten dem staunenden Publikum von über 250 Pythonentwicklern ihre Werke."
-
 #: pymove3d.py:151
-msgid "A long applause showed up. Valentin had 9 months ago learned Python and Blender discovered earlier. His Skatsimulation even includes 3D sound."
-msgstr "Diese würdigten mit lang anhaltendem Applaus die Ergebnisse. Valentin hatte vor 9 Monaten Python gelernt und Blender schon früher entdeckt. Seine Skatsimulation enthält sogar 3D Sound."
+msgid ""
+"The winners of the programming competition, showed at the PyCon.DE 2013 "
+"in Cologne their results. A short presentation inlcuding a movie about "
+"their work done."
+msgstr ""
+"Die Gewinner des Programmierwettbewerbes, zeigten auf der PyCon DE 2013 "
+"in Köln ihre Ergebnisse. In einem Kurzvortrag wurde das Projekt "
+"vorgestellt und mit einem  Film das Ergebnis visualisiert."
 
 #: pymove3d.py:154
-msgid "The preparatory courses were made by volunteers, such as the employees of the magazine \"Time Online\" performed. The following blog entry is a little impression of the success of the courses"
-msgstr "Die Vorbereitungskurse wurden von freiwilligen Helfern, wie den Mitarbeitern der Zeitschrift \"Zeit Online\" durchgeführt. Der Folgende Blogeintrag gibt eine kleinen Eindruck vom Erfolg der Kurse:"
+msgid ""
+"Both students presented to the astonished audience of over 250 Python "
+"developers their work."
+msgstr ""
+"Beide Schüler präsentierten dem staunenden Publikum von über 250 "
+"Pythonentwicklern ihre Werke."
+
+#: pymove3d.py:155
+msgid ""
+"A long applause showed up. Valentin had 9 months ago learned Python and "
+"Blender discovered earlier. His Skatsimulation even includes 3D sound."
+msgstr ""
+"Diese würdigten mit lang anhaltendem Applaus die Ergebnisse. Valentin "
+"hatte vor 9 Monaten Python gelernt und Blender schon früher entdeckt. "
+"Seine Skatsimulation enthält sogar 3D Sound."
 
 #: pymove3d.py:158
+msgid ""
+"The preparatory courses were made by volunteers, such as the employees of"
+" the magazine \"Time Online\" performed. The following blog entry is a "
+"little impression of the success of the courses"
+msgstr ""
+"Die Vorbereitungskurse wurden von freiwilligen Helfern, wie den "
+"Mitarbeitern der Zeitschrift \"Zeit Online\" durchgeführt. Der Folgende "
+"Blogeintrag gibt eine kleinen Eindruck vom Erfolg der Kurse:"
+
+#: pymove3d.py:162
 msgid "Anne a 15 year old girl showed a 3D-Version of the »Game of life«"
 msgstr "Anne (15 Jahre) zeigte eine 3D-Version des »Game of life«"
 
-#: pymove3d.py:159
+#: pymove3d.py:163
 msgid "Valentin (13 years) demomstrates his »Skat-Simulation«"
 msgstr "Valentin (13 Jahre) demonstrierte seine »Skat-Simulation«"
 
-#: pymove3d.py:160
+#: pymove3d.py:164 pymove3d.py:187
 msgid "The award ceremony"
 msgstr "Die Preisverleihung"
 
-#: pymove3d.py:173
+#: pymove3d.py:176
+msgid "Competition 2014"
+msgstr "Wettbewerb 2014"
+
+#: pymove3d.py:177
+msgid ""
+"The winner of the programming competition, showed at the EuroPython 2014 "
+"conference in Berlin his results. A short presentation inlcuding a movie "
+"about and an interview were given."
+msgstr ""
+"Der Gewinner des Programmierwettbewerbes, zeigte auf der EuroPython 2014 "
+"in Berlin sein Ergebnis. In einem Kurzvortrag und einem Interview wurde "
+"das Projekt vorgestellt und mit einem  Film das Ergebnis visualisiert."
+
+#: pymove3d.py:181
+msgid ""
+"The German Python Software Verband (PySV), started a programming contest,"
+" called PyMove3D using the popular 3D rendering software Blender as a "
+"platform for teaching programming."
+msgstr ""
+"Der deutsche Python Software Verband (PySV), hat einen Programmier "
+"Wettbewerb, namens PyMove3D initiiert. Dieser verwendet die populare 3D "
+"rendering Software Blender als Platform um Programmieren zu vermitteln."
+
+#: pymove3d.py:182
+msgid ""
+"On Monday, the EuroPython conference started with the prize ceremony of "
+"the this years contest."
+msgstr ""
+"Am Montag begann die EuroPython Konferenz mit der Preisverleihung des "
+"diesjährigen Contests."
+
+#: pymove3d.py:183
+msgid ""
+"The winner of PyMove3D 2014 was Mika Greif, a thirteen years old boy, who"
+" modelled an icicle cave where water drops from icicles forming "
+"stalagmites on the ground."
+msgstr ""
+"Der Gewinner von PyMove3D 2014 ist Mika Greif, ein 13 Jähriger. "
+"Er modellierte eine Eiszapfenhöhle wo Wasser Tropfen von Eiszapfen am "
+"Boden Stalagmiten bilden."
+
+#: pymove3d.py:186
+msgid "Mika a 13 years old schoolar student showed a 3D Icicle Cave"
+msgstr "Mika ein 13 Jähriger Schüler zeigt eine 3D Eiszapfenhöhle"
+
+#: pymove3d.py:198
 #, python-format
 msgid "Url: %(url)s not found"
 msgstr "Url: %(url)s nicht gefunden"
 
-#: pymove3d.py:174
+#: pymove3d.py:199
 msgid "This information is not available!"
 msgstr "Diese Information ist nicht verfügbar"
 
@@ -100,24 +161,10 @@ msgstr "Diese Information ist nicht verfügbar"
 msgid "The Zen of Python, by Tim Peters"
 msgstr "Python's Zen, von Tim Peters"
 
-#: sayings.py:5
-#: sayings.py:6
-#: sayings.py:7
-#: sayings.py:8
-#: sayings.py:9
-#: sayings.py:10
-#: sayings.py:11
-#: sayings.py:12
-#: sayings.py:13
-#: sayings.py:14
-#: sayings.py:15
-#: sayings.py:16
-#: sayings.py:17
-#: sayings.py:18
-#: sayings.py:19
-#: sayings.py:20
-#: sayings.py:21
-#: sayings.py:22
+#: sayings.py:5 sayings.py:6 sayings.py:7 sayings.py:8 sayings.py:9
+#: sayings.py:10 sayings.py:11 sayings.py:12 sayings.py:13 sayings.py:14
+#: sayings.py:15 sayings.py:16 sayings.py:17 sayings.py:18 sayings.py:19
+#: sayings.py:20 sayings.py:21 sayings.py:22
 msgid "__Tim Peters, The Zen of Python"
 msgstr "__Tim Peters, Python's Zen"
 
@@ -160,7 +207,9 @@ msgstr "Obwohl, das Praktische übertifft die Reinheit."
 #: sayings.py:15
 #, fuzzy
 msgid "Errors should never pass silently, unless explicitly silenced."
-msgstr "Fehler sollte man nicht verschweigen, es sei denn, sie werde ausdrücklich abgeschaltet."
+msgstr ""
+"Fehler sollte man nicht verschweigen, es sei denn, sie werde ausdrücklich"
+" abgeschaltet."
 
 #: sayings.py:16
 msgid "In the face of ambiguity, refuse the temptation to guess."
@@ -168,7 +217,9 @@ msgstr "Wenn etwas zweideutig ist, dann versuch nicht zu raten."
 
 #: sayings.py:17
 msgid "Although that way may not be obvious at first unless you're Dutch."
-msgstr "Wenn die Lösung auch nicht sofort offensichtlich für Dich ist, es sei denn Du bist ein Holländer."
+msgstr ""
+"Wenn die Lösung auch nicht sofort offensichtlich für Dich ist, es sei "
+"denn Du bist ein Holländer."
 
 #: sayings.py:18
 msgid "Now is better than never."
@@ -180,7 +231,9 @@ msgstr "Oft ist niemals besser als *sofort*."
 
 #: sayings.py:20
 msgid "If the implementation is hard to explain, it's a bad idea."
-msgstr "Wenn die Umsetzung nicht leicht zu erklären ist, ist es eine schlechte Idee."
+msgstr ""
+"Wenn die Umsetzung nicht leicht zu erklären ist, ist es eine schlechte "
+"Idee."
 
 #: sayings.py:21
 msgid "If the implementation is easy to explain, it may be a good idea."
@@ -192,7 +245,9 @@ msgstr "Namespaces sind eine großartige Idee -- verwende mehr davon!"
 
 #: sayings.py:23
 msgid "I once tried Java, but it was too complicated for me, Python is easier."
-msgstr "Ich hab mal Java probiert, aber es war mir zu kompliziert, Python ist einfacher."
+msgstr ""
+"Ich hab mal Java probiert, aber es war mir zu kompliziert, Python ist "
+"einfacher."
 
 #: sayings.py:23
 msgid "__Valentin Pratz,  novice programmers"
@@ -200,3 +255,4 @@ msgstr "__Valentin Pratz, Programmieranfänger"
 
 #~ msgid "Unless explicitly silenced."
 #~ msgstr "Solange nicht ausdrücklich abgeschaltet."
+

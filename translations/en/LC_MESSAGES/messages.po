@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-03-10 05:17+0100\n"
+"POT-Creation-Date: 2014-08-25 13:27+0200\n"
 "PO-Revision-Date: 2014-01-18 20:46+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -18,86 +18,121 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: pymove3d.py:35
+#: pymove3d.py:39
 msgid "Competition"
 msgstr ""
 
-#: pymove3d.py:36
+#: pymove3d.py:40
 msgid "Task"
 msgstr ""
 
-#: pymove3d.py:37
+#: pymove3d.py:41
 msgid "Coursematerial"
 msgstr ""
 
-#: pymove3d.py:38
+#: pymove3d.py:42
 msgid "Submission"
 msgstr ""
 
-#: pymove3d.py:39
+#: pymove3d.py:43
 msgid "Prizes"
 msgstr ""
 
-#: pymove3d.py:59 pymove3d.py:71 pymove3d.py:83
+#: pymove3d.py:63 pymove3d.py:75 pymove3d.py:87
 msgid "About Competition"
 msgstr ""
 
-#: pymove3d.py:60 pymove3d.py:72 pymove3d.py:84
+#: pymove3d.py:64 pymove3d.py:76 pymove3d.py:88
 msgid "Dates"
 msgstr ""
 
-#: pymove3d.py:61 pymove3d.py:73 pymove3d.py:85
+#: pymove3d.py:65 pymove3d.py:77 pymove3d.py:89
 msgid "Impressions"
 msgstr ""
 
-#: pymove3d.py:146
+#: pymove3d.py:150
 msgid "Competition 2013"
 msgstr ""
 
-#: pymove3d.py:147
+#: pymove3d.py:151
 msgid ""
 "The winners of the programming competition, showed at the PyCon.DE 2013 "
 "in Cologne their results. A short presentation inlcuding a movie about "
 "their work done."
 msgstr ""
 
-#: pymove3d.py:150
+#: pymove3d.py:154
 msgid ""
 "Both students presented to the astonished audience of over 250 Python "
 "developers their work."
 msgstr ""
 
-#: pymove3d.py:151
+#: pymove3d.py:155
 msgid ""
 "A long applause showed up. Valentin had 9 months ago learned Python and "
 "Blender discovered earlier. His Skatsimulation even includes 3D sound."
 msgstr ""
 
-#: pymove3d.py:154
+#: pymove3d.py:158
 msgid ""
 "The preparatory courses were made by volunteers, such as the employees of"
 " the magazine \"Time Online\" performed. The following blog entry is a "
 "little impression of the success of the courses"
 msgstr ""
 
-#: pymove3d.py:158
+#: pymove3d.py:162
 msgid "Anne a 15 year old girl showed a 3D-Version of the »Game of life«"
 msgstr ""
 
-#: pymove3d.py:159
+#: pymove3d.py:163
 msgid "Valentin (13 years) demomstrates his »Skat-Simulation«"
 msgstr ""
 
-#: pymove3d.py:160
+#: pymove3d.py:164 pymove3d.py:187
 msgid "The award ceremony"
 msgstr ""
 
-#: pymove3d.py:173
+#: pymove3d.py:176
+msgid "Competition 2014"
+msgstr ""
+
+#: pymove3d.py:177
+msgid ""
+"The winner of the programming competition, showed at the EuroPython 2014 "
+"conference in Berlin his results. A short presentation inlcuding a movie "
+"about and an interview were given."
+msgstr ""
+
+#: pymove3d.py:181
+msgid ""
+"The German Python Software Verband (PySV), started a programming contest,"
+" called PyMove3D using the popular 3D rendering software Blender as a "
+"platform for teaching programming."
+msgstr ""
+
+#: pymove3d.py:182
+msgid ""
+"On Monday, the EuroPython conference started with the prize ceremony of "
+"the this years contest."
+msgstr ""
+
+#: pymove3d.py:183
+msgid ""
+"The winner of PyMove3D 2014 was Mika Greif, a thirteen years old boy, who"
+" modelled an icicle cave where water drops from icicles forming "
+"stalagmites on the ground."
+msgstr ""
+
+#: pymove3d.py:186
+msgid "Mika a 13 years old schoolar student showed a 3D Icicle Cave"
+msgstr ""
+
+#: pymove3d.py:198
 #, python-format
 msgid "Url: %(url)s not found"
 msgstr ""
 
-#: pymove3d.py:174
+#: pymove3d.py:199
 msgid "This information is not available!"
 msgstr ""
 
