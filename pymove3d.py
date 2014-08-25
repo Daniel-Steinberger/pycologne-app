@@ -171,6 +171,27 @@ def competition_2013():
                            skat_simulation=skat_simulation,
                            awards=awards)
 
+@app.route("/competition/2014")
+def competition_2014():
+    competition = _(u'Competition 2014')
+    introduction = _(u'The winner of the programming competition, '
+                     u'showed at the EuroPython 2014 conference in Berlin his results. '
+                     u'A short presentation inlcuding a movie about and an interview were given.')
+
+    article= [_(u'The German Python Software Verband (PySV), started a programming contest, called PyMove3D using the popular 3D rendering software Blender as a platform for teaching programming.'),
+              _(u'On Monday, the EuroPython conference started with the prize ceremony of the this years contest.'),
+              _(u'The winner of PyMove3D 2014 was Mika Greif, a thirteen years old boy, who modelled an icicle cave where water drops from icicles forming stalagmites on the ground.')]
+
+
+    icicle_cave = _(u'Mika a 13 years old schoolar student showed a 3D Icicle Cave')
+    awards = _(u'The award ceremony')
+    return render_template("/impressions_2014.html",
+                           act="competition_2014",
+                           competition=competition,
+                           introduction=introduction,
+                           article=article,
+                           icicle_cave=icicle_cave,
+                           awards=awards)
 
 @app.errorhandler(404)
 def page_not_found(e):

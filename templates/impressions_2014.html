@@ -1,0 +1,30 @@
+{% extends "theme.html" %}
+{% block body %}
+<div class="container">
+    <div class="col-md-6">
+      <div class="row">
+      <h2>
+        {{ competion }}
+      </h2>
+      <p>
+          {{ introduction }}
+      </p>
+
+
+      {% for line in article %}
+         <p>{{ line }}</p>
+      {% endfor %}
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="module-thumbnail">
+              <img class="img-responsive img-thumbnail" src="/static/images/archive/competitions/2014/contest2014.jpg" alt="Mika" />
+              <p class="text-primary"><em>{{ icicle_cave }}</em></p>
+          </div>
+          <div class="flex-video widescreen" style="margin: 0 auto;text-align:center;">
+          <iframe width="640" height="360" src="//www.youtube.com/embed/CJZhdLXw8cI?feature=player_detailpage&v=CJZhdLXw8cI#t=149" frameborder="0" allowfullscreen></iframe>"
+         <p class="text-primary"><em>{{ awards }}</em></p>
+       </div>
+      </div>
+</div>
+{% endblock %}
