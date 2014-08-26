@@ -10,27 +10,16 @@ Termine
       <td>Aktivität</td>
     </tr>
     <tr>
-      <td>13.-14.03.2014  </td>
+      <td>29-30.11.2014</td>
+      <td>Hamburg</td>
+      <td>http://www.pyunconf.de</td>
+    </tr>
+    <tr>
+      <td>2015</td>
       <td>Chemnitz (Linuxtag)</td>
-      <td>Kurs/Workshop</td>
-    </tr>
-    <tr>
-      <td>29.-30.03.2014</td>
-      <td>Köln</td>
-      <td>Barcamp...</td>
-    </tr>
-    <tr>
-      <td>01.05.2014 </td>
-      <td></td>
-      <td>Einsendeschluss</td>
-    </tr>
-    <tr>
-      <td>21.07. - 27.07.2014</td>
-      <td>Berlin (EuroPython 2014)</td>
-      <td>Preisverleihung</td>
+      <td>Kurs/Workshop (geplant)</td>
     </tr>
   </table>
-
 
 Kurse selbst organisieren
 =========================
