@@ -12,8 +12,7 @@ Allgemeines
 
 
 #. Der `Python Software Verband e. V.`_ (nachfolgend PySV genannt)
-   veranstaltet mit den Veranstaltern der `EuroPython 2014`_ Konferenz
-   einen Python-Programmier-Wettbewerb.
+   veranstaltet einen Python-Programmier-Wettbewerb.
 #. Diese Wettbewerbsbedingungen regeln die Rechte und Pflichten der
    Teilnehmer und des Veranstalters dieses Wettbewerbs.
 #. PySV behält es sich vor, den Wettbewerb abzuändern, zu unterbrechen
@@ -31,7 +30,7 @@ Teilnahmefähige Beiträge
    und technischen Anforderungen an die Beiträge können unter
    pymove3d.pysv.org/submission abgerufen werden.
 #. Die Teilnehmer können ihren Beitrag als komprimierte Archivdatei
-   (ZIP, tar.gz, ...) bis einschließlich dem 1. Mai 2014 unter `contest@python-verband.org`_
+   (ZIP, tar.gz, ...) bis einschließlich dem DD. MM YYYY unter `contest@python-verband.org`_
    einreichen, sofern sie nicht größer als 10 MByte
    ist. Größere Demos stellen Sie uns bitte über einen Download-Link zur
    Verfügung und mailen nur diesen. Anschließend werden die von der PySV-
@@ -157,5 +156,4 @@ gestellt worden.
 .. _Impressum: http://pymove3d.pysv.org//imprint
 .. _http://pymove3d.pysv.org: http://pymove3d.pysv.org/
 .. _contest@python-verband.org: mailto:contest%40python-verband.org
-.. _EuroPython 2014: https://ep2014.europython.eu/
 .. _http://pymove3d.pysv.org/privacy: http://pymove3d.pysv.org/privacy
