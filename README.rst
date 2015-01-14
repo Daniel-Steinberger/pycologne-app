@@ -7,7 +7,7 @@ First you have to clone this repository and all its submodules::
 
 Next create a virtualenv and install all the requirments into it. In this
 example we are using virtualenvwrapper to manage the virtualenv::
-    
+
     mkvirtualenv pycologne-app-env
 
 This repository provides requirements and configurations.
@@ -19,7 +19,7 @@ requirements::
 
 Now that this is complete, you can run pymove3d in that environment::
 
-    python ./pycologne.py
+    python ./webapp.py
 
 Testing and developing is done with::
 
