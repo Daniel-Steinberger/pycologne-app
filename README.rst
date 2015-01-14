@@ -2,13 +2,13 @@ Installation
 ------------
 
 First you have to clone this repository and all its submodules::
-   hg clone ssh://hg@bitbucket.org/pkoppatz/pymove3d-app
-   cd pymove3d-app
+   hg clone ssh://hg@bitbucket.org/PySV/pycologne-app
+   cd pycologne-app
 
 Next create a virtualenv and install all the requirments into it. In this
 example we are using virtualenvwrapper to manage the virtualenv::
     
-    mkvirtualenv pymove3d-env
+    mkvirtualenv pycologne-app-env
 
 This repository provides requirements and configurations.
 
@@ -19,7 +19,7 @@ requirements::
 
 Now that this is complete, you can run pymove3d in that environment::
 
-    python ./pymove3d.py
+    python ./pycologne.py
 
 Testing and developing is done with::
 
@@ -30,7 +30,3 @@ Now you have additional packages for development and testing:
  - pep8
  - py.test
  - selenium
-
-
-
-    
