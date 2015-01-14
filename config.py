@@ -2,7 +2,5 @@
 # ...
 # available languages
 LANGUAGES = {
-    'en': 'English',
     'de': 'Deutsch',
-    'it': 'Italiano'
 }
