@@ -1,4 +1,4 @@
-{% extends "theme.html" %} 
+{% extends "theme.html" %}
 {% block body %}
 <div class="module module-gallery">
   <!--img src="static/images/python_blender.jpg" /-->
@@ -11,7 +11,7 @@
 	<a  href="{{ url_for('dates') }}" class="btn btn-default">{{ dates }} </a>
       </div>
     </div>
-  </div>  
+  </div>
 </div>
 
 <div class="module module-course">
@@ -45,7 +45,7 @@
 	!-->
 
       </div>
-      
+
       <div class="">
 	<div class="module-heading">
 	  <h3 class="module-title">Folgen Sie uns auch auf</h3>
@@ -102,7 +102,7 @@
 	  </ul>
 	</div>
       </div>
-      
+
     </div>
     </div> <!-- End: module.info -->
         {% include "claims.html" %}
@@ -110,7 +110,7 @@
 </div><!-- course -->
 <div class="module module-impression">
   <div class="container">
-    <div class="col-md-2 col-md-offset-2">  
+    <div class="col-md-2 col-md-offset-2">
     	<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="112px" height="112px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve">
 <g id="Ebene_5">
@@ -128,11 +128,8 @@
 </g>
 </svg>
     </div>
-     <div class="col-md-8">  
+     <div class="col-md-8">
     	<h3  style="padding-top:30px;"> {{ impressions }} </h3>
-			<a href="{{ url_for('competition_2013') }} "  class=""> 2013</a>
-            <a href="{{ url_for('competition_2014') }} "  class=""> 2014</a>
     </div>
  </div>
 {% endblock %}
-
