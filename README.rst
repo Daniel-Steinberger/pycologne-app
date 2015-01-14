@@ -17,7 +17,7 @@ requirements::
 
     pip install -r requirements.txt
 
-Now that this is complete, you can run pymove3d in that environment::
+Now that this is complete, you can run the pycolgone webapp in that environment::
 
     python ./webapp.py
 

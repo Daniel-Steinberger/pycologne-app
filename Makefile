@@ -2,11 +2,11 @@
 # Makefile for pymove3D
 #
 
-# location for the pymove3d.py we use:
+# location for the webapp.py we use:
 export PYTHONPATH=$(PWD)
 
 pylint:
-	pylint ./pymove3d.py
+	pylint ./webapp.py
 
 pybabel_init:
 	pybabel extract -o ./translations/pymove3d.pot .
@@ -20,4 +20,3 @@ pybabel_update:
 
 msgfmt:
 	msgfmt --strict ./translations/de/LC_MESSAGES/messages.po -o ./translations/de/LC_MESSAGES/messages.mo
-	
