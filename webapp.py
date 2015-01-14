@@ -7,23 +7,18 @@ from docutils.core import publish_parts
 from flask import Flask
 from flask import render_template
 from flask import request
-from flask.ext.babel import gettext as _
-from flask.ext.babel import Babel
-from config import LANGUAGES
-from sayings import get_saying
-
-
+# from config import LANGUAGES
 LANGUAGE_SELECTED = "de"
-#ToDo after engelish is implemented set LANGUAGE_SELECTED = None
+from sayings import get_saying
 
 # gets the path where all stuff is located
 APP_PATH = os.path.dirname(os.path.abspath(__file__))
 
 app = Flask(__name__)
-babel = Babel(app)
 
-app.config['BABEL_DEFAULT_LOCALE'] = 'de'
-
+def get_locale():
+    # note: PyCologne app currently has DE  only
+    return LANGUAGE_SELECTED
 
 def get_content(filename, overrides=None):
     filename = os.path.join(APP_PATH, filename)
@@ -36,22 +31,17 @@ def get_content(filename, overrides=None):
     return content
 
 def get_topmenue():
-    menue = [('/competition', _(u'Competition')),
-              ('/task', _(u'Task')),
-              ('/coursematerial', _(u'Coursematerial')),
-              ('/submission', _(u'Submission')),
-              ('/prizes', _(u'Prizes')),
+    menue = [('/competition', u'Competition'),
+              ('/task', u'Task'),
+              ('/coursematerial', u'Coursematerial'),
+              ('/submission', u'Submission'),
+              ('/prizes', u'Prizes'),
             ]
     return menue
 
 app.jinja_env.globals.update(get_topmenue=get_topmenue)
 
-
-@babel.localeselector
-def get_locale():
-    """ToDo: if translation is completed, switch to en """
-    return LANGUAGE_SELECTED or request.accept_languages.best_match(LANGUAGES.keys()) or 'de'
-
+# main page
 
 @app.route("/")
 @app.route("/index")
@@ -60,33 +50,12 @@ def index():
     return render_template("/index.html",
                            saying=saying,
                            author=author,
-                           competition_info=_(u'About Competition'),
-                           dates=_(u'Dates'),
-                           impressions=_(u'Impressions'))
+                           competition_info='About Competition',
+                           dates='Dates',
+                           impressions='Impressions')
+# sub pages
 
-@app.route('/de')
-def de():
-    global LANGUAGE_SELECTED
-    LANGUAGE_SELECTED = "de"
-    saying, author = get_saying()
-    return render_template("/index.html",
-                           saying=saying,
-                           author=author,
-                           competition_info=_(u'About Competition'),
-                           dates=_(u'Dates'),
-                           impressions=_(u'Impressions'))
-
-@app.route('/en')
-def en():
-    saying, author = get_saying()
-    global LANGUAGE_SELECTED
-    LANGUAGE_SELECTED = "en"
-    return render_template("/index.html",
-                           saying=saying,
-                           author=author,
-                           competition_info=_(u'About Competition'),
-                           dates=_(u'Dates'),
-                           impressions=_(u'Impressions'))
+# TODO:  add real pycologne content ...
 
 @app.route("/competition")
 def competition():
@@ -144,59 +113,12 @@ def prizes():
     return render_template("/prizes.html",act="prizes", content=content)
 
 
-
-@app.route("/competition/2013")
-def competition_2013():
-    competition = _(u'Competition 2013')
-    introduction = _(u'The winners of the programming competition, '
-                     u'showed at the PyCon.DE 2013 in Cologne their results. '
-                     u'A short presentation inlcuding a movie about their work done.')
-    article = [_(u'Both students presented to the astonished audience of over 250 Python developers their work.'),
-               _(u'A long applause showed up.'
-                 u' Valentin had 9 months ago learned Python and Blender discovered earlier. '
-                 u'His Skatsimulation even includes 3D sound.'),
-               _(u'The preparatory courses were made by volunteers, such as the '
-                 u'employees of the magazine "Time Online" performed. '
-                 u'The following blog entry is a little impression of the success of the courses'),
-              ]
-    game_of_life = _(u'Anne a 15 year old girl showed a 3D-Version of the »Game of life«')
-    skat_simulation = _(u'Valentin (13 years) demomstrates his »Skat-Simulation«')
-    awards = _(u'The award ceremony')
-    return render_template("/impressions_2013.html",
-                           act="competition_2013",
-                           competition=competition,
-                           introduction=introduction,
-                           article=article,
-                           game_of_life=game_of_life,
-                           skat_simulation=skat_simulation,
-                           awards=awards)
-
-@app.route("/competition/2014")
-def competition_2014():
-    competition = _(u'Competition 2014')
-    introduction = _(u'The winner of the programming competition, '
-                     u'showed at the EuroPython 2014 conference in Berlin his results. '
-                     u'A short presentation inlcuding a movie about and an interview were given.')
-
-    article= [_(u'The German Python Software Verband (PySV), started a programming contest, called PyMove3D using the popular 3D rendering software Blender as a platform for teaching programming.'),
-              _(u'On Monday, the EuroPython conference started with the prize ceremony of the this years contest.'),
-              _(u'The winner of PyMove3D 2014 was Mika Greif, a thirteen years old boy, who modelled an icicle cave where water drops from icicles forming stalagmites on the ground.')]
-
-
-    icicle_cave = _(u'Mika a 13 years old schoolar student showed a 3D Icicle Cave')
-    awards = _(u'The award ceremony')
-    return render_template("/impressions_2014.html",
-                           act="competition_2014",
-                           competition=competition,
-                           introduction=introduction,
-                           article=article,
-                           icicle_cave=icicle_cave,
-                           awards=awards)
+# default error handler
 
 @app.errorhandler(404)
 def page_not_found(e):
-    msg = _(u"Url: %(url)s not found", url=request.url)
-    info = _(u"This information is not available!")
+    msg = u"Url: %s not found" % request.url
+    info = u"This information is not available!"
     return render_template("404.html", msg=msg, info=info)
 
 if __name__ == "__main__":
