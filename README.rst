@@ -112,11 +112,11 @@ in your local repository clone::
 
     [paths]
     default = ssh://hg@bitbucket.org/YourAccountName/pycologne-app
-    origin = https://bitbucket.org/PySV/pycologne-app
+    upstream = https://bitbucket.org/PySV/pycologne-app
 
 Then you can use this alias in your ``hg pull`` command::
 
-    $ hg pull -u origin
+    $ hg pull -u upstream
 
 Finally, don't forget to push these changes to your repository fork on
 Bitbucket as well::
