@@ -1,0 +1,35 @@
+{% extends "theme.html" %}
+{% block body %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="page-header">
+        <h2>Nächstes User Group Treffen</h1>
+      </div>
+      <div class="well">
+        <p class="lead">{{ format_date(next_meeting) }}</strong></p>
+        <p></p><a class="btn btn-primary" href="{{ url_for('join') }}"
+            role="button">Infos (Programm, Anfahrt, etc.) &raquo;</a></p>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="page-header">
+        <h1>Aktuelle Veranstaltungen</h1>
+      </div>
+
+      {{ events | safe }}
+
+      <div class="page-header">
+        <h1>Terminvorschau</h1>
+      </div>
+
+      <ul>
+      {% for date in meetings %}
+        <li>{{ format_date(date) }} - User Group Meeting</li>
+      {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}
