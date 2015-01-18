@@ -4,21 +4,29 @@
 
 from __future__ import unicode_literals, print_function
 
-import os
 import codecs
+import os
+import sys
 
+from functools import partial
+
+from babel.dates import format_datetime
 from docutils.core import publish_parts
 from flask import Flask
 from flask import render_template
 from flask import request
 
-# from config import LANGUAGES
+# gets the path where all stuff is located
+APP_PATH = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(APP_PATH, 'lib'))
+
+from config import DATE_FORMAT_LONG
 from sayings import get_saying
+from events import meeting_dates
 
 # set default language
 LANGUAGE_SELECTED = "de"
-# gets the path where all stuff is located
-APP_PATH = os.path.dirname(os.path.abspath(__file__))
+
 
 app = Flask(__name__)
 
@@ -38,7 +46,7 @@ def get_content(filename, overrides=None):
     The filename/path is interpreted as being relative to the root of the
     webapp project directory.
 
-    If the file does not exist, reurns an empty string.
+    If the file does not exist, returns an empty string.
 
     """
     filename = os.path.join(APP_PATH, filename)
@@ -108,8 +116,21 @@ def join():
 
 @app.route("/events")
 def events():
-    content = get_template("rst", "events.rst")
-    return render_content("events", content)
+    """Serve events page with list of upcoming meetings."""
+    # get dates for next twelve user group meetings
+    meetings = meeting_dates()
+    next_meeting = next(meetings)
+    # get manually added extra events from ReST file
+    events = get_template("rst", "events.rst")
+    # curry date formatting function
+    format_date = partial(format_datetime,
+        format=DATE_FORMAT_LONG.get(get_locale(), 'long'), locale=get_locale())
+
+    return render_template("/events.html",
+        meetings=meetings,
+        next_meeting=next_meeting,
+        events=events,
+        format_date=format_date)
 
 @app.route("/contact")
 def contact():
