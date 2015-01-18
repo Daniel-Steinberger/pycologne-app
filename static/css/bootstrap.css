@@ -6033,13 +6033,10 @@ a.link-yellow:hover {
 /* Module
 ------------------------------------ */
 .module-gallery {
-  background: url('../images/python_blender.jpg') no-repeat 0px -200px;
-  background-size: 2000px 884px;
+  background: url('../images/pyCologne_banner_1500x500.jpg') no-repeat 0px -50px;
+  background-size: 1500px 500px;
 }
-.module-prizes {
-  background: url('../images/berlin.jpg') no-repeat 0px -200px;
-  background-size: 1920px 981px;
-}
+
 .module-gallery .module-content {
   height: 300px;
   position: relative;

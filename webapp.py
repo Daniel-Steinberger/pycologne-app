@@ -40,6 +40,12 @@ def get_locale():
     # note: PyCologne app currently has DE language only
     return LANGUAGE_SELECTED
 
+def get_urls():
+    """Return a dictionary with fixed (external) URLs"""
+    from config import TWITTER_URL, FACEBOOK_URL, GOOGLE_PLUS_URL
+    urls = [('twitter', TWITTER_URL), ('facebook', FACEBOOK_URL), ('google', GOOGLE_PLUS_URL)]
+    return dict(urls)
+
 def get_content(filename, overrides=None):
     """Read ReST document from file and return it as a HTML unicode string.
 
@@ -91,7 +97,8 @@ app.jinja_env.globals.update(get_topmenue=get_topmenue)
 
 def render_content(page, content, **kw):
     """Render page with given name and content with content template."""
-    return render_template("/content.html", act=page, content=content, **kw)
+    return render_template("/content.html", act=page, content=content,
+                                              urls=get_urls(), **kw)
 
 # main page
 
@@ -100,7 +107,17 @@ def render_content(page, content, **kw):
 def index():
     """Serve main index page."""
     saying, author = get_saying()
-    return render_template("/index.html", saying=saying, author=author)
+    # get dates for next twelve user group meetings
+    meetings = meeting_dates()
+    next_meeting = next(meetings)
+    # curry date formatting function
+    format_date = partial(format_datetime,
+        format=DATE_FORMAT_LONG.get(get_locale(), 'long'), locale=get_locale())
+
+    return render_template("/index.html",  urls=get_urls(),
+                                              next_meeting=next_meeting,
+                                              format_date=format_date,
+                                              saying=saying, author=author)
 
 # sub pages
 

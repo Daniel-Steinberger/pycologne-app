@@ -1,12 +1,12 @@
 {% extends "theme.html" %}
 {% block body %}
 <div class="module module-gallery">
-  <!--img src="static/images/python_blender.jpg" /-->
   <div class="container">
     <div class="col-md-6 col-yellow">
       <div class="module-content">
-    <h1 class="header" style="color:white;padding-top: 45px;margin-bottom:30px;">Der Python Wettbewerb für Mädchen & Jungen ab 13 Jahren</h1>
-    <h4 class="" style="color:white;">3D Objekte mit Python steuern & bewegen</h4>
+    <h1 class="header" style="color:white;padding-top: 45px;margin-bottom:30px;">Die Python User Group K&ouml;ln &ndash;<br/>
+         für Python-Freunde aus der Region K&ouml;ln-Bonn-D&uuml;sseldorf.</h1>
+    <h4 class="" style="color:white;">regelm&auml;&szlig;ige Treffen an jedem 2. Mittwoch im Monat</h4>
     <a  href="{{ url_for('join') }}"  class="btn btn-default">Mitmachen</a>
     <a  href="{{ url_for('events') }}" class="btn btn-default">Termine</a>
       </div>
@@ -34,7 +34,8 @@
     <div class="col-sm-6">
       <div class="">
     <div class="module-heading">
-      <h3 class="module-title">nächster Wettbewerb in 2015</h3>
+    <!-- TODO: Link to meeting details page -->
+      <h3 class="module-title">nächstes Treffen: <br/> {{ format_date(next_meeting) }}</h3>
     </div>
     <!--
     <div class="module-body">
@@ -52,7 +53,8 @@
     </div>
     <div class="module-body">
       <ul class="list-inline">
-        <li><a href="https://twitter.com/pymove3d">
+        <li>
+        <a href="{{ urls['twitter'] }}">
         <svg version="1.1" id="Ebene_1a" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
              width="32px" height="32px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve">
           <g id="Ebene_2a">
@@ -68,7 +70,8 @@
           </g>
         </svg>
         </a></li>
-        <li><a href="https://www.facebook.com/pages/pymove3D/676872565661173">
+        <li>
+        <a href="{{ urls['facebook'] }}">
         <svg version="1.1" id="Ebene_3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
              width="32px" height="32px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve">
           <g id="Ebene_4">
@@ -77,7 +80,8 @@
           </g>
         </svg>
         </a></li>
-        <li><a href="https://plus.google.com/u/0/communities/107654933404793509482">
+        <li>
+        <a href="{{ urls['google'] }}">
         <svg version="1.1" id="Ebene_5" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
              width="32px" height="32px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve">
           <g id="Ebene_6">
