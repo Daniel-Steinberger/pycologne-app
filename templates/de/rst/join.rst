@@ -6,7 +6,7 @@ Wir sind immer daran interessiert, andere Python-Anwender kennenzulernen und zu 
 Python einsetzen und welche Erfahrungen sie gesammelt haben.
 Der strukturierte Teil der Veranstaltung geht von 19:00 Uhr bis spätestens 21.00 Uhr.
 Danach geht es in ein nahe gelegenes Restaurant, um locker in gemütlicher Atmosphäre weiter zu
-diskutieren (zur Zeit Herbrands, Tel. 0221 - 954 16 26).
+diskutieren (zur Zeit `Herbrands <http://www.herbrands.de/>`_, Tel. 0221 - 954 16 26).
 
 
 Adresse
