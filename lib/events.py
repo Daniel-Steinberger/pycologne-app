@@ -24,7 +24,7 @@ if __name__ == '__main__':
 
     meetings = meeting_dates()
     print("Nächstes PyCologne-Treffen: {}".format(
-    next(meetings).strftime(DATE_FMT)))
+        next(meetings).strftime(DATE_FMT)))
 
     print("\nNachfolgende Termine:\n")
 

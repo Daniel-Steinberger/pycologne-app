@@ -4,7 +4,7 @@
 
 SOURCES = webapp.py sayings.py config.py lib/events.py
 TESTS = _tests/test_sayings.py \
-        _tests/test_http_status.py
+	_tests/test_http_status.py
 
 LINTME = $(SOURCES) $(TESTS)
 
@@ -19,7 +19,7 @@ pylint: $(LINTME)
 flake:
 	flake8
 
-check: pylint flake
+check: flake pylint
 
 less:
 	lessc static/less/pycologne.less > static/css/pycologne.css

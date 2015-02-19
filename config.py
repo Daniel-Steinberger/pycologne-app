@@ -12,22 +12,27 @@ DATE_FORMAT_LONG = {
     'de': "EEEE, d. MMMM yyyy, HH:mm 'Uhr'"
 }
 
-WEBSITE_URL =  "http://www.pycologne.de"
+WEBSITE_URL = "http://www.pycologne.de"
 TWITTER_URL = "http://twitter.com/pyCologne"
 FACEBOOK_URL = "http://www.facebook.com/pyCologne"  # Facebook-Seite
-FB_GROUP_URL = "http://www.facebook.com/groups/pycologne" # Facebook-Gruppe
-GOOGLE_PLUS_URL =  "https://plus.google.com/b/114994727117032649068/"
-GOOGLE_CAL_URL = "https://www.google.com/calendar/embed?src=fm26mlvtjlqsjqpj53jq1pd128@group.calendar.google.com&ctz=Europe/Berlin"
-GOOGLE_CAL_ICS = "https://www.google.com/calendar/ical/fm26mlvtjlqsjqpj53jq1pd128@group.calendar.google.com/public/basic.ics"
+FB_GROUP_URL = "http://www.facebook.com/groups/pycologne"  # Facebook-Gruppe
+GOOGLE_PLUS_URL = "https://plus.google.com/b/114994727117032649068/"
+GOOGLE_CAL_URL = \
+    "https://www.google.com/calendar/embed?src=fm26mlvtjlqsjqpj53jq1pd128" \
+    "@group.calendar.google.com&ctz=Europe/Berlin"
+GOOGLE_CAL_ICS = \
+    "https://www.google.com/calendar/ical/fm26mlvtjlqsjqpj53jq1pd128" \
+    "@group.calendar.google.com/public/basic.ics"
 
 # currently not referenced
-LANYRD_URL =  "http://lanyrd.com/profile/pycologne"
-FLICKR_URL ="http://www.flickr.com/photos/tags/pycologne"
+LANYRD_URL = "http://lanyrd.com/profile/pycologne"
+FLICKR_URL = "http://www.flickr.com/photos/tags/pycologne"
 XING_URL = "https://www.xing.com/net/pri19efecx/pycologne"
 MEETUP_URL = "http://www.meetup.com/pyCologne/"
 
 # TODO - cf. http://wiki.pythonde.pysv.org/pycologne/#Ressourcen
 # Mailingliste: <python DASH users AT uni DASH koeln DOT de>
-#pycologne at chat.freenode.net
-# Python Developers: http://pythonpeople.znc.com.br/people/python_group/detail/9
+# pycologne at chat.freenode.net
+# Python Developers:
+#     http://pythonpeople.znc.com.br/people/python_group/detail/9
 # Python Meetups:  http://python.meetup.com/
