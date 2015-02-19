@@ -1,11 +1,10 @@
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
-import time
 import unittest
 
-from sayings import get_saying
 
 class HTTPStatusTest(unittest.TestCase):
+
     def checkURL(self, url):
         self.browser.get(url)
         try:
@@ -14,11 +13,11 @@ class HTTPStatusTest(unittest.TestCase):
         except NoSuchElementException:
             pass
 
-
     def runTest(self):
         self.browser = webdriver.Firefox()
         path = "http://127.0.0.1:5014/"
-        urls = ["", "index", "competition", "task", "submission", "coursematerial",
+        urls = [
+            "", "index", "competition", "task", "submission", "coursematerial",
                 "imprint", "privacy"]
         for url in urls:
             self.checkURL(path + url)
