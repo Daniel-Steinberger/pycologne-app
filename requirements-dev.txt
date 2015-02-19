@@ -1,9 +1,8 @@
 -r requirements.txt
-Babel==1.3
+flake8==2.3.0
 flake8-docstrings==0.2.1
-pep8==1.4.6
 py==1.4.19
-pylint==1.4.0
+pylint==1.4.1
 pytest==2.5.1
 selenium==2.39.0
 six==1.4.1
