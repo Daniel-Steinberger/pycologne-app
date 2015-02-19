@@ -18,6 +18,10 @@ syntax: glob
 .DS_Store
 # temporare Dateien die mit "make html" jederzeit neu generieren kann.
 
+#everything from pycharm should be ignored
+.idea
+
+
 *.pyc
 spam.log
 pid.txt
