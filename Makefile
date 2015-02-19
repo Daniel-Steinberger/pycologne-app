@@ -20,3 +20,6 @@ flake:
 	flake8
 
 check: pylint flake
+
+less:
+	lessc static/less/pycologne.less > static/css/pycologne.css
