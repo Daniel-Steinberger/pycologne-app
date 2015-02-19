@@ -21,6 +21,13 @@ syntax: glob
 #everything from pycharm should be ignored
 .idea
 
+# tox artifacts
+.tox
+
+# setuptools artifacts
+build
+dist
+*.egg-info
 
 *.pyc
 spam.log
