@@ -18,6 +18,9 @@ Adresse
 | Germany
 
 
+Email
+~~~~~~~~~~~
+Öffentliche Anfragen bitte an folgende Adresse richten `python-users@uni-koeln.de <python-users@uni-koeln.de>`_.
 
 Anreise
 ~~~~~~~~~~~~~~~~~~~
