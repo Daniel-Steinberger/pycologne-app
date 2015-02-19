@@ -86,6 +86,7 @@ def get_template(*args):
 def get_topmenue():
     """Return top-level menu structure as a list of (urlpath, label) tuples."""
     menue = [
+        ('/', _('Startseite')),
         ('/about', _('Die User Group')),
         ('/join', _('Mitmachen')),
         ('/events', _('Termine')),
@@ -115,9 +116,10 @@ def index():
         format=DATE_FORMAT_LONG.get(get_locale(), 'long'), locale=get_locale())
 
     return render_template("/index.html",  urls=get_urls(),
-                                              next_meeting=next_meeting,
-                                              format_date=format_date,
-                                              saying=saying, author=author)
+                           act='',
+                           next_meeting=next_meeting,
+                           format_date=format_date,
+                           saying=saying, author=author)
 
 # sub pages
 
@@ -144,10 +146,11 @@ def events():
         format=DATE_FORMAT_LONG.get(get_locale(), 'long'), locale=get_locale())
 
     return render_template("/events.html",
-        meetings=meetings,
-        next_meeting=next_meeting,
-        events=events,
-        format_date=format_date)
+                           act='events',
+                           meetings=meetings,
+                           next_meeting=next_meeting,
+                           events=events,
+                           format_date=format_date)
 
 @app.route("/contact")
 def contact():
