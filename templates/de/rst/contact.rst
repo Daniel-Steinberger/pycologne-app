@@ -1,22 +1,32 @@
+Allgemeine Anfragen
+~~~~~~~~~~~~~~~~~~~
 
-Anfragen:
-~~~~~~~~~~~
+Sie erreichen die Mitglieder der PyCologne User Group über die öffentliche
+Mailingliste_. Um eine Mail an die Liste (und damit alle Abonennten der Liste)
+zu senden, schreiben Sie bitte an python-users@uni-koeln.de.
 
-Sie erreichen die Mitglieder der PyCologne UserGroup über eine öffentliche Anfrage an `python-users@uni-koeln.de <python-users@uni-koeln.de>`_
+  *Bitte beachten Sie:* Beiträge von Personen, die keine Abonnenten der Liste
+  sind, müssen vom Mailinglisten-Moderator genehmigt werden. Bitte haben Sie
+  dafür Verständnis und ggf. etwas Geduld.
 
-Nicht öffentliche Anfragen bitte an folgende Adresse richten `info@pycologne.de <info@pycologne.de>`_
+Richten Sie persönliche, nicht öffentliche Anfragen bitte an die Adresse
+info@pycologne.de.
+
+.. _mailingliste: /join#Mailingliste
 
 
-Pressekontakt:
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Pressekontakt
+~~~~~~~~~~~~~
+
+Wenn Sie sich über die PyCologne User Group informieren möchten oder Fragen zu
+unseren Veranstaltungen haben, kontaktieren Sie bitte unsere Ansprechpartner
+für Presse, Verlage und andere Medien über die Adresse medien@pycologne.de.
 
 
-Wenn Sie sich über die PyCologne Usergroup informieren möchten oder Fragen zu
-unseren Veranstaltungen haben stehen Ihnen unsere Ansprechpartner
-gerne zur Verfügung.
+Webseite
+~~~~~~~~
 
-Per Email `medien@pycologne.de <medien@pycologne.de>`_ können Sie zu unseren
-Ansprechpartnern Kontakt aufnehmen. Ihre Anfrage wird umgehend beantwortet.
-
+Bei Problemen mit dieser Webseite oder Kommentaren und Verbesserungsvorschlägen
+dazu, schreiben Sie bitte an webteam@pycologne.de.
 
 
