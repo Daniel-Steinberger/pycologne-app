@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Suppport for calling the package as a command line script.
+"""Support for calling the package as a command line script.
 
 Usage::
 
