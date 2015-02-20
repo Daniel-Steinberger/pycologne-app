@@ -2,17 +2,41 @@
 # -*- coding: utf-8 -*-
 """Functional tests for webapp using Selenium."""
 
-import unittest
+from __future__ import print_function
+
+import os
+
+# we don't use 'from flask.ext.testing import ...'
+# because pylint can't cope with the custom Flask importer
+from flask_testing import LiveServerTestCase
 
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 
+from pycgnweb.webapp import app
 
-class HTTPStatusTest(unittest.TestCase):
+
+class HTTPStatusTest(LiveServerTestCase):
     """Test case checking that all URLs return valid pages."""
 
     def setUp(self):
+        """Create Selenium webdriver instance for Firefox."""
         self.browser = webdriver.Firefox()
+
+    def tearDown(self):
+        """Close the browser window and delete webdriver instance."""
+        self.browser.close()
+        del self.browser
+
+    def create_app(self):
+        """Create Flask application instance."""
+        print("Current dir: %s" % os.getcwd())
+        app.static_folder = os.path.join(os.getcwd(), 'static')
+        app.template_folder = os.path.join(os.getcwd(), 'templates')
+        app.config['TESTING'] = True
+        app.config['LIVESERVER_PORT'] = 5014
+        app.debug = True
+        return app
 
     def check_url(self, url):
         """Check that page content is found."""
@@ -25,7 +49,6 @@ class HTTPStatusTest(unittest.TestCase):
 
     def test_page_status(self):
         """Check all URLs."""
-
         path = "http://localhost:5014/"
         urls = ("", "index", "about", "join", "events", "contact")
 
@@ -34,4 +57,5 @@ class HTTPStatusTest(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    import unittest
     unittest.main()

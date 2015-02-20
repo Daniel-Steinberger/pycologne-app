@@ -1,6 +1,7 @@
 -r requirements.txt
 flake8==2.3.0
 flake8-docstrings==0.2.1
+git+https://github.com/jarus/flask-testing.git@2033007#egg=Flask-Testing
 mccabe==0.3
 py==1.4.19
 pylint==1.4.1
