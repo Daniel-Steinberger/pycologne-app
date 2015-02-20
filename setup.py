@@ -14,8 +14,6 @@ setup(
     author="PyCologne",
     author_email="webteam@pycologne.de",
     packages=['pycgnweb'],
-    test_suite='nose.collector',
-    tests_require=['nose'],
     entry_points={
         'console_scripts': [
             'pycologne-webapp = pycgnweb.webapp:main'

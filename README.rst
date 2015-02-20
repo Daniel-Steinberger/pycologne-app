@@ -52,12 +52,15 @@ Then clone your fork::
 Create a virtual environment as described above and install the development
 requirements with::
 
-    $ pip install -r requirements-dev.txt
+    $ pip install -U -r requirements-dev.txt
 
 Now you have additional packages for development and testing:
 
-- pep8
-- py.test
+- flake8
+- flake8_docstrings
+- Flask-Testing
+- pytest
+- pylint
 - selenium
 
 For compiling the custom css files from less, you need to install the less

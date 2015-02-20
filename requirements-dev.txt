@@ -1,8 +1,11 @@
 -r requirements.txt
 flake8==2.3.0
 flake8-docstrings==0.2.1
-git+https://github.com/jarus/flask-testing.git@2033007#egg=Flask-Testing
+# dev version >= 0.4.2 fixes double test execution when app.debug=True
+git+https://github.com/jarus/flask-testing.git@0233007b8d4f2359bf38532381da4c32515d253f#egg=Flask-Testing
 mccabe==0.3
+# dev version >= 0.4.1 fixes 'No handlers could be found for logger "root"'
+git+https://github.com/GreenSteam/pep257@7a2c4529abcbe56aea41918c1fdc9cb602f6e9b4#egg=pep257
 py==1.4.19
 pylint==1.4.1
 pytest==2.5.1
