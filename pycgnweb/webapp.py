@@ -172,7 +172,7 @@ def contact():
 @app.errorhandler(404)
 def page_not_found(err):
     """Default error handler. Serve error page for 404 responses."""
-    msg = "Url: %s not found" % request.url
+    msg = "URL not found: %s" % request.url
     info = "This information is not available!"
     return render_template("404.html", msg=msg, info=info)
 # pylint: enable=W0613

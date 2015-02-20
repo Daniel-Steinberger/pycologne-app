@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Functional tests for webapp using Selenium."""
 
-from __future__ import print_function
+from __future__ import unicode_literals, print_function
 
 import os
 
@@ -42,8 +42,9 @@ class HTTPStatusTest(LiveServerTestCase):
         """Check that page content is found."""
         self.browser.get(url)
         try:
-            heading1 = self.browser.find_element_by_xpath("//h1")
-            self.assertNotEqual(heading1.text, "Page Not Found")
+            heading1 = self.browser.find_element_by_xpath(
+                "//h3[@id='message']")
+            self.assertNotEqual(heading1.text[:15], "URL not found: ")
         except NoSuchElementException:
             pass
 
