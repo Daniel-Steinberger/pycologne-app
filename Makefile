@@ -29,7 +29,7 @@ export PYTHONPATH=$(PWD)
 
 pylint: $(LINTME)
 	# Pylint exit code 4 (warnings) and higher ignored
-	pylint --rcfile=pylint.rc --reports=n $^ || test $$? -ge 4
+	pylint --rcfile=pylint.rc --reports=n $^ || test $$[$$?&3] -eq 0
 
 pylint-report: $(LINTME)
 	pylint --rcfile=pylint.rc $^
