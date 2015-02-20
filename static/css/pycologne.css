@@ -1,5 +1,8 @@
+// Core variables and mixins
+@import "variables.less"; // Modify this for custom colors, font-sizes, etc
+@import "mixins.less";
+
+
 /* Modules
 ------------------------------------ */
-.module-footer {
-  padding-top: 3em;
-}
+.module-footer {padding-top: 3em;}
