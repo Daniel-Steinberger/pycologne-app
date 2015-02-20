@@ -5,7 +5,6 @@ Flask-Babel==0.9
 itsdangerous==0.23
 Jinja2==2.7.1
 MarkupSafe==0.18
-mccabe==0.3
 Pygments==1.6
 python-dateutil==2.2
 pytz==2013.8
