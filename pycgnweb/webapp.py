@@ -181,20 +181,28 @@ def page_not_found(err):
 def main(args=None):
     """Main command line script entry point."""
     parser = argparse.ArgumentParser()
-    # pylint: disable=C0330
-    parser.add_argument('-d', '--debug', action="store_true",
+    parser.add_argument(
+        '-d',
+        '--debug',
+        action="store_true",
         help="Run server in debug mode (default: %(default)s).")
-    parser.add_argument('--host', default="localhost",
+    parser.add_argument(
+        '--host',
+        default="localhost",
         help="Hostname/IP address to bind server to (default: %(default)s).")
-    parser.add_argument('--port', type=int, default=5014,
+    parser.add_argument(
+        '--port',
+        type=int,
+        default=5014,
         help="Port number to bind server to (default: %(default)s).")
-    parser.add_argument('--static-folder',
+    parser.add_argument(
+        '--static-folder',
         default=os.path.join(os.getcwd(), 'static'),
         help="Path to web server static files (default: %(default)s).")
-    parser.add_argument('--template-folder',
+    parser.add_argument(
+        '--template-folder',
         default=os.path.join(os.getcwd(), 'templates'),
         help="Path to HTML and ReST templates (default: %(default)s).")
-    # pylint: enable=C0330
     args = parser.parse_args(args if args is not None else sys.argv[1:])
 
     app.static_folder = args.static_folder
