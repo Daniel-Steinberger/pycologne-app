@@ -19,18 +19,23 @@ def meeting_dates(count=12):
                       bysecond=0, count=count))
 
 
-if __name__ == '__main__':
-    # example usage
-    import locale
-
-    locale.setlocale(locale.LC_ALL, 'de_DE.UTF-8')
-    DATE_FMT = "%A, %d. %B %Y, %H:%M Uhr"
-
+def _test():
+    """Test/demonstration code for 'meeting_dates' function."""
+    date_fmt = "%A, %d. %B %Y, %H:%M Uhr"
     meetings = meeting_dates()
+
     print("Nächstes PyCologne-Treffen: {}".format(
-        next(meetings).strftime(DATE_FMT)))
+        next(meetings).strftime(date_fmt).decode('utf-8')))
 
     print("\nNachfolgende Termine:\n")
 
     for date in meetings:
-        print("* {}".format(date.strftime(DATE_FMT)))
+        print("* {}".format(date.strftime(date_fmt).decode('utf-8')))
+
+
+if __name__ == '__main__':
+    # example usage
+    import locale
+
+    locale.setlocale(locale.LC_ALL, ('de_DE', 'UTF-8'))
+    _test()
