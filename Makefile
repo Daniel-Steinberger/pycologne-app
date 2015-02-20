@@ -22,20 +22,24 @@ CSSDIR = $(STATICDIR)/css
 # location for the webapp.py we use:
 export PYTHONPATH=$(PWD)
 
+.PHONY: check flake less pylint pylint-report run run-debug
+
+all:
+	@echo "No default make target."
+
 %.css: $(LESSDIR)/%.less
 	less $< > $(CSSDIR)/$@
 
-.PHONY: check flake less pylint pylint-report run run-debug
-
 pylint: $(LINTME)
-	# Pylint exit code 4 (warnings) and higher ignored
+#	Pylint exit code 4 (warnings) and higher ignored
 	pylint --rcfile=pylint.rc --reports=n $^ || test $$[$$?&3] -eq 0
 
 pylint-report: $(LINTME)
 	pylint --rcfile=pylint.rc $^
 
 flake:
-	flake8
+# 	flake8 should read tox.ini by default but it does not
+	flake8 --config=tox.ini
 
 check: flake pylint
 
