@@ -26,7 +26,7 @@ from .events import meeting_dates
 LANGUAGE_SELECTED = "de"
 
 # pylint: disable=C0103
-app = Flask(__name__)
+app = Flask(__name__.split('.')[0])
 # pylint: enable=C0103
 
 
