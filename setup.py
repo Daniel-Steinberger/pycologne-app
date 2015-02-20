@@ -12,7 +12,7 @@ setup(
     name="pycologne-app",
     description="A Flask app that drives the PyCologne web site",
     author="PyCologne",
-    author_email="Webteam@pycologne.de",
+    author_email="webteam@pycologne.de",
     packages=['pycgnweb'],
     test_suite='nose.collector',
     tests_require=['nose'],
