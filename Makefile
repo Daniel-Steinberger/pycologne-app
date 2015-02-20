@@ -28,8 +28,8 @@ export PYTHONPATH=$(PWD)
 .PHONY: check flake less pylint pylint-report run run-debug
 
 pylint: $(LINTME)
-	# Pylint exit code 4 (warnings) and higher ignored
-	pylint --rcfile=pylint.rc --reports=n $^ || test $$[$$?&3] -eq 0
+	# Pylint exit codes other than 1, 2 and 32 are ignored
+	pylint --rcfile=pylint.rc --reports=n $^ || test $$[$$?&35] -eq 0
 
 pylint-report: $(LINTME)
 	pylint --rcfile=pylint.rc $^
