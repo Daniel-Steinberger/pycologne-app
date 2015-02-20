@@ -1,15 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+"""Calculate dates of next PyCologne meetings."""
 
 from __future__ import unicode_literals, print_function
 
-__all__ = ['meeting_dates']
-
 from dateutil.rrule import rrule, MONTHLY, WE
+
+__all__ = ('meeting_dates',)
 
 
 def meeting_dates(count=12):
-    """Return iterator yielding datetime instances for *count* next meetings.
+    """Return iterator yielding datetime instances for next meeting dates.
+
+    Yields *count* items (defaults to twelve).
+
     """
     return iter(rrule(MONTHLY, byweekday=WE(+2), byhour=19, byminute=0,
                       bysecond=0, count=count))

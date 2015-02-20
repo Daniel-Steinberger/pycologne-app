@@ -2,11 +2,10 @@
 # -*- coding: utf-8 -*-
 """A Flask-based webapp for the homepage of the pyCologne Python user group."""
 
-from __future__ import unicode_literals, print_function
+from __future__ import absolute_import, print_function, unicode_literals
 
 import codecs
 import os
-import sys
 
 from functools import partial
 
@@ -16,24 +15,27 @@ from flask import Flask
 from flask import render_template
 from flask import request
 
-# gets the path where all stuff is located
-APP_PATH = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.join(APP_PATH, 'lib'))
+from .config import (DATE_FORMAT_LONG, FACEBOOK_URL, GOOGLE_PLUS_URL,
+                     TWITTER_URL)
+from .sayings import get_saying
+from .events import meeting_dates
 
-from config import DATE_FORMAT_LONG
-from sayings import get_saying
-from events import meeting_dates
+# gets the paths where all stuff is located
+STATIC_DIR = os.path.join(os.getcwd(), 'static')
+TEMPLATE_DIR = os.path.join(os.getcwd(), 'templates')
 
 # set default language
 LANGUAGE_SELECTED = "de"
 
 
 # pylint: disable=C0103
-app = Flask(__name__)
+app = Flask(__name__, static_folder=STATIC_DIR, template_folder=TEMPLATE_DIR)
 # pylint: enable=C0103
 
-# dummy translation function
-_ = lambda s: s
+
+def _(msg):
+    """Dummy translation function."""
+    return msg
 
 
 # helper functions
@@ -44,23 +46,18 @@ def get_locale():
 
 
 def get_urls():
-    """Return a dictionary with fixed (external) URLs"""
-    from config import TWITTER_URL, FACEBOOK_URL, GOOGLE_PLUS_URL
-    urls = [('twitter', TWITTER_URL),
-            ('facebook', FACEBOOK_URL), ('google', GOOGLE_PLUS_URL)]
+    """Return a dictionary with fixed (external) URLs."""
+    urls = [('twitter', TWITTER_URL), ('facebook', FACEBOOK_URL),
+            ('google', GOOGLE_PLUS_URL)]
     return dict(urls)
 
 
 def get_content(filename, overrides=None):
     """Read ReST document from file and return it as a HTML unicode string.
 
-    The filename/path is interpreted as being relative to the root of the
-    webapp project directory.
-
     If the file does not exist, returns an empty string.
 
     """
-    filename = os.path.join(APP_PATH, filename)
     content = ""
 
     if os.path.isfile(filename):
@@ -81,13 +78,13 @@ def get_template(*args):
     The location of the template is specified with its path name components as
     positional parameters. The path name components are interpreted as being
     relative to the template directory for the currently selected language. If
-    multiple path name components ar egiven, the are joined with
+    multiple path name components are given, they are joined with
     ``os.path.join``. The last component must be the template filename.
 
     The contents of the template file are expected to be UTF-8 encoded.
 
     """
-    return get_content(os.path.join("templates", get_locale(), *args))
+    return get_content(os.path.join(TEMPLATE_DIR, get_locale(), *args))
 
 
 def get_topmenue():
@@ -184,5 +181,11 @@ def page_not_found(err):
 # pylint: enable=W0613
 
 
-if __name__ == "__main__":
+def main(args=None):
+    """Main command line script entry point."""
     app.run(host='localhost', port=5014, debug=True)
+
+
+if __name__ == "__main__":
+    import sys
+    sys.exit(main(sys.argv[1:]) or 0)

@@ -13,8 +13,13 @@ setup(
     description="A Flask app that drives the PyCologne web site",
     author="PyCologne",
     author_email="Webteam@pycologne.de",
-    py_modules=['webapp', 'sayings'],
+    packages=['pycgnweb'],
     test_suite='nose.collector',
     tests_require=['nose'],
+    entry_points={
+        'console_scripts': [
+            'pycologne-webapp = pycgnweb.webapp:main'
+        ]
+    },
     zip_safe=False
 )

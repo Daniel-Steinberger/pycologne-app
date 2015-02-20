@@ -2,7 +2,9 @@
 # Makefile for pycologne
 #
 
-SOURCES = webapp.py sayings.py config.py lib/events.py
+PKG = pycgnweb
+SOURCES = $(PKG)/__main__.py $(PKG)/config.py $(PKG)/events.py \
+	$(PKG)/sayings.py $(PKG)/webapp.py
 TESTS = _tests/test_sayings.py \
 	_tests/test_http_status.py
 
@@ -23,3 +25,6 @@ check: flake pylint
 
 less:
 	lessc static/less/pycologne.less > static/css/pycologne.css
+
+run:
+	python -m pycgnweb
