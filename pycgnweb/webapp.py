@@ -4,8 +4,10 @@
 
 from __future__ import absolute_import, print_function, unicode_literals
 
+import argparse
 import codecs
 import os
+import sys
 
 from functools import partial
 
@@ -20,16 +22,11 @@ from .config import (DATE_FORMAT_LONG, FACEBOOK_URL, GOOGLE_PLUS_URL,
 from .sayings import get_saying
 from .events import meeting_dates
 
-# gets the paths where all stuff is located
-STATIC_DIR = os.path.join(os.getcwd(), 'static')
-TEMPLATE_DIR = os.path.join(os.getcwd(), 'templates')
-
 # set default language
 LANGUAGE_SELECTED = "de"
 
-
 # pylint: disable=C0103
-app = Flask(__name__, static_folder=STATIC_DIR, template_folder=TEMPLATE_DIR)
+app = Flask(__name__)
 # pylint: enable=C0103
 
 
@@ -84,7 +81,7 @@ def get_template(*args):
     The contents of the template file are expected to be UTF-8 encoded.
 
     """
-    return get_content(os.path.join(TEMPLATE_DIR, get_locale(), *args))
+    return get_content(os.path.join(app.template_folder, get_locale(), *args))
 
 
 def get_topmenue():
@@ -183,9 +180,25 @@ def page_not_found(err):
 
 def main(args=None):
     """Main command line script entry point."""
-    app.run(host='localhost', port=5014, debug=True)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-d', '--debug', action="store_true",
+        help="Run server in debug mode (default: %(default)s).")
+    parser.add_argument('--host', default="localhost",
+        help="Hostname/IP address to bind server to (default: %(default)s).")
+    parser.add_argument('--port', type=int, default=5014,
+        help="Port number to bind server to (default: %(default)s).")
+    parser.add_argument('--static-folder',
+        default=os.path.join(os.getcwd(), 'static'),
+        help="Path to web server static files (default: %(default)s).")
+    parser.add_argument('--template-folder',
+        default=os.path.join(os.getcwd(), 'templates'),
+        help="Path to HTML and ReST templates (default: %(default)s).")
+    args = parser.parse_args(args if args is not None else sys.argv[1:])
+
+    app.static_folder = args.static_folder
+    app.template_folder = args.template_folder
+    app.run(host=args.host, port=args.port, debug=args.debug)
 
 
 if __name__ == "__main__":
-    import sys
     sys.exit(main(sys.argv[1:]) or 0)

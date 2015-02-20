@@ -13,7 +13,7 @@ LINTME = $(SOURCES) $(TESTS)
 # location for the webapp.py we use:
 export PYTHONPATH=$(PWD)
 
-.PHONY: check flake pylint
+.PHONY: check flake less pylint run run-debug
 
 pylint: $(LINTME)
 	pylint --rcfile=pylint.rc $^
@@ -28,3 +28,6 @@ less:
 
 run:
 	python -m pycgnweb
+
+run-debug:
+	python -m pycgnweb -d
