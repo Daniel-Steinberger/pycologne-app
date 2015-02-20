@@ -13,15 +13,19 @@ example we are using virtualenvwrapper to manage the virtualenv::
 
 This repository provides requirements and configurations.
 
-For local development, install the requirements specified in
-requirements::
+To provide the run-time environment for the application, install the
+requirements specified in ``requirements.txt``::
 
     $ pip install -r requirements.txt
 
 Now that this is complete, you can run the pycologne webapp in that
 environment::
 
-    $ python webapp.py
+    $ PYTHONPATH="$(pwd)" python -m pycgnweb
+
+Or, if you have ``make``::
+
+    make run
 
 
 Development
@@ -56,9 +60,9 @@ Now you have additional packages for development and testing:
 - py.test
 - selenium
 
-For compiling the cusstom css files from less, you need to install the
-less compiler ``lessc``. Under Debian and similar Linux systems, you
-can install the packages ``node-less``.
+For compiling the custom css files from less, you need to install the less
+compiler ``lessc``. Under Debian and similar Linux systems, you can install the
+packages ``node-less``.
 
 
 Creating a Commit and a Pull Request
