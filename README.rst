@@ -56,6 +56,10 @@ Now you have additional packages for development and testing:
 - py.test
 - selenium
 
+For compiling the cusstom css files from less, you need to install the
+less compiler ``lessc``. Under Debian and similar Linux systems, you
+can install the packages ``node-less``.
+
 
 Creating a Commit and a Pull Request
 ------------------------------------

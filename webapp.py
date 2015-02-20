@@ -28,14 +28,15 @@ from events import meeting_dates
 LANGUAGE_SELECTED = "de"
 
 
+# pylint: disable=C0103
 app = Flask(__name__)
+# pylint: enable=C0103
 
 # dummy translation function
 _ = lambda s: s
 
+
 # helper functions
-
-
 def get_locale():
     """Return language code for locale used for translations and templates."""
     # note: PyCologne app currently has DE language only
@@ -63,8 +64,8 @@ def get_content(filename, overrides=None):
     content = ""
 
     if os.path.isfile(filename):
-        with codecs.open(filename, 'r', 'utf-8') as f:
-            rst_data = f.read()
+        with codecs.open(filename, 'r', 'utf-8') as file_:
+            rst_data = file_.read()
 
         content = publish_parts(
             rst_data,
@@ -108,9 +109,8 @@ def render_content(page, content, **kw):
     return render_template("/content.html", act=page, content=content,
                            urls=get_urls(), **kw)
 
+
 # main page
-
-
 @app.route("/")
 @app.route("/index")
 def index():
@@ -130,17 +130,18 @@ def index():
                            format_date=format_date,
                            saying=saying, author=author)
 
+
 # sub pages
-
-
 @app.route("/about")
 def about():
+    """Return about page."""
     content = get_template("rst", "about.rst")
     return render_content("about", content)
 
 
 @app.route("/join")
 def join():
+    """Return join page."""
     content = get_template("rst", "join.rst")
     return render_content("join", content)
 
@@ -152,7 +153,7 @@ def events():
     meetings = meeting_dates()
     next_meeting = next(meetings)
     # get manually added extra events from ReST file
-    events = get_template("rst", "events.rst")
+    events_ = get_template("rst", "events.rst")
     # curry date formatting function
     format_date = partial(format_datetime,
                           format=DATE_FORMAT_LONG.get(get_locale(), 'long'),
@@ -162,24 +163,25 @@ def events():
                            act='events',
                            meetings=meetings,
                            next_meeting=next_meeting,
-                           events=events,
+                           events=events_,
                            format_date=format_date)
 
 
 @app.route("/contact")
 def contact():
+    """Return contact page."""
     content = get_template("rst", "contact.rst")
     return render_content("contact", content)
 
-# default error handler
 
-
+# pylint: disable=W0613
 @app.errorhandler(404)
-def page_not_found(e):
-    """Serve error page for 404 responses."""
+def page_not_found(err):
+    """Default error handler. Serve error page for 404 responses."""
     msg = "Url: %s not found" % request.url
     info = "This information is not available!"
     return render_template("404.html", msg=msg, info=info)
+# pylint: enable=W0613
 
 
 if __name__ == "__main__":
