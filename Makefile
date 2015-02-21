@@ -32,7 +32,7 @@ all:
 
 pylint: $(LINTME)
 # 	Pylint exit codes other than 1, 2 and 32 are ignored
-	pylint --rcfile=pylint.rc --reports=n $^ || test $$[$$?&35] -eq 0
+	pylint --rcfile=pylint.rc --reports=n $^ || test $$(($$?&35)) -eq 0
 
 pylint-report: $(LINTME)
 	pylint --rcfile=pylint.rc $^
