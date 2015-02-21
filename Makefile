@@ -28,7 +28,7 @@ all:
 	@echo "No default make target."
 
 %.css: $(LESSDIR)/%.less
-	less $< > $(CSSDIR)/$@
+	lessc $< > $(CSSDIR)/$@
 
 pylint: $(LINTME)
 # 	Pylint exit codes other than 1, 2 and 32 are ignored
