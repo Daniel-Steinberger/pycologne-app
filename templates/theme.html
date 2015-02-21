@@ -39,10 +39,17 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
+              {%- if act -%}
+              <a class="navbar-brand" href="/"><img class="logo"
+                src="/static/images/PyCologne-2012-Logo-web-horizontal.svg"
+                title="pyCologne" alt="[Logo pyCologne]"
+                height="60" /></a>
+              {% else %}
               <a class="navbar-brand" href="/"><img class="logo"
                 src="/static/images/PyCologne-2012-Logo-web.svg"
                 title="pyCologne" alt="[Logo pyCologne]"
                 width="120" height="120" /></a>
+              {% endif %}
             </div>
             <div class="collapse navbar-collapse">
               <ul class="nav navbar-nav navbar-right">
