@@ -18,7 +18,8 @@ from flask import render_template
 from flask import request
 
 from .config import (DATE_FORMAT_LONG, FACEBOOK_URL, GOOGLE_PLUS_URL,
-                     TWITTER_URL)
+                     TWITTER_URL, MEETUP_URL,  BITBUCKET_URL)
+
 from .sayings import get_saying
 from .events import meeting_dates
 
@@ -45,7 +46,8 @@ def get_locale():
 def get_urls():
     """Return a dictionary with fixed (external) URLs."""
     urls = [('twitter', TWITTER_URL), ('facebook', FACEBOOK_URL),
-            ('google', GOOGLE_PLUS_URL)]
+            ('google', GOOGLE_PLUS_URL), ('bitbucket',  BITBUCKET_URL),
+            ('meetup', MEETUP_URL)]
     return dict(urls)
 
 

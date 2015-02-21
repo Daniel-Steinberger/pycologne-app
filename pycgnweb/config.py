@@ -17,6 +17,9 @@ WEBSITE_URL = "http://www.pycologne.de"
 TWITTER_URL = "http://twitter.com/pyCologne"
 FACEBOOK_URL = "http://www.facebook.com/pyCologne"  # Facebook-Seite
 FB_GROUP_URL = "http://www.facebook.com/groups/pycologne"  # Facebook-Gruppe
+MEETUP_URL = "http://www.meetup.com/pyCologne/"
+BITBUCKET_URL = "https://bitbucket.org/PySV/pycologne-app"
+
 GOOGLE_PLUS_URL = "https://plus.google.com/b/114994727117032649068/"
 GOOGLE_CAL_URL = \
     "https://www.google.com/calendar/embed?src=fm26mlvtjlqsjqpj53jq1pd128" \
@@ -29,7 +32,6 @@ GOOGLE_CAL_ICS = \
 LANYRD_URL = "http://lanyrd.com/profile/pycologne"
 FLICKR_URL = "http://www.flickr.com/photos/tags/pycologne"
 XING_URL = "https://www.xing.com/net/pri19efecx/pycologne"
-MEETUP_URL = "http://www.meetup.com/pyCologne/"
 
 # TODO - cf. http://wiki.pythonde.pysv.org/pycologne/#Ressourcen
 # Mailingliste: <python DASH users AT uni DASH koeln DOT de>
