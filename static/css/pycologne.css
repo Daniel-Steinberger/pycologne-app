@@ -3,3 +3,8 @@
 .module-footer {
   padding-top: 3em;
 }
+/* Map
+------------------------------------ */
+#map {
+  height: 600px;
+}

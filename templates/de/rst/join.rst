@@ -67,7 +67,14 @@ Außerdem ist der Fußweg vom C4 zum Herbrands eingezeichnet.
 
 .. raw:: html
 
- <img src="/static/images/pyCologne_lageplan-pfad.png" alt="Lageplan">
+   <div id="map">
+      <noscript><img src="/static/images/map.png"></noscript>
+   </div>
+   <link rel="stylesheet" href="/static/css/leaflet.css" />
+   <script src="/static/js/leaflet.js"></script>
+   <script src="/static/js/map.js"></script>
+
 
 
 `Openstreetmap.org-Link zu diesem Kartenausschnitt <http://osm.org/go/0GC9nMPHo--?node=445436623>`_
+| `Karte als Bild </static/images/map.png>`_
