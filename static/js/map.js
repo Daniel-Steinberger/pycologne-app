@@ -8,10 +8,9 @@ var coordsHerbrands = [50.951450, 6.910400];
 
 var map = L.map('map');
 
-L.tileLayer('http://{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png', {
+L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>',
     maxZoom: 18,
-    subdomains: ['otile1','otile2','otile3','otile4']
 }).addTo(map);
 
 var marker = L.marker(coordsC4).addTo(map);
