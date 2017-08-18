@@ -13,6 +13,7 @@ from functools import partial
 
 from babel.dates import format_datetime
 from docutils.core import publish_parts
+from flask import abort
 from flask import Flask
 from flask import render_template
 from flask import request
@@ -155,12 +156,23 @@ def events():
                           format=DATE_FORMAT_LONG.get(get_locale(), 'long'),
                           locale=get_locale())
 
+    next_meeting_url = '/events/{:%Y-%m-%d}'.format(next_meeting)
     return render_template("/events.html",
                            act='events',
                            meetings=meetings,
                            next_meeting=next_meeting,
+                           next_meeting_url=next_meeting_url,
                            events=events_,
                            format_date=format_date)
+
+
+@app.route("/events/<date>")
+def events_date(date):
+    """Serve an event page for a specific meeting."""
+    content = get_template("rst/events/", "{}.rst".format(date))
+    if content == u'':
+        abort(404)
+    return render_content("event", content)
 
 
 @app.route("/contact")

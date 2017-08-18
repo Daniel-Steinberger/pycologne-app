@@ -1,0 +1,29 @@
+PyCologne Treffen September 2017
+================================
+
+Datum:
+  Mi, 13.09.2017
+Uhrzeit:
+  19:00
+Ort:
+  Chaos Computer Club Cologne, Heliosstr. 6a 50825 Köln (Anfahrt_)
+
+Das Programm für das Treffen steht noch nicht fest.
+
+Wir suchen noch Themen! Wenn Du einen Vortrag halten oder andere Programmpunkte
+anmelden willst, schreibe einfach auf die Mailingliste! Daneben gibt es Raum für
+spontan eingebrachte Themen, z.B. Buch- und Programm-Vorstellungen, Fragen,
+Ankündigungen und alles was euch so zum Thema Python einfällt.
+
+Ab ca. 21:00 Uhr werden wir den Abend gemütlich in einer nahe gelegenen
+Kneipe (Herbrands) ausklingen lassen.
+
+Hast Du vor, zu kommen oder bist verhindert? Sag' uns unverbindlich
+über Meetup_ Bescheid (kostenlose Anmeldung erforderlich).
+
+Etherpad Protokoll_
+
+.. _Anfahrt: /join
+.. _Meetup: http://www.meetup.com/pyCologne/
+.. _Protokoll: http://yourpart.eu/p/pyc_20170913
+
