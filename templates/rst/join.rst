@@ -70,8 +70,8 @@ Außerdem ist der Fußweg vom C4 zum Herbrands eingezeichnet.
    <div id="map">
       <noscript><img src="/static/images/map.png"></noscript>
    </div>
-   <link rel="stylesheet" href="/static/css/leaflet.css" />
-   <script src="/static/js/leaflet.js"></script>
+   <link rel="stylesheet" href="/static/js/leaflet/leaflet.css" />
+   <script src="/static/js/leaflet/leaflet.js"></script>
    <script src="/static/js/map.js"></script>
 
 
