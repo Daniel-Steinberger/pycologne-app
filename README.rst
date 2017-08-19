@@ -9,7 +9,7 @@ First you have to clone this repository and all its submodules::
 Next create a virtualenv and install all the requirments into it. In this
 example we are using virtualenvwrapper to manage the virtualenv::
 
-    $ mkvirtualenv -p `which python2` pycologne-app-env
+    $ mkvirtualenv -p `which python3` pycologne-app-env
 
 This repository provides requirements and configurations.
 

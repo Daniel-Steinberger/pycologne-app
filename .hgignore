@@ -45,3 +45,4 @@ pyhasse.similarity/*
 oldies
 level/Level*
 static/js/prettify*
+.cache
