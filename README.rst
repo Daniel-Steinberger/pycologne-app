@@ -133,3 +133,24 @@ Finally, don't forget to push these changes to your repository fork on
 Bitbucket as well::
 
     $ hg push
+
+
+Deploy
+------
+
+The application is ready to be deployed via a webserver's
+FastCGI-plugin. First install additional requirements::
+
+    $ pip install -r requirements.txt
+
+Now build and install the pycologne package into your virtualenv::
+
+    $ python setup.py build
+    $ python setup.py install
+
+Now the FastCGI-plugin of your webserver needs to be pointed to the
+WSGI-Executable, e.g::
+
+    /path/to/virtualenv/bin/python -m pycgnweb --wsgi --template-folder /path/to/pycologne-app/templates/
+
+The app expects to be served under `/` and the static files to be served under `/static`.
