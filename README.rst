@@ -153,4 +153,4 @@ WSGI-Executable, e.g::
 
     /path/to/virtualenv/bin/python -m pycgnweb --wsgi --template-folder /path/to/pycologne-app/templates/
 
-The app expects to be served under `/` and the static files to be served under `/static`.
+The app expects to be served under ``/`` and the static files to be served under ``/static``.
