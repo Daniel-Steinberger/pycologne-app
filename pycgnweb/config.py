@@ -1,17 +1,10 @@
 # -*- coding: utf-8 -*-
 """Configuration settings for the webapp."""
 
-from __future__ import unicode_literals, print_function
-
-# available languages
-LANGUAGES = {
-    'de': 'Deutsch',
-}
 
 # Format strings for babel.dates.format_datetime
-DATE_FORMAT_LONG = {
-    'de': "EEEE, d. MMMM yyyy, HH:mm 'Uhr'"
-}
+DATE_FORMAT_LONG = "EEEE, d. MMMM yyyy, HH:mm 'Uhr'"
+
 
 WEBSITE_URL = "http://www.pycologne.de"
 TWITTER_URL = "http://twitter.com/pyCologne"

@@ -1,7 +1,5 @@
 """Container for sayings related to Python."""
 
-from __future__ import unicode_literals
-
 from random import choice
 
 SAYINGS = [

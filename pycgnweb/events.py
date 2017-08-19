@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 """Calculate dates of next PyCologne meetings."""
 
-from __future__ import unicode_literals, print_function
-
 from dateutil.rrule import rrule, MONTHLY, WE
 
 __all__ = ('meeting_dates',)

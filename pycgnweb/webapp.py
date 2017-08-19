@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 """A Flask-based webapp for the homepage of the pyCologne Python user group."""
 
-from __future__ import absolute_import, print_function, unicode_literals
-
 import argparse
 import codecs
 import os
@@ -24,24 +22,9 @@ from .config import (DATE_FORMAT_LONG, FACEBOOK_URL, GOOGLE_PLUS_URL,
 from .sayings import get_saying
 from .events import meeting_dates
 
-# set default language
-LANGUAGE_SELECTED = "de"
-
 # pylint: disable=C0103
 app = Flask(__name__.split('.')[0])
 # pylint: enable=C0103
-
-
-def _(msg):
-    """Dummy translation function."""
-    return msg
-
-
-# helper functions
-def get_locale():
-    """Return language code for locale used for translations and templates."""
-    # note: PyCologne app currently has DE language only
-    return LANGUAGE_SELECTED
 
 
 def get_urls():
@@ -75,28 +58,30 @@ def get_content(filename, overrides=None):
 def get_template(*args):
     """Return contents of given template as a unicode string.
 
-    The location of the template is specified with its path name components as
-    positional parameters. The path name components are interpreted as being
-    relative to the template directory for the currently selected language. If
+    The location of the template is specified with its path name
+    components as positional parameters. The path name components are
+    interpreted as being relative to the template directory. If
     multiple path name components are given, they are joined with
-    ``os.path.join``. The last component must be the template filename.
+    ``os.path.join``. The last component must be the template
+    filename.
 
     The contents of the template file are expected to be UTF-8 encoded.
 
     """
-    return get_content(os.path.join(app.template_folder, get_locale(), *args))
+    return get_content(os.path.join(app.template_folder, *args))
 
 
 def get_topmenue():
     """Return top-level menu structure as a list of (urlpath, label) tuples."""
     menue = [
-        ('/', _('Startseite')),
-        ('/about', _('Die User Group')),
-        ('/join', _('Mitmachen')),
-        ('/events', _('Termine')),
-        ('/contact', _('Kontakt')),
+        ('/', 'Startseite'),
+        ('/about', 'Die User Group'),
+        ('/join', 'Mitmachen'),
+        ('/events', 'Termine'),
+        ('/contact', 'Kontakt'),
     ]
     return menue
+
 
 app.jinja_env.globals.update(get_topmenue=get_topmenue)
 
@@ -118,8 +103,8 @@ def index():
     next_meeting = next(meetings)
     # curry date formatting function
     format_date = partial(format_datetime,
-                          format=DATE_FORMAT_LONG.get(get_locale(), 'long'),
-                          locale=get_locale())
+                          format=DATE_FORMAT_LONG,
+                          locale="DE")
 
     return render_template("/index.html", urls=get_urls(),
                            act='',
@@ -153,8 +138,8 @@ def events():
     events_ = get_template("rst", "events.rst")
     # curry date formatting function
     format_date = partial(format_datetime,
-                          format=DATE_FORMAT_LONG.get(get_locale(), 'long'),
-                          locale=get_locale())
+                          format=DATE_FORMAT_LONG,
+                          locale="DE")
 
     next_meeting_url = '/events/{:%Y-%m-%d}'.format(next_meeting)
     return render_template("/events.html",
