@@ -1,4 +1,3 @@
-* Sa. 28. und So. 29. März 2015 - `PythonCamp Cologne`_
+* 25. -- 27. Oktober 2017 - `PyCon.DE 2017`_
 
-
-.. _pythoncamp cologne: http://pythoncamp.de
+.. _PyCon.DE 2017: https://de.pycon.org/
