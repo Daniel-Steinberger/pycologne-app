@@ -83,6 +83,53 @@ def get_topmenue():
     return menue
 
 
+def ensure_next_meeting(next_date):
+    """ensure that an .rst file for the next meeting is present
+    """
+    path = os.path.join(
+        app.template_folder,
+        'rst',
+        'events',
+        '{:%Y-%m-%d}.rst'.format(next_date),
+    )
+    if os.path.isfile(path):
+        return True
+    title = "PyCologne Treffen {:%B %Y}".format(next_date)
+    line = '=' * len(title)
+    header = title + '\n' + line
+
+    with open(path, 'w+') as meeting:
+        meeting.write("""{header}
+
+Datum:
+  Mi, {next_date:%d.%m.%Y}
+Uhrzeit:
+  19:00
+Ort:
+  Chaos Computer Club Cologne, Heliosstr. 6a 50825 Köln (Anfahrt_)
+
+Das Programm für das Treffen steht noch nicht fest.
+
+**Wir suchen noch Themen!** Wenn Du einen Vortrag halten oder andere Programmpunkte
+anmelden willst, schreibe einfach auf die Mailingliste_! Daneben gibt es Raum für
+spontan eingebrachte Themen, z.B. Buch- und Programm-Vorstellungen, Fragen,
+Ankündigungen und alles was euch so zum Thema Python einfällt.
+
+Ab ca. 21:00 Uhr werden wir den Abend gemütlich in einer nahe gelegenen
+Kneipe (Herbrands) ausklingen lassen.
+
+Hast Du vor, zu kommen oder bist verhindert? Sag' uns unverbindlich
+über Meetup_ Bescheid (kostenlose Anmeldung erforderlich).
+
+Etherpad Protokoll_
+
+.. _Anfahrt: /join
+.. _Mailingliste: /join
+.. _Meetup: http://www.meetup.com/pyCologne/
+.. _Protokoll: http://yourpart.eu/p/pyc_{next_date:%Y%m%d}
+""".format(header=header, next_date=next_date))
+
+
 app.jinja_env.globals.update(get_topmenue=get_topmenue)
 
 
@@ -142,6 +189,7 @@ def events():
                           locale="DE")
 
     next_meeting_url = '/events/{:%Y-%m-%d}'.format(next_meeting)
+    ensure_next_meeting(next_meeting)
     return render_template("/events.html",
                            act='events',
                            meetings=meetings,
