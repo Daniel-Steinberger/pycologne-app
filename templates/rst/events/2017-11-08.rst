@@ -1,0 +1,28 @@
+PyCologne Treffen November 2017
+===============================
+
+Datum:
+  Mi, 08.11.2017
+Uhrzeit:
+  19:00
+Ort:
+  Chaos Computer Club Cologne, Heliosstr. 6a 50825 Köln (Anfahrt_)
+
+Programm
+--------
+
+ * Django-Admin-Interface - schneller Weg zu Datenbank-GUIs -- Rebecca Breu
+ * Docker: vom Microservice zu Fastgenomics -- Henning Dickten
+
+Ab ca. 21:00 Uhr werden wir den Abend gemütlich in einer nahe gelegenen
+Kneipe (Herbrands) ausklingen lassen.
+
+Hast Du vor, zu kommen oder bist verhindert? Sag' uns unverbindlich
+über Meetup_ Bescheid (kostenlose Anmeldung erforderlich).
+
+Etherpad Protokoll_
+
+.. _Anfahrt: /join
+.. _Mailingliste: /join
+.. _Meetup: http://www.meetup.com/pyCologne/
+.. _Protokoll: http://yourpart.eu/p/pyc_20171108
