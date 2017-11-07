@@ -11,8 +11,8 @@ Ort:
 Programm
 --------
 
- * Django-Admin-Interface - schneller Weg zu Datenbank-GUIs -- Rebecca Breu
- * Docker: vom Microservice zu Fastgenomics -- Henning Dickten
+* Django-Admin-Interface - schneller Weg zu Datenbank-GUIs -- Rebecca Breu
+* Docker: vom Microservice zu Fastgenomics -- Henning Dickten
 
 Ab ca. 21:00 Uhr werden wir den Abend gemütlich in einer nahe gelegenen
 Kneipe (Herbrands) ausklingen lassen.
