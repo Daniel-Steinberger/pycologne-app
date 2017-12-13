@@ -1,5 +1,6 @@
+
 * 7. -- 8. April 2018 -  python barcamp 2018, Köln, Webseite kommt bald
-* Oktober 2018 - `PyCon.DE 2018`, Karlsruhe
+* Oktober 2018 - `PyCon.DE 2018`_, Karlsruhe
 
 
 Alte Termine
