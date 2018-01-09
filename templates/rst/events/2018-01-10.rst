@@ -1,0 +1,29 @@
+PyCologne Treffen January 2018
+==============================
+
+Datum:
+  Mi, 10.01.2018
+Uhrzeit:
+  19:00
+Ort:
+  Chaos Computer Club Cologne, Heliosstr. 6a 50825 Köln (Anfahrt_)
+
+Programm
+--------
+- Daniel Hepper: pipenv
+- Jens Diemer: Publischer-Erweiterung im django-ya-model-publisher
+- Reimar Bauer: PyFilesystem2
+
+
+Ab ca. 21:00 Uhr werden wir den Abend gemütlich in einer nahe gelegenen
+Kneipe (Herbrands) ausklingen lassen.
+
+Hast Du vor, zu kommen oder bist verhindert? Sag' uns unverbindlich
+über Meetup_ Bescheid (kostenlose Anmeldung erforderlich).
+
+Etherpad Protokoll_
+
+.. _Anfahrt: /join
+.. _Mailingliste: /join
+.. _Meetup: http://www.meetup.com/pyCologne/
+.. _Protokoll: http://yourpart.eu/p/pyc_20180110
