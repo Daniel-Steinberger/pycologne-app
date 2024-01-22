@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "pycologne-app-git"
+version = "1.0"
+description = "PyCologne Flask Webseite"
+authors = ["Daniel Steinberger <daniel.steinberger@dvs.ag>"]
+license = "GPLv3"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+flask = "^3.0.1"
+pytz = "^2023.3.post1"
+six = "^1.16.0"
+python-dateutil = "^2.8.2"
+docutils = "^0.20.1"
+babel = "^2.14.0"
+
+
+[tool.poetry.group.dev.dependencies]
+selenium = "^4.16.0"
+pytest = "^7.4.4"
+pylint = "^3.0.3"
+flask-testing = "^0.8.1"
+pyflakes = "^3.2.0"
+flake8-docstrings = "^1.7.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
