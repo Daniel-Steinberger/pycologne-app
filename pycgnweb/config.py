@@ -7,13 +7,9 @@ DATE_FORMAT_LONG = "EEEE, d. MMMM yyyy, HH:mm 'Uhr'"
 
 
 WEBSITE_URL = "http://www.pycologne.de"
-TWITTER_URL = "http://twitter.com/pyCologne"
-FACEBOOK_URL = "http://www.facebook.com/pyCologne"  # Facebook-Seite
-FB_GROUP_URL = "http://www.facebook.com/groups/pycologne"  # Facebook-Gruppe
 MEETUP_URL = "http://www.meetup.com/pyCologne/"
 BITBUCKET_URL = "https://bitbucket.org/PySV/pycologne-app"
 
-GOOGLE_PLUS_URL = "https://plus.google.com/b/114994727117032649068/"
 GOOGLE_CAL_URL = \
     "https://www.google.com/calendar/embed?src=fm26mlvtjlqsjqpj53jq1pd128" \
     "@group.calendar.google.com&ctz=Europe/Berlin"
