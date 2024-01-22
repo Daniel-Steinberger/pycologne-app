@@ -105,7 +105,9 @@ Datum:
 Uhrzeit:
   19:00
 Ort:
-  Chaos Computer Club Cologne, Heliosstr. 6a 50825 Köln (Anfahrt_)
+  ReHub
+  Deutz-Mülheimer Straße 121
+  51063 Köln (Anfahrt_)
 
 Das Programm für das Treffen steht noch nicht fest.
 
@@ -114,16 +116,12 @@ anmelden willst, schreibe einfach auf die Mailingliste_! Daneben gibt es Raum f�
 spontan eingebrachte Themen, z.B. Buch- und Programm-Vorstellungen, Fragen,
 Ankündigungen und alles was euch so zum Thema Python einfällt.
 
-Ab ca. 21:00 Uhr werden wir den Abend gemütlich in einer nahe gelegenen
-Kneipe (Herbrands) ausklingen lassen.
-
 Hast Du vor, zu kommen oder bist verhindert? Sag' uns unverbindlich
 über Meetup_ Bescheid (kostenlose Anmeldung erforderlich).
 
 Etherpad Protokoll_
 
 .. _Anfahrt: /join
-.. _Mailingliste: /join
 .. _Meetup: http://www.meetup.com/pyCologne/
 .. _Protokoll: http://yourpart.eu/p/pyc_{next_date:%Y%m%d}
 """.format(header=header, next_date=next_date))

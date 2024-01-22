@@ -9,60 +9,31 @@ haben.
 Veranstaltungsort
 ~~~~~~~~~~~~~~~~~~
 
-| Chaos-Computer-Club Cologne
-| Heliosstraße 6a
-| 50285 Köln-Ehrenfeld
+| ReHub
+| Deutz-Mülheimer Straße 121
+| 51063 Köln
 | Germany
-
-
-Mailingliste
-~~~~~~~~~~~~~
-
-Wer die pyCologne Aktivitäten verfolgen oder sich daran beteiligen möchte,
-wird gebeten, sich auf unserer Mailingliste einzutragen.
-
-Um die Mailingliste zu abonnieren oder das Abbonnement zu ändern, besuchen Sie
-bitte:
-
-    https://lists.uni-koeln.de/mailman/listinfo/python-users
-
-Um eine Nachricht an die Mailingliste zu schicken, schreiben Sie an:
-
-    python-users@uni-koeln.de
-
-Im Archiv der Mailingliste können Sie hier suchen:
-
-   `Listenarchiv <http://pycologne.de/mlsearch.html>`_
 
 
 Anreise
 ~~~~~~~~
 
-
 ÖPNV
 --------
 
-Die nächsten ÖPNV-Haltestellen sind "Venloer Str./Gürtel" (Straßenbahn Linie 3,
-4 und 13) und der Bahnhof Ehrenfeld (S12, S13, sowie Regionalbahnen).
+Die nächste ÖPNV-Haltestelle ist "Stegerwaldsiedlung" (Straßenbahn Linie 3 und 4).
 
 
 Auto
 -------
 
-Die Verfügbarkeit von Parkplätzen in Ehrenfeld allgemein und im Umkreis des
-Veranstaltunsorts ist sehr gering. Der Parkplatz des Supermarkts nebenan ist
-nur für Kunden und außerhalb der Geschäftszeiten nicht geöffnet!
-
-Der nächste kostenpflichtige Parkplatz ist am Heliosturm (Einfahrt
-Venloerstraße oder Ehrenfeldgürtel), die nächsten Parkhäuser sind am
-Bezirksrathaus und am Neptunbad (über Venloerstraße).
+Parken ist mit etwas Glück in der Umgebung kostenfrei möglich.
 
 
 Karte
 ---------
 
-Auf der folgenden Karte ist die Lage des Veranstaltungsorts (C4) zu ersehen.
-Außerdem ist der Fußweg vom C4 zum Herbrands eingezeichnet.
+Auf der folgenden Karte ist die Lage des Veranstaltungsorts zu ersehen.
 
 
 .. raw:: html
@@ -76,5 +47,5 @@ Außerdem ist der Fußweg vom C4 zum Herbrands eingezeichnet.
 
 
 
-`Openstreetmap.org-Link zu diesem Kartenausschnitt <http://osm.org/go/0GC9nMPHo--?node=445436623>`_
+`Openstreetmap.org-Link zu diesem Kartenausschnitt <https://www.openstreetmap.org/directions?from=&to=50.94855%2C6.98627#map=19/50.94843/6.98642>`_
 | `Karte als Bild </static/images/map.png>`_
