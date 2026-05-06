@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """Unit tests for pycgnweb.sayings module."""
 
 from pycgnweb.sayings import get_saying

@@ -1,36 +1,39 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """A Flask-based webapp for the homepage of the pyCologne Python user group."""
 
 import argparse
-import codecs
 import os
 import sys
-
 from functools import partial
 
 from babel.dates import format_datetime
 from docutils.core import publish_parts
-from flask import abort
-from flask import Flask
-from flask import render_template
-from flask import request
+from flask import Flask, abort, render_template, request
 
-from .config import (DATE_FORMAT_LONG, MEETUP_URL, REPO_URL)
-
-from .sayings import get_saying
+from .config import DATE_FORMAT_LONG, MEETUP_URL, REPO_URL
 from .events import meeting_dates
+from .sayings import get_saying
 
-# pylint: disable=C0103
-app = Flask(__name__.split('.')[0])
-# pylint: enable=C0103
+app = Flask(__name__.split(".")[0])
+
+
+# Hardening fuer docutils.publish_parts: keine RAW-HTML-Direktiven, keine
+# File-Includes, ruhige Logging-Levels (Quelle der .rst-Dateien sind
+# ausschliesslich Maintainer-Commits, vgl. README.md).
+_RST_SETTINGS = {
+    "doctitle_xform": False,
+    "report_level": 5,
+    "halt_level": 5,
+    "file_insertion_enabled": False,
+    "raw_enabled": False,
+}
 
 
 def get_urls():
     """Return a dictionary with fixed (external) URLs."""
     return {
-        'repo': REPO_URL,
-        'meetup': MEETUP_URL,
+        "repo": REPO_URL,
+        "meetup": MEETUP_URL,
     }
 
 
@@ -43,13 +46,15 @@ def get_content(filename, overrides=None):
     content = ""
 
     if os.path.isfile(filename):
-        with codecs.open(filename, 'r', 'utf-8') as file_:
+        with open(filename, encoding="utf-8") as file_:
             rst_data = file_.read()
 
+        settings = {**_RST_SETTINGS, **(overrides or {})}
         content = publish_parts(
             rst_data,
-            writer_name='html',
-            settings_overrides=overrides)['html_body']
+            writer_name="html",
+            settings_overrides=settings,
+        )["html_body"]
 
     return content
 
@@ -73,32 +78,36 @@ def get_template(*args):
 def get_topmenue():
     """Return top-level menu structure as a list of (urlpath, label) tuples."""
     menue = [
-        ('/', 'Startseite'),
-        ('/about', 'Die User Group'),
-        ('/join', 'Mitmachen'),
-        ('/events', 'Termine'),
-        ('/contact', 'Kontakt'),
+        ("/", "Startseite"),
+        ("/about", "Die User Group"),
+        ("/join", "Mitmachen"),
+        ("/events", "Termine"),
+        ("/contact", "Kontakt"),
     ]
     return menue
 
 
 def ensure_next_meeting(next_date):
-    """ensure that an .rst file for the next meeting is present
+    """Ensure that a .rst file for the next meeting is present.
+
+    TODO: side-effect-laden — schreibt Daten in den Templates-Ordner.
+    Sollte in einen separaten data/-Pfad oder Cache wandern.
     """
     path = os.path.join(
         app.template_folder,
-        'rst',
-        'events',
-        '{:%Y-%m-%d}.rst'.format(next_date),
+        "rst",
+        "events",
+        f"{next_date:%Y-%m-%d}.rst",
     )
     if os.path.isfile(path):
         return True
-    title = "PyCologne Treffen {:%B %Y}".format(next_date)
-    line = '=' * len(title)
-    header = title + '\n' + line
+    title = f"PyCologne Treffen {next_date:%B %Y}"
+    line = "=" * len(title)
+    header = f"{title}\n{line}"
 
-    with open(path, 'w+') as meeting:
-        meeting.write("""{header}
+    with open(path, "w+", encoding="utf-8") as meeting:
+        meeting.write(
+            f"""{header}
 
 Datum:
   Mi, {next_date:%d.%m.%Y}
@@ -122,9 +131,11 @@ Hast Du vor, zu kommen oder bist verhindert? Sag' uns unverbindlich
 Etherpad Protokoll_
 
 .. _Anfahrt: /join
-.. _Meetup: http://www.meetup.com/pyCologne/
+.. _Meetup: https://www.meetup.com/pyCologne/
 .. _Protokoll: http://yourpart.eu/p/pyc_{next_date:%Y%m%d}
-""".format(header=header, next_date=next_date))
+"""
+        )
+    return True
 
 
 app.jinja_env.globals.update(get_topmenue=get_topmenue)
@@ -132,8 +143,7 @@ app.jinja_env.globals.update(get_topmenue=get_topmenue)
 
 def render_content(page, content, **kw):
     """Render page with given name and content with content template."""
-    return render_template("/content.html", act=page, content=content,
-                           urls=get_urls(), **kw)
+    return render_template("/content.html", act=page, content=content, urls=get_urls(), **kw)
 
 
 # main page
@@ -146,15 +156,17 @@ def index():
     meetings = meeting_dates()
     next_meeting = next(meetings)
     # curry date formatting function
-    format_date = partial(format_datetime,
-                          format=DATE_FORMAT_LONG,
-                          locale="DE")
+    format_date = partial(format_datetime, format=DATE_FORMAT_LONG, locale="DE")
 
-    return render_template("/index.html", urls=get_urls(),
-                           act='',
-                           next_meeting=next_meeting,
-                           format_date=format_date,
-                           saying=saying, author=author)
+    return render_template(
+        "/index.html",
+        urls=get_urls(),
+        act="",
+        next_meeting=next_meeting,
+        format_date=format_date,
+        saying=saying,
+        author=author,
+    )
 
 
 # sub pages
@@ -181,26 +193,26 @@ def events():
     # get manually added extra events from ReST file
     events_ = get_template("rst", "events.rst")
     # curry date formatting function
-    format_date = partial(format_datetime,
-                          format=DATE_FORMAT_LONG,
-                          locale="DE")
+    format_date = partial(format_datetime, format=DATE_FORMAT_LONG, locale="DE")
 
-    next_meeting_url = '/events/{:%Y-%m-%d}'.format(next_meeting)
+    next_meeting_url = f"/events/{next_meeting:%Y-%m-%d}"
     ensure_next_meeting(next_meeting)
-    return render_template("/events.html",
-                           act='events',
-                           meetings=meetings,
-                           next_meeting=next_meeting,
-                           next_meeting_url=next_meeting_url,
-                           events=events_,
-                           format_date=format_date)
+    return render_template(
+        "/events.html",
+        act="events",
+        meetings=meetings,
+        next_meeting=next_meeting,
+        next_meeting_url=next_meeting_url,
+        events=events_,
+        format_date=format_date,
+    )
 
 
 @app.route("/events/<date>")
 def events_date(date):
     """Serve an event page for a specific meeting."""
-    content = get_template("rst/events/", "{}.rst".format(date))
-    if content == u'':
+    content = get_template("rst/events/", f"{date}.rst")
+    if content == "":
         abort(404)
     return render_content("event", content)
 
@@ -212,14 +224,12 @@ def contact():
     return render_content("contact", content)
 
 
-# pylint: disable=W0613
 @app.errorhandler(404)
-def page_not_found(err):
+def page_not_found(_err):
     """Default error handler. Serve error page for 404 responses."""
-    msg = "URL not found: %s" % request.url
+    msg = f"URL not found: {request.url}"
     info = "This information is not available!"
-    return render_template("404.html", msg=msg, info=info)
-# pylint: enable=W0613
+    return render_template("404.html", msg=msg, info=info), 404
 
 
 def main(args=None):
@@ -227,27 +237,32 @@ def main(args=None):
 
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        '-d',
-        '--debug',
+        "-d",
+        "--debug",
         action="store_true",
-        help="Run server in debug mode (default: %(default)s).")
+        help="Run server in debug mode (default: %(default)s).",
+    )
     parser.add_argument(
-        '--host',
+        "--host",
         default="localhost",
-        help="Hostname/IP address to bind server to (default: %(default)s).")
+        help="Hostname/IP address to bind server to (default: %(default)s).",
+    )
     parser.add_argument(
-        '--port',
+        "--port",
         type=int,
         default=5014,
-        help="Port number to bind server to (default: %(default)s).")
+        help="Port number to bind server to (default: %(default)s).",
+    )
     parser.add_argument(
-        '--static-folder',
-        default=os.path.join(os.getcwd(), 'static'),
-        help="Path to web server static files (default: %(default)s).")
+        "--static-folder",
+        default=os.path.join(os.getcwd(), "static"),
+        help="Path to web server static files (default: %(default)s).",
+    )
     parser.add_argument(
-        '--template-folder',
-        default=os.path.join(os.getcwd(), 'templates'),
-        help="Path to HTML and ReST templates (default: %(default)s).")
+        "--template-folder",
+        default=os.path.join(os.getcwd(), "templates"),
+        help="Path to HTML and ReST templates (default: %(default)s).",
+    )
     args = parser.parse_args(args if args is not None else sys.argv[1:])
 
     app.static_folder = args.static_folder

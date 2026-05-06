@@ -24,3 +24,9 @@ def test_page_returns_ok(client, path):
     """Jede der oeffentlichen Routen muss HTTP 200 liefern."""
     response = client.get(path)
     assert response.status_code == 200
+
+
+def test_unknown_url_returns_404(client):
+    """Unbekannte URLs muessen 404 liefern."""
+    response = client.get("/this-does-not-exist")
+    assert response.status_code == 404
