@@ -16,7 +16,7 @@ from flask import Flask
 from flask import render_template
 from flask import request
 
-from .config import (DATE_FORMAT_LONG, MEETUP_URL, BITBUCKET_URL)
+from .config import (DATE_FORMAT_LONG, MEETUP_URL, REPO_URL)
 
 from .sayings import get_saying
 from .events import meeting_dates
@@ -29,7 +29,7 @@ app = Flask(__name__.split('.')[0])
 def get_urls():
     """Return a dictionary with fixed (external) URLs."""
     return {
-        'bitbucket': BITBUCKET_URL,
+        'repo': REPO_URL,
         'meetup': MEETUP_URL,
     }
 

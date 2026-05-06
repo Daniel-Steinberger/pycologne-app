@@ -6,9 +6,9 @@
 DATE_FORMAT_LONG = "EEEE, d. MMMM yyyy, HH:mm 'Uhr'"
 
 
-WEBSITE_URL = "http://www.pycologne.de"
-MEETUP_URL = "http://www.meetup.com/pyCologne/"
-BITBUCKET_URL = "https://bitbucket.org/PySV/pycologne-app"
+WEBSITE_URL = "https://www.pycologne.de"
+MEETUP_URL = "https://www.meetup.com/pyCologne/"
+REPO_URL = "https://github.com/Daniel-Steinberger/pycologne-app"
 
 GOOGLE_CAL_URL = \
     "https://www.google.com/calendar/embed?src=fm26mlvtjlqsjqpj53jq1pd128" \
