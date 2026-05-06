@@ -223,8 +223,7 @@ def page_not_found(err):
 
 
 def main(args=None):
-    """Main command line script entry point for starting the development
-    server or WSGI server."""
+    """Main command line script entry point for the development server."""
 
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -249,21 +248,12 @@ def main(args=None):
         '--template-folder',
         default=os.path.join(os.getcwd(), 'templates'),
         help="Path to HTML and ReST templates (default: %(default)s).")
-    parser.add_argument(
-        '--wsgi',
-        default=False,
-        action="store_true",
-        help="If given, start the webapp as WSGI server")
     args = parser.parse_args(args if args is not None else sys.argv[1:])
 
     app.static_folder = args.static_folder
     app.template_folder = args.template_folder
 
-    if args.wsgi:
-        from flipflop import WSGIServer
-        WSGIServer(app).run()
-    else:
-        app.run(host=args.host, port=args.port, debug=args.debug)
+    app.run(host=args.host, port=args.port, debug=args.debug)
 
 
 if __name__ == "__main__":
