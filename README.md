@@ -68,10 +68,11 @@ docs/            Projekt-Dokumentation (z.B. Renovierungsplan)
 
 ## Inhalte und Trust-Boundary
 
-Die Inhalte der einzelnen Seiten liegen als ReST-Dateien unter
-`templates/rst/` und werden vom Server zu HTML gerendert und mit `|safe` ins
-Template eingebunden. Quelle dieser Dateien sind ausschließlich
-Maintainer-Commits — es gibt keinen Upload-Pfad zur Laufzeit.
+Die Inhalte der einzelnen Seiten liegen als Markdown-Dateien unter
+`templates/md/` und werden vom Server zu HTML gerendert (`markdown-it-py` mit
+`html=False`) und mit `|safe` ins Template eingebunden. Quelle dieser Dateien
+sind ausschließlich Maintainer-Commits — es gibt keinen Upload-Pfad zur
+Laufzeit.
 
 ## Beitragende
 

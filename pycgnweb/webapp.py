@@ -6,11 +6,11 @@ import os
 import sys
 from datetime import datetime
 from functools import partial
-from typing import Any
+from typing import Any, cast
 
 from babel.dates import format_datetime
-from docutils.core import publish_parts
 from flask import Flask, abort, render_template, request
+from markdown_it import MarkdownIt
 
 from .config import DATE_FORMAT_LONG, MEETUP_URL, REPO_URL
 from .events import meeting_dates
@@ -19,16 +19,9 @@ from .sayings import get_saying
 app = Flask(__name__.split(".")[0])
 
 
-# Hardening fuer docutils.publish_parts: keine RAW-HTML-Direktiven, keine
-# File-Includes, ruhige Logging-Levels (Quelle der .rst-Dateien sind
-# ausschliesslich Maintainer-Commits, vgl. README.md).
-_RST_SETTINGS: dict[str, Any] = {
-    "doctitle_xform": False,
-    "report_level": 5,
-    "halt_level": 5,
-    "file_insertion_enabled": False,
-    "raw_enabled": False,
-}
+# Markdown-Parser. html=False blockt Inline-HTML im Eingang (Default-sicher);
+# Quelle der .md-Dateien sind ausschliesslich Maintainer-Commits, vgl. README.
+_md = MarkdownIt("commonmark", {"html": False, "linkify": True}).enable(["table", "strikethrough"])
 
 
 def get_urls() -> dict[str, str]:
@@ -39,25 +32,18 @@ def get_urls() -> dict[str, str]:
     }
 
 
-def get_content(filename: str, overrides: dict[str, Any] | None = None) -> str:
-    """Read ReST document from file and return it as a HTML unicode string.
+def get_content(filename: str) -> str:
+    """Read Markdown document from file and return it as a HTML string.
 
     If the file does not exist, returns an empty string.
     """
-    content = ""
+    if not os.path.isfile(filename):
+        return ""
 
-    if os.path.isfile(filename):
-        with open(filename, encoding="utf-8") as file_:
-            rst_data = file_.read()
+    with open(filename, encoding="utf-8") as file_:
+        md_data = file_.read()
 
-        settings = {**_RST_SETTINGS, **(overrides or {})}
-        content = publish_parts(
-            rst_data,
-            writer_name="html",
-            settings_overrides=settings,
-        )["html_body"]
-
-    return content
+    return cast(str, _md.render(md_data))
 
 
 def get_template(*args: str) -> str:
@@ -81,51 +67,41 @@ def get_topmenue() -> list[tuple[str, str]]:
 
 
 def ensure_next_meeting(next_date: datetime) -> bool:
-    """Ensure that a .rst file for the next meeting is present.
+    """Ensure that a Markdown file for the next meeting is present.
 
     TODO: side-effect-laden — schreibt Daten in den Templates-Ordner.
     Sollte in einen separaten data/-Pfad oder Cache wandern.
     """
     path = os.path.join(
         app.template_folder or "",
-        "rst",
+        "md",
         "events",
-        f"{next_date:%Y-%m-%d}.rst",
+        f"{next_date:%Y-%m-%d}.md",
     )
     if os.path.isfile(path):
         return True
-    title = f"PyCologne Treffen {next_date:%B %Y}"
-    line = "=" * len(title)
-    header = f"{title}\n{line}"
 
     with open(path, "w+", encoding="utf-8") as meeting:
         meeting.write(
-            f"""{header}
+            f"""# PyCologne Treffen {next_date:%B %Y}
 
-Datum:
-  Mi, {next_date:%d.%m.%Y}
-Uhrzeit:
-  19:00
-Ort:
-  ReHub
-  Deutz-Mülheimer Straße 121
-  51063 Köln (Anfahrt_)
+**Datum:** Mi, {next_date:%d.%m.%Y}
+**Uhrzeit:** 19:00
+**Ort:** ReHub, Deutz-Mülheimer Straße 121, 51063 Köln ([Anfahrt](/join))
 
 Das Programm für das Treffen steht noch nicht fest.
 
-**Wir suchen noch Themen!** Wenn Du einen Vortrag halten oder andere Programmpunkte
-anmelden willst, schreibe einfach auf die Mailingliste_! Daneben gibt es Raum für
-spontan eingebrachte Themen, z.B. Buch- und Programm-Vorstellungen, Fragen,
-Ankündigungen und alles was euch so zum Thema Python einfällt.
+**Wir suchen noch Themen!** Wenn Du einen Vortrag halten oder andere
+Programmpunkte anmelden willst, schreibe einfach auf die [Mailingliste](/join)!
+Daneben gibt es Raum für spontan eingebrachte Themen, z.B. Buch- und
+Programm-Vorstellungen, Fragen, Ankündigungen und alles was euch so zum Thema
+Python einfällt.
 
 Hast Du vor, zu kommen oder bist verhindert? Sag' uns unverbindlich
-über Meetup_ Bescheid (kostenlose Anmeldung erforderlich).
+über [Meetup](https://www.meetup.com/pyCologne/) Bescheid (kostenlose
+Anmeldung erforderlich).
 
-Etherpad Protokoll_
-
-.. _Anfahrt: /join
-.. _Meetup: https://www.meetup.com/pyCologne/
-.. _Protokoll: http://yourpart.eu/p/pyc_{next_date:%Y%m%d}
+Etherpad [Protokoll](http://yourpart.eu/p/pyc_{next_date:%Y%m%d})
 """
         )
     return True
@@ -166,14 +142,14 @@ def index() -> str:
 @app.route("/about")
 def about() -> str:
     """Return about page."""
-    content = get_template("rst", "about.rst")
+    content = get_template("md", "about.md")
     return render_content("about", content)
 
 
 @app.route("/join")
 def join() -> str:
     """Return join page."""
-    content = get_template("rst", "join.rst")
+    content = get_template("md", "join.md")
     return render_content("join", content)
 
 
@@ -183,8 +159,8 @@ def events() -> str:
     # get dates for next twelve user group meetings
     meetings = meeting_dates()
     next_meeting = next(meetings)
-    # get manually added extra events from ReST file
-    events_ = get_template("rst", "events.rst")
+    # get manually added extra events from Markdown file
+    events_ = get_template("md", "events.md")
     # curry date formatting function
     format_date = partial(format_datetime, format=DATE_FORMAT_LONG, locale="DE")
 
@@ -204,7 +180,7 @@ def events() -> str:
 @app.route("/events/<date>")
 def events_date(date: str) -> str:
     """Serve an event page for a specific meeting."""
-    content = get_template("rst/events/", f"{date}.rst")
+    content = get_template("md", "events", f"{date}.md")
     if content == "":
         abort(404)
     return render_content("event", content)
@@ -213,7 +189,7 @@ def events_date(date: str) -> str:
 @app.route("/contact")
 def contact() -> str:
     """Return contact page."""
-    content = get_template("rst", "contact.rst")
+    content = get_template("md", "contact.md")
     return render_content("contact", content)
 
 
@@ -254,7 +230,7 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument(
         "--template-folder",
         default=os.path.join(os.getcwd(), "templates"),
-        help="Path to HTML and ReST templates (default: %(default)s).",
+        help="Path to HTML and Markdown templates (default: %(default)s).",
     )
     args = parser.parse_args(argv if argv is not None else sys.argv[1:])
 

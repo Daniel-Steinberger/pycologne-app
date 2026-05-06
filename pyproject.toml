@@ -12,7 +12,7 @@ maintainers = [
 dependencies = [
     "flask>=3.0",
     "python-dateutil>=2.9",
-    "docutils>=0.21",
+    "markdown-it-py>=3",
     "babel>=2.16",
 ]
 
@@ -61,7 +61,7 @@ warn_unreachable = true
 disallow_untyped_defs = true
 
 [[tool.mypy.overrides]]
-module = ["docutils.*", "dateutil.*"]
+module = ["dateutil.*"]
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]

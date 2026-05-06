@@ -1,5 +1,4 @@
-**pyCologne** - die Python User Group Köln
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## **pyCologne** - die Python User Group Köln
 
 **pyCologne** ist eine Gruppe von Python-Freunden aus der Region
 Köln-Bonn-Düsseldorf. Es finden regelmäßige monatliche Treffen statt (immer am
