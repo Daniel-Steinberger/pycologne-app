@@ -200,7 +200,7 @@ def page_not_found(_err: Exception) -> tuple[str, int]:
     return render_template("404.html", msg=msg, info=info), 404
 
 
-def main(argv: list[str] | None = None) -> None:
+def main() -> None:
     """Main command line script entry point for the development server."""
 
     parser = argparse.ArgumentParser()
@@ -231,7 +231,7 @@ def main(argv: list[str] | None = None) -> None:
         default=os.path.join(os.getcwd(), "templates"),
         help="Path to HTML and Markdown templates (default: %(default)s).",
     )
-    args = parser.parse_args(argv)
+    args = parser.parse_args()
 
     app.static_folder = args.static_folder
     app.template_folder = args.template_folder
