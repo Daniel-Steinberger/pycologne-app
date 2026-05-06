@@ -3,7 +3,6 @@
 
 import argparse
 import os
-import sys
 from datetime import datetime
 from functools import partial
 from typing import Any, cast
@@ -232,7 +231,7 @@ def main(argv: list[str] | None = None) -> None:
         default=os.path.join(os.getcwd(), "templates"),
         help="Path to HTML and Markdown templates (default: %(default)s).",
     )
-    args = parser.parse_args(argv if argv is not None else sys.argv[1:])
+    args = parser.parse_args(argv)
 
     app.static_folder = args.static_folder
     app.template_folder = args.template_folder
@@ -241,4 +240,4 @@ def main(argv: list[str] | None = None) -> None:
 
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    main()
