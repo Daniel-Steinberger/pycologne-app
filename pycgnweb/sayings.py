@@ -2,7 +2,7 @@
 
 from random import choice
 
-SAYINGS = [
+SAYINGS: list[tuple[str, str]] = [
     ("Beautiful is better than ugly.", "__Tim Peters, The Zen of Python"),
     ("Explicit is better than implicit.", "__Tim Peters, The Zen of Python"),
     ("Simple is better than complex.", "__Tim Peters, The Zen of Python"),
@@ -45,7 +45,7 @@ SAYINGS = [
 ]
 
 
-def get_saying():
+def get_saying() -> tuple[str, str]:
     """Return a random saying."""
     saying, author = choice(SAYINGS)  # noqa: S311 — kein Krypto-Kontext
     return saying, author

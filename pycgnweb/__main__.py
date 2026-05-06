@@ -12,4 +12,4 @@ from pycgnweb.webapp import main
 if __name__ == "__main__":
     import sys
 
-    sys.exit(main(sys.argv[1:]) or 0)
+    main(sys.argv[1:])

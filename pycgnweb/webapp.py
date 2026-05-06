@@ -4,7 +4,9 @@
 import argparse
 import os
 import sys
+from datetime import datetime
 from functools import partial
+from typing import Any
 
 from babel.dates import format_datetime
 from docutils.core import publish_parts
@@ -20,7 +22,7 @@ app = Flask(__name__.split(".")[0])
 # Hardening fuer docutils.publish_parts: keine RAW-HTML-Direktiven, keine
 # File-Includes, ruhige Logging-Levels (Quelle der .rst-Dateien sind
 # ausschliesslich Maintainer-Commits, vgl. README.md).
-_RST_SETTINGS = {
+_RST_SETTINGS: dict[str, Any] = {
     "doctitle_xform": False,
     "report_level": 5,
     "halt_level": 5,
@@ -29,7 +31,7 @@ _RST_SETTINGS = {
 }
 
 
-def get_urls():
+def get_urls() -> dict[str, str]:
     """Return a dictionary with fixed (external) URLs."""
     return {
         "repo": REPO_URL,
@@ -37,11 +39,10 @@ def get_urls():
     }
 
 
-def get_content(filename, overrides=None):
+def get_content(filename: str, overrides: dict[str, Any] | None = None) -> str:
     """Read ReST document from file and return it as a HTML unicode string.
 
     If the file does not exist, returns an empty string.
-
     """
     content = ""
 
@@ -59,42 +60,34 @@ def get_content(filename, overrides=None):
     return content
 
 
-def get_template(*args):
-    """Return contents of given template as a unicode string.
+def get_template(*args: str) -> str:
+    """Return contents of the given template as a unicode string.
 
-    The location of the template is specified with its path name
-    components as positional parameters. The path name components are
-    interpreted as being relative to the template directory. If
-    multiple path name components are given, they are joined with
-    ``os.path.join``. The last component must be the template
-    filename.
-
-    The contents of the template file are expected to be UTF-8 encoded.
-
+    The path name components are interpreted as being relative to the
+    template directory. The contents are expected to be UTF-8 encoded.
     """
-    return get_content(os.path.join(app.template_folder, *args))
+    return get_content(os.path.join(app.template_folder or "", *args))
 
 
-def get_topmenue():
+def get_topmenue() -> list[tuple[str, str]]:
     """Return top-level menu structure as a list of (urlpath, label) tuples."""
-    menue = [
+    return [
         ("/", "Startseite"),
         ("/about", "Die User Group"),
         ("/join", "Mitmachen"),
         ("/events", "Termine"),
         ("/contact", "Kontakt"),
     ]
-    return menue
 
 
-def ensure_next_meeting(next_date):
+def ensure_next_meeting(next_date: datetime) -> bool:
     """Ensure that a .rst file for the next meeting is present.
 
     TODO: side-effect-laden — schreibt Daten in den Templates-Ordner.
     Sollte in einen separaten data/-Pfad oder Cache wandern.
     """
     path = os.path.join(
-        app.template_folder,
+        app.template_folder or "",
         "rst",
         "events",
         f"{next_date:%Y-%m-%d}.rst",
@@ -141,7 +134,7 @@ Etherpad Protokoll_
 app.jinja_env.globals.update(get_topmenue=get_topmenue)
 
 
-def render_content(page, content, **kw):
+def render_content(page: str, content: str, **kw: Any) -> str:
     """Render page with given name and content with content template."""
     return render_template("/content.html", act=page, content=content, urls=get_urls(), **kw)
 
@@ -149,7 +142,7 @@ def render_content(page, content, **kw):
 # main page
 @app.route("/")
 @app.route("/index")
-def index():
+def index() -> str:
     """Serve main index page."""
     saying, author = get_saying()
     # get dates for next twelve user group meetings
@@ -171,21 +164,21 @@ def index():
 
 # sub pages
 @app.route("/about")
-def about():
+def about() -> str:
     """Return about page."""
     content = get_template("rst", "about.rst")
     return render_content("about", content)
 
 
 @app.route("/join")
-def join():
+def join() -> str:
     """Return join page."""
     content = get_template("rst", "join.rst")
     return render_content("join", content)
 
 
 @app.route("/events")
-def events():
+def events() -> str:
     """Serve events page with list of upcoming meetings."""
     # get dates for next twelve user group meetings
     meetings = meeting_dates()
@@ -209,7 +202,7 @@ def events():
 
 
 @app.route("/events/<date>")
-def events_date(date):
+def events_date(date: str) -> str:
     """Serve an event page for a specific meeting."""
     content = get_template("rst/events/", f"{date}.rst")
     if content == "":
@@ -218,21 +211,21 @@ def events_date(date):
 
 
 @app.route("/contact")
-def contact():
+def contact() -> str:
     """Return contact page."""
     content = get_template("rst", "contact.rst")
     return render_content("contact", content)
 
 
 @app.errorhandler(404)
-def page_not_found(_err):
+def page_not_found(_err: Exception) -> tuple[str, int]:
     """Default error handler. Serve error page for 404 responses."""
     msg = f"URL not found: {request.url}"
     info = "This information is not available!"
     return render_template("404.html", msg=msg, info=info), 404
 
 
-def main(args=None):
+def main(argv: list[str] | None = None) -> None:
     """Main command line script entry point for the development server."""
 
     parser = argparse.ArgumentParser()
@@ -263,7 +256,7 @@ def main(args=None):
         default=os.path.join(os.getcwd(), "templates"),
         help="Path to HTML and ReST templates (default: %(default)s).",
     )
-    args = parser.parse_args(args if args is not None else sys.argv[1:])
+    args = parser.parse_args(argv if argv is not None else sys.argv[1:])
 
     app.static_folder = args.static_folder
     app.template_folder = args.template_folder
@@ -272,4 +265,4 @@ def main(args=None):
 
 
 if __name__ == "__main__":
-    sys.exit(main(sys.argv[1:]) or 0)
+    main(sys.argv[1:])
