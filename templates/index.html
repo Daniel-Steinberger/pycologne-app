@@ -1,24 +1,25 @@
 {% extends "theme.html" %}
 {% block body %}
 <div class="container">
-  <section class="hero" aria-label="Einstieg">
-    <div class="hero__primary">
+  <section class="home-grid" aria-label="Übersicht">
+
+    <article class="tile tile--accent">
       <p class="eyebrow">Python User Group Köln</p>
-      <h1 class="hero__title">pyCologne</h1>
-      <p class="hero__lead">
+      <h1 class="tile__title">pyCologne</h1>
+      <p class="tile__lead">
         Eine offene Diskussionsrunde rund um Python — mit Vorträgen,
         Fragen und gemeinsamem Knobeln. Einmal im Monat in Köln.
       </p>
-      <p class="hero__actions">
-        <a href="{{ url_for('join') }}" class="btn btn--primary btn--lg">
+      <p>
+        <a href="{{ url_for('join') }}" class="btn btn--lg">
           Mitmachen <span aria-hidden="true">→</span>
         </a>
       </p>
-    </div>
+    </article>
 
-    <aside class="hero__meta">
+    <article class="tile">
       <p class="eyebrow">Nächstes Treffen</p>
-      <p class="hero__date">
+      <p class="tile__date">
         <time>{{ format_date(next_meeting) }}</time>
       </p>
       <p>
@@ -26,25 +27,32 @@
           Alle Termine <span aria-hidden="true">→</span>
         </a>
       </p>
-    </aside>
-  </section>
+    </article>
 
-  <section class="features">
-    <h2 class="section-title">Was wir bieten</h2>
-    <ul class="features__list">
-      <li>Regelmäßige Treffen — am 2. Mittwoch jeden Monats</li>
-      <li>Vorträge zu Themen aus der Python-Welt</li>
-      <li>Offene Diskussionen, Fragen und gemeinsames Knobeln</li>
-      <li>Lightning Talks, Buchvorstellungen und Coding-Sessions</li>
-      <li>Offen für alle — Einsteiger:innen wie erfahrene Entwickler:innen</li>
-    </ul>
-    <p>
-      <a href="{{ url_for('about') }}" class="btn">
-        Mehr erfahren <span aria-hidden="true">→</span>
-      </a>
-    </p>
-  </section>
+    <article class="tile">
+      <p class="eyebrow">Was wir bieten</p>
+      <ul class="features__list">
+        <li>Regelmäßige Treffen — am 2. Mittwoch jeden Monats</li>
+        <li>Vorträge zu Themen aus der Python-Welt</li>
+        <li>Offene Diskussionen, Fragen und gemeinsames Knobeln</li>
+        <li>Lightning Talks, Buchvorstellungen und Coding-Sessions</li>
+        <li>Offen für alle — Einsteiger:innen wie erfahrene Entwickler:innen</li>
+      </ul>
+      <p>
+        <a href="{{ url_for('about') }}" class="btn">
+          Mehr erfahren <span aria-hidden="true">→</span>
+        </a>
+      </p>
+    </article>
 
-  {% include "claims.html" %}
+    <article class="tile tile--saying" aria-label="Zitat">
+      <p class="eyebrow">Zen of Python</p>
+      <blockquote class="tile__quote">
+        <p>{{ saying }}</p>
+        <cite class="tile__cite">{{ author }}</cite>
+      </blockquote>
+    </article>
+
+  </section>
 </div>
 {% endblock %}

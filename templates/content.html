@@ -1,8 +1,24 @@
 {% extends "theme.html" %}
 {% block body %}
 <div class="container">
-  <article class="prose">
-    {{ content | safe }}
-  </article>
+  <div class="content-grid">
+    <article class="prose">
+      {{ content | safe }}
+    </article>
+
+    {% if code_block %}
+    <aside class="content-side">
+      <article class="tile tile--code" aria-label="Live-Code">
+        <div class="tile__head">
+          <p class="eyebrow">{{ code_caption | default("Live aus dem Quelltext") }}</p>
+          {% if code_explainer %}
+          <p>{{ code_explainer | safe }}</p>
+          {% endif %}
+        </div>
+        {{ code_block | safe }}
+      </article>
+    </aside>
+    {% endif %}
+  </div>
 </div>
 {% endblock %}

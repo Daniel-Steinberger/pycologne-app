@@ -1,0 +1,65 @@
+{% extends "theme.html" %}
+{% block title %}Mitmachen — PyCologne{% endblock %}
+{% block body %}
+<div class="container">
+  <section class="join-grid" aria-label="Mitmachen">
+
+    <article class="tile join-grid__intro">
+      <h1>Mitmachen</h1>
+      <p>
+        Du programmierst gerne Python — oder fängst gerade erst an? Komm
+        zu unseren Treffen, hör Dir Vorträge an, bring Deine eigenen
+        Themen mit oder hör einfach zu. Anmeldung läuft kostenlos über
+        <a href="{{ urls['meetup'] }}">Meetup</a>, reinschauen reicht
+        aber auch.
+      </p>
+      <p>
+        Bei uns sind Diskussionen ausdrücklich gewünscht. Wir freuen uns
+        auf neue Python-Anwender:innen, neue Themen und Perspektiven,
+        die wir noch nicht kennen.
+      </p>
+    </article>
+
+    <article class="tile">
+      <p class="eyebrow">Veranstaltungsort</p>
+      <p>
+        <strong>DVS AG — Deutsche Verrechnungsstelle AG</strong><br>
+        Schanzenstraße 30<br>
+        51063 Köln<br>
+        Carlswerk-Quartier
+      </p>
+    </article>
+
+    <article class="tile">
+      <p class="eyebrow">So findest Du uns</p>
+      <dl class="transit-list">
+        <dt>Bus &amp; Bahn</dt>
+        <dd>Wenige Gehminuten von der KVB-Haltestelle „von-Sparr-Straße" (Linie 4).</dd>
+
+        <dt>Auto</dt>
+        <dd>
+          In den Straßen rund um das Carlswerk gibt es überwiegend
+          gebührenpflichtige Parkscheinflächen — frei verfügbare
+          Stellplätze sind selten.
+        </dd>
+      </dl>
+    </article>
+
+    <article class="tile tile--map join-grid__map" aria-label="Karte">
+      <div id="map"></div>
+    </article>
+
+    <p>
+      <a href="https://www.openstreetmap.org/?mlat=50.96850&amp;mlon=7.01150#map=18/50.96850/7.01150"
+         class="btn btn--small">
+        <span aria-hidden="true">↗</span> Auf OpenStreetMap öffnen
+      </a>
+    </p>
+
+  </section>
+</div>
+
+<link rel="stylesheet" href="/static/js/leaflet/leaflet.css" />
+<script src="/static/js/leaflet/leaflet.js"></script>
+<script src="/static/js/map.js"></script>
+{% endblock %}

@@ -448,19 +448,31 @@
     font-size: var(--fs-2xl);
   }
 
-  /* ---- Hero (Index) ---------------------------------------------------- */
-  .hero {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-8);
-    align-items: stretch;
-    padding-block: var(--space-8) var(--space-12);
+  /* ---- Tile-System ----------------------------------------------------
+     Wiederverwendbarer Karten-Block fuer Index-Grid, Join-Sektionen und
+     beliebige Inhalts-Bloecke. Pflichtmodifier:
+       .tile--accent   gelber Akzentblock (Hero)
+       .tile--saying   schmaler Akzent-Border links (Zitat)
+       .tile--code     Tile mit Pygments-Code-Block, kein Padding fuer pre
+       .tile--map      Tile mit eingebetteter Leaflet-Karte
+  */
+  .tile {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: clamp(1.5rem, 1rem + 2vw, 2.25rem);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    min-width: 0;
   }
-  @media (min-width: 768px) {
-    .hero { grid-template-columns: 1.4fr 1fr; }
-  }
+  .tile > * { margin: 0; max-width: none; }
+  .tile > h2, .tile > h3 { line-height: var(--lh-tight); }
+  .tile p { color: var(--text-muted); max-width: var(--content-max); }
+  .tile p strong { color: var(--text); }
 
-  .hero__primary {
+  .tile--accent {
     background:
       radial-gradient(120% 80% at 100% 0%,
         color-mix(in oklch, var(--accent) 50%, transparent) 0%,
@@ -468,77 +480,124 @@
       linear-gradient(135deg,
         var(--accent) 0%,
         color-mix(in oklch, var(--accent) 70%, var(--text)) 100%);
-    color: light-dark(#0a0a0a, #0a0a0a);
-    border-radius: var(--radius-xl);
-    padding: clamp(1.75rem, 1.2rem + 3vw, 3rem);
+    color: #0a0a0a;
+    border: 0;
     box-shadow: var(--shadow-md);
     position: relative;
     overflow: hidden;
   }
-  .hero__primary::before {
+  .tile--accent::before {
     content: "";
     position: absolute;
     inset: 0;
-    background-image:
-      repeating-linear-gradient(45deg,
-        transparent 0 14px,
-        rgba(0,0,0,0.04) 14px 15px);
+    background-image: repeating-linear-gradient(45deg,
+      transparent 0 14px, rgba(0,0,0,0.04) 14px 15px);
     pointer-events: none;
   }
-  .hero__primary > * { position: relative; }
-  .hero__primary .eyebrow { color: rgba(0,0,0,0.6); }
-  .hero__title {
-    font-size: var(--fs-5xl);
-    line-height: var(--lh-tight);
-    color: light-dark(#0a0a0a, #0a0a0a);
-    margin: 0 0 var(--space-4);
-  }
-  .hero__lead {
-    font-size: var(--fs-lg);
-    max-width: 38ch;
-    color: rgba(0,0,0,0.78);
-    margin: 0 0 var(--space-6);
-  }
-  .hero__actions { margin: 0; }
-
-  .hero__primary .btn {
-    background: light-dark(#0a0a0a, #18181b);
-    border-color: light-dark(#0a0a0a, #18181b);
+  .tile--accent > * { position: relative; }
+  .tile--accent .eyebrow { color: rgba(0,0,0,0.6); }
+  .tile--accent h1, .tile--accent h2, .tile--accent h3 { color: #0a0a0a; }
+  .tile--accent p { color: rgba(0,0,0,0.78); }
+  .tile--accent .btn {
+    background: #0a0a0a;
+    border-color: #0a0a0a;
     color: var(--accent);
   }
-  .hero__primary .btn:hover {
-    background: light-dark(#1f1f23, #27272a);
-    border-color: light-dark(#1f1f23, #27272a);
+  .tile--accent .btn:hover {
+    background: #1f1f23;
+    border-color: #1f1f23;
+  }
+  @media (prefers-color-scheme: dark) {
+    .tile--accent .btn { background: #18181b; border-color: #18181b; }
+    .tile--accent .btn:hover { background: #27272a; border-color: #27272a; }
   }
 
-  .hero__meta {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-xl);
-    padding: clamp(1.5rem, 1rem + 2vw, 2.25rem);
-    box-shadow: var(--shadow-sm);
+  .tile--saying { border-inline-start: 3px solid var(--accent); }
+  .tile--saying p {
+    font-size: var(--fs-xl);
+    line-height: var(--lh-snug);
+    color: var(--text);
+    font-weight: 500;
+    max-width: none;
   }
-  .hero__date {
+
+  .tile--code {
+    padding: 0;
+    overflow: hidden;
+  }
+  .tile--code .tile__head {
+    padding: var(--space-4) var(--space-5) var(--space-2);
+  }
+  .tile--code .highlight {
+    margin: 0;
+    padding: var(--space-4) var(--space-5);
+    background: var(--code-bg);
+    border-top: 1px solid var(--border);
+    border-radius: 0;
+    overflow-x: auto;
+    font-size: var(--fs-sm);
+  }
+  .tile--code .highlight pre {
+    margin: 0;
+    padding: 0;
+    background: none;
+    border: 0;
+    font-family: var(--font-mono);
+    line-height: var(--lh-snug);
+  }
+
+  .tile--map { padding: 0; overflow: hidden; }
+  .tile--map #map {
+    margin: 0;
+    border-radius: 0;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .tile__title {
+    font-size: var(--fs-5xl);
+    line-height: var(--lh-tight);
+    margin: 0 0 var(--space-2);
+  }
+  .tile__lead {
+    font-size: var(--fs-lg);
+    margin: 0;
+  }
+  .tile__date {
     font-family: var(--font-mono);
     font-feature-settings: "tnum";
     font-size: var(--fs-xl);
     font-weight: 600;
     color: var(--text);
-    margin: 0 0 var(--space-5);
     line-height: var(--lh-snug);
   }
-
-  /* ---- Features (Index) ----------------------------------------------- */
-  .features {
-    margin-top: var(--space-16);
-    max-width: 720px;
+  .tile__cite {
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    color: var(--text-muted);
+    display: block;
+    margin-top: var(--space-2);
   }
+  .tile__cite::before { content: "— "; }
+
+  /* ---- Home-Grid: 2x2-Kachel-Layout fuer die Startseite -------------- */
+  .home-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+    padding-block: var(--space-8) var(--space-12);
+  }
+  @media (min-width: 820px) {
+    .home-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-6);
+    }
+  }
+
+  /* Features-Liste (innerhalb einer .tile--features) */
   .features__list {
     list-style: none;
-    margin: 0 0 var(--space-6);
+    margin: 0;
     padding: 0;
     display: grid;
     gap: var(--space-2);
@@ -557,38 +616,58 @@
     font-family: var(--font-mono);
   }
 
-  /* ---- Saying / Cite (Index claim) ------------------------------------ */
-  .saying {
-    margin-top: var(--space-16);
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-inline-start: 3px solid var(--accent);
-    border-radius: var(--radius-lg);
-    padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
-    box-shadow: var(--shadow-sm);
-    max-width: 720px;
+  /* ---- Content-Grid: zweispaltig wenn aside vorhanden ---------------- */
+  .content-grid {
+    display: grid;
+    gap: var(--space-8);
+    grid-template-columns: 1fr;
+    padding-block: var(--space-4) var(--space-8);
   }
-  .saying__quote {
-    border: 0;
-    margin: 0;
-    padding: 0;
-    color: var(--text);
-    font-style: normal;
+  @media (min-width: 900px) {
+    .content-grid:has(.content-side) {
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+      gap: var(--space-10);
+      align-items: start;
+    }
   }
-  .saying__quote p {
-    font-size: var(--fs-xl);
-    line-height: var(--lh-snug);
-    color: var(--text);
-    font-weight: 500;
-    margin: 0 0 var(--space-4);
+  .content-grid .prose { max-width: var(--content-max); }
+  .content-side {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    position: sticky;
+    top: calc(64px + var(--space-4));
   }
-  .saying__author {
+
+  /* ---- Join-Grid: Mehrkachel-Layout fuer /join ------------------------ */
+  .join-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+    padding-block: var(--space-4) var(--space-8);
+  }
+  @media (min-width: 820px) {
+    .join-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-6);
+    }
+    .join-grid__intro,
+    .join-grid__map { grid-column: 1 / -1; }
+  }
+  .transit-list { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-3); }
+  .transit-list dt {
     font-family: var(--font-mono);
-    font-size: var(--fs-sm);
-    color: var(--text-muted);
-    display: block;
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    color: var(--text-soft);
+    margin-bottom: var(--space-1);
   }
-  .saying__author::before { content: "— "; }
+  .transit-list dd {
+    margin: 0 0 var(--space-3);
+    color: var(--text-muted);
+  }
+  .transit-list dd:last-child { margin-bottom: 0; }
 
   /* ---- Buttons -------------------------------------------------------- */
   .btn {

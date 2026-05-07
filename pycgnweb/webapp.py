@@ -24,15 +24,25 @@ from .sayings import get_saying
 
 app = Flask(__name__.split(".")[0])
 
-# Quellcode der Terminberechnung: per inspect zur Render-Zeit aus events.py
-# gelesen — wenn der Code dort geaendert wird, aktualisiert sich auch die
-# auf der Termine-Seite gezeigte Variante. Pygments rendert das Markup
-# einmal, light/dark wird per CSS umgeschaltet.
+# Quellcode-Snippets per inspect zur Render-Zeit aus den jeweiligen Modulen
+# gelesen — wenn der Code dort geaendert wird, aktualisiert sich automatisch
+# auch die auf der Webseite gezeigte Variante. Pygments rendert das Markup
+# einmal; light/dark wird per CSS umgeschaltet.
 _MEETING_SOURCE = textwrap.dedent(inspect.getsource(meeting_dates))
+_SAYING_SOURCE = textwrap.dedent(inspect.getsource(get_saying))
 _PY_LEXER = PythonLexer()
 _PY_FORMATTER = HtmlFormatter(cssclass="highlight")
 PYGMENTS_CSS_LIGHT = HtmlFormatter(style="default").get_style_defs(".highlight")
 PYGMENTS_CSS_DARK = HtmlFormatter(style="monokai").get_style_defs(".highlight")
+
+
+def _hl(source: str) -> str:
+    """Render Python source via Pygments to highlighted HTML."""
+    return cast(str, highlight(source, _PY_LEXER, _PY_FORMATTER))
+
+
+HIGHLIGHTED_MEETING_SOURCE = _hl(_MEETING_SOURCE)
+HIGHLIGHTED_SAYING_SOURCE = _hl(_SAYING_SOURCE)
 
 
 def _pkg_version(name: str) -> str:
@@ -58,9 +68,9 @@ def inject_runtime() -> dict[str, dict[str, str]]:
 
 @app.context_processor
 def inject_code_reveal() -> dict[str, str]:
-    """Provide the live source of meeting_dates(), highlighted for both themes."""
+    """Provide highlighted live source plus Pygments style defs."""
     return {
-        "meeting_source": cast(str, highlight(_MEETING_SOURCE, _PY_LEXER, _PY_FORMATTER)),
+        "meeting_source": HIGHLIGHTED_MEETING_SOURCE,
         "pygments_css_light": PYGMENTS_CSS_LIGHT,
         "pygments_css_dark": PYGMENTS_CSS_DARK,
     }
@@ -186,14 +196,27 @@ def index() -> str:
 def about() -> str:
     """Return about page."""
     content = get_template("md", "about.md")
-    return render_content("about", content)
+    return render_content(
+        "about",
+        content,
+        code_block=HIGHLIGHTED_SAYING_SOURCE,
+        code_caption="Zitate-Generator (live)",
+        code_explainer=(
+            "Das Zen-Zitat auf der Startseite kommt aus dieser Funktion in "
+            "<code>pycgnweb/sayings.py</code> — bei jedem Aufruf wird ein "
+            "Spruch aus der Liste gelost."
+        ),
+    )
 
 
 @app.route("/join")
 def join() -> str:
     """Return join page."""
-    content = get_template("md", "join.md")
-    return render_content("join", content)
+    return render_template(
+        "join.html",
+        act="join",
+        urls=get_urls(),
+    )
 
 
 @app.route("/events")
