@@ -86,7 +86,7 @@ def ensure_next_meeting(next_date: datetime) -> bool:
 
 **Datum:** Mi, {next_date:%d.%m.%Y}
 **Uhrzeit:** 19:00
-**Ort:** ReHub, Deutz-Mülheimer Straße 121, 51063 Köln ([Anfahrt](/join))
+**Ort:** DVS AG, Schanzenstraße 30, 51063 Köln ([Anfahrt](/join))
 
 Das Programm für das Treffen steht noch nicht fest.
 
