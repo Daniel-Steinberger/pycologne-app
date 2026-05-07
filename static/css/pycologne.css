@@ -1,8 +1,32 @@
+/* Sticky Footer
+------------------------------------
+   Ersetzt das negative-margin-Pattern in bootstrap.css; das verursachte
+   in Kombination mit border-top/padding-top auf body eine vertikale
+   Ueberlaenge von rund 76px. */
+html, body {
+  height: auto;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+#wrap {
+  flex: 1 0 auto;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+}
+#footer {
+  flex-shrink: 0;
+}
+
 /* Modules
 ------------------------------------ */
 .module-footer {
   padding-top: 3em;
 }
+
 /* Map
 ------------------------------------ */
 #map {
