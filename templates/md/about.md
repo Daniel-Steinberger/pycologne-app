@@ -17,9 +17,9 @@ gemeinsam Pizza — die geht auf Kosten unseres Gastgebers, der DVS AG.
 ## Wer zu uns kommt
 
 Unsere Community ist bunt: Entwickler:innen aus Firmen und
-Forschungseinrichtungen, Selbstständige, Studierende, Lehrende und
-Hobbyist:innen. Was uns verbindet, ist die Begeisterung für Python —
-von kleinen Skripten bis zu großen Systemen.
+Forschungseinrichtungen, Selbstständige, Studierende und Hobbyist:innen.
+Was uns verbindet, ist die Begeisterung für Python — von kleinen
+Skripten bis zu großen Systemen.
 
 Egal, wo Du gerade stehst: bei uns findest Du Inspiration, Antworten
 auf Deine Fragen und Menschen, mit denen es Spaß macht, über Code

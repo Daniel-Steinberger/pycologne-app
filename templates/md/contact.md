@@ -6,5 +6,4 @@ alle kommenden Treffen an, und Du kannst Dich kostenlos für ein Treffen
 anmelden.
 
 Die Webseite ist gerade frisch im Aufbau. Sobald wir hier weitere
-Kontaktwege eingerichtet haben (E-Mail, Mailingliste oder Mastodon),
-findest Du sie an dieser Stelle.
+Kontaktwege einrichten, findest Du sie an dieser Stelle.

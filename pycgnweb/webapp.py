@@ -191,8 +191,11 @@ def contact() -> str:
 @app.errorhandler(404)
 def page_not_found(_err: Exception) -> tuple[str, int]:
     """Default error handler. Serve error page for 404 responses."""
-    msg = f"URL not found: {request.url}"
-    info = "This information is not available!"
+    msg = "Seite nicht gefunden"
+    info = (
+        f"Die angeforderte URL ({request.url}) existiert nicht "
+        "oder ist nicht mehr verfügbar."
+    )
     return render_template("404.html", msg=msg, info=info), 404
 
 

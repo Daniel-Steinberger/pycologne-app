@@ -19,13 +19,13 @@ Schanzenstraße 30, 51063 Köln (Carlswerk)
 
 ### Mit Bus &amp; Bahn
 
-Direkt vor der Tür hält die Linie 4 — Haltestelle „von-Sparr-Straße".
-Vom Kölner Hauptbahnhof bist Du in rund 15 Minuten da.
+Wenige Gehminuten von der KVB-Haltestelle „von-Sparr-Straße" (Linie 4).
 
 ### Mit dem Auto
 
-Parkplätze gibt es mit etwas Glück kostenfrei in den Seitenstraßen
-rund um das Carlswerk-Gelände.
+In den Straßen rund um das Carlswerk gibt es überwiegend
+gebührenpflichtige Parkscheinflächen — frei verfügbare Stellplätze
+sind selten.
 
 ### Auf der Karte
 
