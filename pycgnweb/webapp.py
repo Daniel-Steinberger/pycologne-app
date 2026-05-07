@@ -3,8 +3,10 @@
 
 import argparse
 import os
+import sys
 from datetime import datetime
 from functools import partial
+from importlib.metadata import PackageNotFoundError, version
 from typing import Any, cast
 
 from babel.dates import format_datetime
@@ -16,6 +18,27 @@ from .events import meeting_dates
 from .sayings import get_saying
 
 app = Flask(__name__.split(".")[0])
+
+
+def _pkg_version(name: str) -> str:
+    """Return installed package version, or 'n/a' if not found."""
+    try:
+        return version(name)
+    except PackageNotFoundError:
+        return "n/a"
+
+
+@app.context_processor
+def inject_runtime() -> dict[str, dict[str, str]]:
+    """Make Python/Flask/Library versions available in every template."""
+    return {
+        "runtime": {
+            "python": f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}",
+            "flask": _pkg_version("flask"),
+            "markdown_it": _pkg_version("markdown-it-py"),
+            "babel": _pkg_version("babel"),
+        }
+    }
 
 
 # Markdown-Parser. html=True erlaubt Inline-HTML in den .md-Quellen (z.B. das

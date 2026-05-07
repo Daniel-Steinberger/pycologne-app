@@ -1,9 +1,19 @@
 <footer class="site-footer">
   <div class="container site-footer__inner">
-    <p class="site-footer__brand">PyCologne</p>
-    <p class="site-footer__meta">
-      Made with <span aria-label="Liebe">♥</span> in Köln ·
-      <a href="https://github.com/Daniel-Steinberger/pycologne-app">Quellcode</a>
-    </p>
+    <div class="site-footer__col">
+      <p class="site-footer__brand">PyCologne</p>
+      <p class="site-footer__meta">
+        Made with <span aria-label="Liebe">♥</span> in Köln ·
+        <a href="https://github.com/Daniel-Steinberger/pycologne-app">Quellcode</a>
+      </p>
+    </div>
+
+    <div class="site-footer__col site-footer__stack" aria-label="Technischer Stack">
+      <p class="eyebrow">Powered by</p>
+      <pre class="site-footer__pre"><code>Python   {{ runtime.python }}
+Flask    {{ runtime.flask }}
+Babel    {{ runtime.babel }}
+markdown-it-py  {{ runtime.markdown_it }}</code></pre>
+    </div>
   </div>
 </footer>

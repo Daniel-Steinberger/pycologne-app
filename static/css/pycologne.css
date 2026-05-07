@@ -356,12 +356,19 @@
     font-size: var(--fs-sm);
   }
   .site-footer__inner {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: var(--space-4) var(--space-6);
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    align-items: start;
   }
+  @media (min-width: 720px) {
+    .site-footer__inner {
+      grid-template-columns: 1fr auto;
+      gap: var(--space-12);
+    }
+    .site-footer__stack { text-align: end; }
+  }
+  .site-footer__col { display: flex; flex-direction: column; gap: var(--space-2); }
   .site-footer__brand {
     color: var(--text-muted);
     font-weight: 600;
@@ -369,6 +376,25 @@
   }
   .site-footer__meta { margin: 0; }
   .site-footer a { color: var(--text-muted); }
+  .site-footer__pre {
+    margin: 0;
+    padding: var(--space-3) var(--space-4);
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: var(--fs-xs);
+    color: var(--text-muted);
+    line-height: 1.5;
+    text-align: start;
+    overflow-x: auto;
+  }
+  .site-footer__pre code {
+    background: none;
+    border: 0;
+    padding: 0;
+    font-size: inherit;
+    color: inherit;
+  }
 
   /* ---- Eyebrow / Section Title ----------------------------------------- */
   .eyebrow {
