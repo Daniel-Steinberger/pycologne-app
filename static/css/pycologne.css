@@ -16,21 +16,24 @@
     color-scheme: light dark;
 
     /* ---- Farben (light-dark() native) -------------------------------- */
-    --bg:            light-dark(#ffffff, #09090b);
-    --bg-elevated:   light-dark(#fafafa, #0f0f12);
-    --surface:       light-dark(#ffffff, #18181b);
-    --surface-alt:   light-dark(#f4f4f5, #1f1f23);
-    --text:          light-dark(#0f172a, #f4f4f5);
-    --text-muted:    light-dark(#475569, #a1a1aa);
-    --text-soft:     light-dark(#94a3b8, #71717a);
-    --border:        light-dark(#e4e4e7, #27272a);
-    --border-strong: light-dark(#d4d4d8, #3f3f46);
-    --accent:        light-dark(#ca8a04, #facc15);
-    --accent-soft:   light-dark(#fef9c3, #422006);
-    --accent-strong: light-dark(#854d0e, #fde047);
-    --primary:       light-dark(#4f46e5, #818cf8);
-    --primary-strong: light-dark(#3730a3, #a5b4fc);
-    --code-bg:       light-dark(#f4f4f5, #1f1f23);
+    /* Inspiriert von python.org: Python-Blau (#306998 / #4584b6) als
+       Link- und Akzentfarbe, Python-Gelb (#ffd43b) als Highlight.
+       Dark-Mode mit weichem Navy-Stich statt Pure-Black. */
+    --bg:            light-dark(#ffffff, #1a1d2e);
+    --bg-elevated:   light-dark(#f8fafc, #232639);
+    --surface:       light-dark(#ffffff, #232639);
+    --surface-alt:   light-dark(#f1f5f9, #2d3148);
+    --text:          light-dark(#0f172a, #e8e9f0);
+    --text-muted:    light-dark(#475569, #a8acc4);
+    --text-soft:     light-dark(#64748b, #7d809a);
+    --border:        light-dark(#e2e8f0, #2d3148);
+    --border-strong: light-dark(#cbd5e1, #424665);
+    --accent:        light-dark(#ca8a04, #ffd43b);
+    --accent-soft:   light-dark(#fef9c3, #3a3210);
+    --accent-strong: light-dark(#854d0e, #ffe066);
+    --primary:       light-dark(#306998, #4584b6);
+    --primary-strong: light-dark(#1e4870, #6cb1e3);
+    --code-bg:       light-dark(#f4f4f5, #2d3148);
 
     /* ---- Typografie -------------------------------------------------- */
     --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
@@ -99,7 +102,7 @@
     --transition-fast: 100ms cubic-bezier(0.4, 0, 0.2, 1);
     --transition:      200ms cubic-bezier(0.4, 0, 0.2, 1);
 
-    --ring-accent: 0 0 0 3px light-dark(#fde04766, #facc1540);
+    --ring-accent: 0 0 0 3px light-dark(#fef08a99, #ffd43b40);
   }
 }
 
@@ -533,22 +536,11 @@
     margin-top: var(--space-16);
     background: var(--surface);
     border: 1px solid var(--border);
+    border-inline-start: 3px solid var(--accent);
     border-radius: var(--radius-lg);
     padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
     box-shadow: var(--shadow-sm);
-    position: relative;
     max-width: 720px;
-  }
-  .saying::before {
-    content: "“";
-    position: absolute;
-    top: -0.2em;
-    inset-inline-start: 0.4em;
-    font-size: 5rem;
-    line-height: 1;
-    color: var(--accent);
-    font-family: Georgia, serif;
-    pointer-events: none;
   }
   .saying__quote {
     border: 0;
@@ -556,7 +548,6 @@
     padding: 0;
     color: var(--text);
     font-style: normal;
-    position: relative;
   }
   .saying__quote p {
     font-size: var(--fs-xl);
