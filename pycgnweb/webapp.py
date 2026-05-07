@@ -199,8 +199,8 @@ def join() -> str:
 @app.route("/events")
 def events() -> str:
     """Serve events page with list of upcoming meetings."""
-    # get dates for next twelve user group meetings
-    meetings = meeting_dates()
+    # eines fuer den Hero, sechs fuer die Terminvorschau
+    meetings = meeting_dates(count=7)
     next_meeting = next(meetings)
     # get manually added extra events from Markdown file
     events_ = get_template("md", "events.md")
