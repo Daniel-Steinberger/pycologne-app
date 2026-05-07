@@ -700,6 +700,15 @@
     font-size: var(--fs-xs);
     color: var(--text-soft);
   }
+  .upcoming-list__feed {
+    margin-top: var(--space-5);
+    text-align: end;
+  }
+
+  .btn--small {
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--fs-xs);
+  }
 
   /* ---- Prose (Markdown-Inhalte) --------------------------------------- */
   .prose {

@@ -10,7 +10,7 @@ from importlib.metadata import PackageNotFoundError, version
 from typing import Any, cast
 
 from babel.dates import format_datetime
-from flask import Flask, abort, render_template, request
+from flask import Flask, Response, abort, render_template, request, url_for
 from markdown_it import MarkdownIt
 
 from .config import DATE_FORMAT_LONG, MEETUP_URL, REPO_URL
@@ -220,6 +220,61 @@ def page_not_found(_err: Exception) -> tuple[str, int]:
         "oder ist nicht mehr verfügbar."
     )
     return render_template("404.html", msg=msg, info=info), 404
+
+
+def _ics_escape(text: str) -> str:
+    """Escape special chars per RFC 5545 (LOCATION/DESCRIPTION values)."""
+    return text.replace("\\", "\\\\").replace(",", "\\,").replace(";", "\\;")
+
+
+@app.route("/events.ics")
+def events_feed() -> Response:
+    """iCalendar-Feed mit den naechsten zwoelf Treffen.
+
+    Standard-iCalendar-Format (RFC 5545), CRLF-Zeilenumbrueche,
+    Europe/Berlin-Wallclock-Zeiten. Subscription-fertig fuer Apple
+    Calendar, Google Calendar oder Thunderbird.
+    """
+    from datetime import UTC, datetime, timedelta
+
+    location = _ics_escape("DVS AG, Schanzenstraße 30, 51063 Köln")
+    description = _ics_escape(
+        "Monatliches Treffen der Python User Group Köln. "
+        "Programm und Anmeldung über https://www.meetup.com/pycologne/"
+    )
+    now_stamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
+
+    lines = [
+        "BEGIN:VCALENDAR",
+        "VERSION:2.0",
+        "PRODID:-//PyCologne//pycologne.de//DE",
+        "CALSCALE:GREGORIAN",
+        "METHOD:PUBLISH",
+        "X-WR-CALNAME:PyCologne Treffen",
+        "X-WR-TIMEZONE:Europe/Berlin",
+    ]
+
+    for date in meeting_dates(count=12):
+        end = date + timedelta(hours=2)
+        event_url = url_for("events_date", date=date.strftime("%Y-%m-%d"), _external=True)
+        lines.extend(
+            [
+                "BEGIN:VEVENT",
+                f"UID:meeting-{date:%Y-%m-%d}@pycologne.de",
+                f"DTSTAMP:{now_stamp}",
+                f"DTSTART;TZID=Europe/Berlin:{date:%Y%m%dT%H%M%S}",
+                f"DTEND;TZID=Europe/Berlin:{end:%Y%m%dT%H%M%S}",
+                "SUMMARY:PyCologne Treffen",
+                f"LOCATION:{location}",
+                f"DESCRIPTION:{description}",
+                f"URL:{event_url}",
+                "END:VEVENT",
+            ]
+        )
+
+    lines.append("END:VCALENDAR")
+    body = "\r\n".join(lines) + "\r\n"
+    return Response(body, mimetype="text/calendar")
 
 
 def main() -> None:
