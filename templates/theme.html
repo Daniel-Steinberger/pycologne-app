@@ -29,17 +29,9 @@
   <body>
     <div id="wrap">
       <header>
-        <!-- Fixed navbar -->
         <div class="navbar navbar-default" role="navigation">
           <div class="container">
             <div class="navbar-header">
-              <button type="button" class="navbar-toggle"
-                  data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
               {%- if act -%}
               <a class="navbar-brand" href="/"><img class="logo"
                 src="/static/images/PyCologne-2012-Logo-web-horizontal.svg"
@@ -52,14 +44,14 @@
                 width="120" height="120" /></a>
               {% endif %}
             </div>
-            <div class="collapse navbar-collapse">
+            <div class="navbar-collapse">
               <ul class="nav navbar-nav navbar-right">
                 {% for href, caption in get_topmenue(): %}
                 {%- if href[1:] == act -%}
                 <li class="active">{% else %}<li>{% endif %}<a href="{{ href }}" >{{ caption }}</a></li>
                 {% endfor %}
               </ul>
-            </div><!--/.nav-collapse -->
+            </div>
           </div>
         </div>
       </header>
@@ -70,11 +62,5 @@
     </div> <!-- /wrap -->
 
     {% include "footer.html" %}
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="/static/js/jquery-3.2.1.min.js"></script>
-    <script src="/static/js/bootstrap.js"></script>
   </body>
 </html>
