@@ -1,18 +1,26 @@
-## **pyCologne** - die Python User Group Köln
+# Die Python User Group Köln
 
-**pyCologne** ist eine Gruppe von Python-Freunden aus der Region
-Köln-Bonn-Düsseldorf. Es finden regelmäßige monatliche Treffen statt (immer am
-2. Mittwoch des Monat), die aus einem informativen Teil und einem optionalen
-informellen Ausklang beim gemeinsamen Restaurantbesuch bestehen.
+PyCologne ist die Anlaufstelle für alle, die Python lieben — egal ob Profi,
+Quereinsteiger:in oder gerade erst neugierig geworden. Wir treffen uns
+einmal im Monat in Köln, am zweiten Mittwoch, um über Python zu reden,
+Vorträge zu hören, Dinge auszuprobieren und gemeinsam einen guten
+Abend zu verbringen.
 
-Die Treffen sind geprägt vom intensiven Austausch von Informationen über Python
-durch attraktive Vorträge, Diskussionen und Hilfe zu allen Themen aus der
-Python-Welt. Neben technischen Themen sind dies auch Buchvorstellungen,
-Ankündigungen und Berichte von Veranstaltungen oder Planung eigener
-Veranstaltungen.
+## Was bei einem Treffen passiert
 
-Die Teilnehmer kommen aus sehr unterschiedlichen Tätigkeitsbereichen. Einige
-sind bei privaten Firmen, öffentlichen Gesellschaften und
-Forschungseinrichtungen beschäftigt. Selbständige, Studenten und Rentner sind
-weitere Gruppen die vertreten sind. Bei pyCologne finden Python-Neulinge genau
-wie Python-Profis ein Informations-, Diskussions- und Inspirations-Forum.
+Im ersten Teil gibt es **Vorträge, Demos und Diskussionen** — von tiefen
+Sprachfeatures über Web-Frameworks und Libraries bis zu Lightning Talks,
+Buchempfehlungen oder Berichten von Konferenzen wie der EuroPython oder
+PyCon DE. Anschließend (für alle, die Lust haben) ein lockerer Ausklang
+in der Nähe.
+
+## Wer zu uns kommt
+
+Unsere Community ist bunt: Entwickler:innen aus Firmen und
+Forschungseinrichtungen, Selbstständige, Studierende, Lehrende und
+Hobbyist:innen. Was uns verbindet, ist die Begeisterung für Python —
+von kleinen Skripten bis zu großen Systemen.
+
+Egal, wo Du gerade stehst: bei uns findest Du Inspiration, Antworten
+auf Deine Fragen und Menschen, mit denen es Spaß macht, über Code
+zu reden.

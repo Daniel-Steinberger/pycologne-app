@@ -1,34 +1,37 @@
-**Wir laden alle Python-Begeisterten aus der Umgebung ein, bei uns mitzumachen
-und zu den Treffen zu kommen!**
+# Mitmachen
 
-Wir sind immer daran interessiert, andere Python-Anwender kennenzulernen und zu
-erfahren, wofür sie Python einsetzen und welche Erfahrungen sie gesammelt
-haben.
+Du programmierst gerne Python — oder fängst gerade erst an? Komm zu
+unseren Treffen, hör Dir Vorträge an, bring Deine eigenen Themen mit
+oder genieß einfach die Runde. Anmeldung läuft kostenlos über
+[Meetup](https://www.meetup.com/pycologne/), reinschauen reicht aber
+auch.
 
-## Veranstaltungsort
+Wir sind immer daran interessiert, neue Python-Anwender:innen
+kennenzulernen — und zu erfahren, wofür Du Python einsetzt und welche
+Erfahrungen Du dabei machst.
 
-DVS AG - Deutsche Verrechnungsstelle AG<br>
-Schanzenstraße 30<br>
-51063 Köln<br>
-Germany
+## Wo wir uns treffen
 
-## Anreise
+**DVS AG — Deutsche Verrechnungsstelle AG**<br>
+Schanzenstraße 30, 51063 Köln (Carlswerk)
 
-### ÖPNV
+## So findest Du uns
 
-Die nächste ÖPNV-Haltestelle ist „von-Sparr-Straße" (Straßenbahn Linie 4).
+### Mit Bus &amp; Bahn
 
-### Auto
+Direkt vor der Tür hält die Linie 4 — Haltestelle „von-Sparr-Straße".
+Vom Kölner Hauptbahnhof bist Du in rund 15 Minuten da.
 
-Parken ist mit etwas Glück in der Umgebung kostenfrei möglich.
+### Mit dem Auto
 
-### Karte
+Parkplätze gibt es mit etwas Glück kostenfrei in den Seitenstraßen
+rund um das Carlswerk-Gelände.
 
-Auf der folgenden Karte ist die Lage des Veranstaltungsorts zu ersehen.
+### Auf der Karte
 
 <div id="map"></div>
 <link rel="stylesheet" href="/static/js/leaflet/leaflet.css" />
 <script src="/static/js/leaflet/leaflet.js"></script>
 <script src="/static/js/map.js"></script>
 
-[Openstreetmap-Link zu diesem Kartenausschnitt](https://www.openstreetmap.org/?mlat=50.96850&mlon=7.01150#map=18/50.96850/7.01150)
+[Auf OpenStreetMap öffnen](https://www.openstreetmap.org/?mlat=50.96850&mlon=7.01150#map=18/50.96850/7.01150)

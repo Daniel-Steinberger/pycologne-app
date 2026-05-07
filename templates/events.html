@@ -1,36 +1,46 @@
 {% extends "theme.html" %}
+{% block title %}Termine — PyCologne{% endblock %}
 {% block body %}
 <div class="container">
-  <div class="row">
-    <div class="col-md-6">
-      <div class="page-header">
-        <h1>Nächstes User Group Treffen</h1>
-      </div>
-      <div class="well">
-        <p class="lead">{{ format_date(next_meeting) }}</strong></p>
-        <p><a class="btn btn-primary" href="{{ next_meeting_url }}" role="button">Infos (Programm, Anfahrt, etc.) &raquo;</a></p>
-      </div>
-    </div>
+  <div class="events-grid">
 
-    <div class="col-md-6">
+    <section class="event-next">
+      <header class="section-header">
+        <h1>Nächstes Treffen</h1>
+      </header>
+      <article class="card card--accent">
+        <p class="card__date">
+          <time>{{ format_date(next_meeting) }}</time>
+        </p>
+        <p class="card__action">
+          <a class="btn btn--primary" href="{{ next_meeting_url }}">
+            Programm &amp; Anfahrt <span aria-hidden="true">→</span>
+          </a>
+        </p>
+      </article>
+
       {% if events %}
-      <div class="page-header">
-        <h1>Aktuelle Veranstaltungen</h1>
-      </div>
-
-      {{ events | safe }}
+      <section class="event-extras prose">
+        <h2>Aktuelle Veranstaltungen</h2>
+        {{ events | safe }}
+      </section>
       {% endif %}
+    </section>
 
-      <div class="page-header">
-        <h1>Terminvorschau</h1>
-      </div>
-
-      <ul>
-      {% for date in meetings %}
-        <li>{{ format_date(date) }} - User Group Meeting</li>
-      {% endfor %}
+    <section class="event-upcoming">
+      <header class="section-header">
+        <h2>Terminvorschau</h2>
+      </header>
+      <ul class="upcoming-list">
+        {% for date in meetings %}
+        <li class="upcoming-list__item">
+          <time class="upcoming-list__date">{{ format_date(date) }}</time>
+          <span class="upcoming-list__label">User Group Meeting</span>
+        </li>
+        {% endfor %}
       </ul>
-    </div>
+    </section>
+
   </div>
 </div>
 {% endblock %}

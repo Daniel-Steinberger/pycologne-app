@@ -1,9 +1,16 @@
 {% extends "theme.html" %}
+{% block title %}404 — PyCologne{% endblock %}
 {% block body %}
-<div class="col-md-8 col-md-offset-2 module-cite">
-  <div class="text-center">
-    <h3 id="message">{{ msg }}</h3>
-    <p id="info">{{ info }}<p>
-  </div>
+<div class="container">
+  <article class="prose error-page">
+    <p class="eyebrow">Fehler 404</p>
+    <h1 id="message">{{ msg }}</h1>
+    <p id="info">{{ info }}</p>
+    <p>
+      <a class="btn" href="/">
+        <span aria-hidden="true">←</span> Zur Startseite
+      </a>
+    </p>
+  </article>
 </div>
 {% endblock %}

@@ -1,10 +1,8 @@
 {% extends "theme.html" %}
 {% block body %}
 <div class="container">
-  <div class="col-lg-12">
-    <div class="row">
-      {{ content|safe }}
-    </div>
-  </div>
+  <article class="prose">
+    {{ content | safe }}
+  </article>
 </div>
 {% endblock %}

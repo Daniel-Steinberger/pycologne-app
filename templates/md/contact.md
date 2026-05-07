@@ -1,9 +1,10 @@
-## Allgemeine Anfragen
+# Kontakt
 
-Die Webseite befindet sich gerade erst wieder im Aufbau, sobald die technischen
-Gegebenheiten erfüllt sind, werden wir passende Kontaktmöglichkeiten zur
-Verfügung stellen.
+Am schnellsten erreichst Du uns über unsere
+[Meetup-Gruppe](https://www.meetup.com/pycologne/) — dort kündigen wir
+alle kommenden Treffen an, und Du kannst Dich kostenlos für ein Treffen
+anmelden.
 
-Bis dahin erreichst Du uns am einfachsten über unsere
-[Meetup-Gruppe](https://www.meetup.com/pycologne/), wo auch alle kommenden
-Treffen angekündigt werden.
+Die Webseite ist gerade frisch im Aufbau. Sobald wir hier weitere
+Kontaktwege eingerichtet haben (E-Mail, Mailingliste oder Mastodon),
+findest Du sie an dieser Stelle.
