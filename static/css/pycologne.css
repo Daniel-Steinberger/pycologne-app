@@ -282,11 +282,7 @@
   .brand {
     display: inline-flex;
     align-items: center;
-    gap: var(--space-3);
     text-decoration: none;
-    color: var(--text);
-    font-weight: 700;
-    letter-spacing: var(--tracking-tight);
   }
   .brand__logo {
     height: 36px;
@@ -295,14 +291,6 @@
   /* Logo invertieren im Dark Mode */
   @media (prefers-color-scheme: dark) {
     .brand__logo { filter: invert(1) hue-rotate(180deg); }
-  }
-  .brand__text {
-    /* Text-Brand neben Logo nur >= md, sonst nur Logo */
-    display: none;
-    font-size: var(--fs-lg);
-  }
-  @media (min-width: 640px) {
-    .brand__text { display: inline; }
   }
 
   .primary-nav { margin-inline-start: auto; }
