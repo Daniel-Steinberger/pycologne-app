@@ -92,16 +92,13 @@ def ensure_next_meeting(next_date: datetime) -> bool:
 Das Programm für das Treffen steht noch nicht fest.
 
 **Wir suchen noch Themen!** Wenn Du einen Vortrag halten oder andere
-Programmpunkte anmelden willst, schreibe einfach auf die [Mailingliste](/join)!
-Daneben gibt es Raum für spontan eingebrachte Themen, z.B. Buch- und
-Programm-Vorstellungen, Fragen, Ankündigungen und alles was euch so zum Thema
-Python einfällt.
+Programmpunkte anmelden willst, melde Dich gerne. Daneben gibt es Raum für
+spontan eingebrachte Themen, z.B. Buch- und Programm-Vorstellungen, Fragen,
+Ankündigungen und alles was euch so zum Thema Python einfällt.
 
 Hast Du vor, zu kommen oder bist verhindert? Sag' uns unverbindlich
-über [Meetup](https://www.meetup.com/pyCologne/) Bescheid (kostenlose
+über [Meetup](https://www.meetup.com/pycologne/) Bescheid (kostenlose
 Anmeldung erforderlich).
-
-Etherpad [Protokoll](http://yourpart.eu/p/pyc_{next_date:%Y%m%d})
 """
         )
     return True
