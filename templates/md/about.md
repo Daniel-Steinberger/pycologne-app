@@ -11,8 +11,8 @@ Abend zu verbringen.
 Im ersten Teil gibt es **Vorträge, Demos und Diskussionen** — von tiefen
 Sprachfeatures über Web-Frameworks und Libraries bis zu Lightning Talks,
 Buchempfehlungen oder Berichten von Konferenzen wie der EuroPython oder
-PyCon DE. Anschließend (für alle, die Lust haben) ein lockerer Ausklang
-in der Nähe.
+PyCon DE. Zwischendurch wird's gesellig: wir bestellen meistens
+gemeinsam Pizza — die geht auf Kosten unseres Gastgebers, der DVS AG.
 
 ## Wer zu uns kommt
 
