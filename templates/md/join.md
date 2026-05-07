@@ -2,13 +2,13 @@
 
 Du programmierst gerne Python — oder fängst gerade erst an? Komm zu
 unseren Treffen, hör Dir Vorträge an, bring Deine eigenen Themen mit
-oder genieß einfach die Runde. Anmeldung läuft kostenlos über
+oder hör einfach zu. Anmeldung läuft kostenlos über
 [Meetup](https://www.meetup.com/pycologne/), reinschauen reicht aber
 auch.
 
-Wir sind immer daran interessiert, neue Python-Anwender:innen
-kennenzulernen — und zu erfahren, wofür Du Python einsetzt und welche
-Erfahrungen Du dabei machst.
+Bei uns sind Diskussionen ausdrücklich gewünscht. Wir freuen uns auf
+neue Python-Anwender:innen, neue Themen und Perspektiven, die wir
+noch nicht kennen.
 
 ## Wo wir uns treffen
 
