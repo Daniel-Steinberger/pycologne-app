@@ -7,7 +7,6 @@ Flask-Webanwendung für die Webseite der Python-User-Group Köln
 
 - Python 3.11 oder neuer
 - [uv](https://docs.astral.sh/uv/) für Dependency-Management
-- `lessc` (Paket `node-less` unter Debian/Ubuntu) zum Kompilieren der CSS-Dateien
 
 uv-Installation:
 
@@ -35,12 +34,6 @@ make run
 uv run python -m pycgnweb -d
 ```
 
-CSS aus LESS-Quellen bauen:
-
-```sh
-make less
-```
-
 Tests:
 
 ```sh
@@ -59,7 +52,7 @@ uv run mypy pycgnweb
 ```
 pycgnweb/        Hauptmodul (Flask-Routen, Konfiguration, Sitzungs-Logik)
 templates/       Jinja2-Templates und ReST-Inhalte
-static/          CSS, LESS-Quellen, Bilder
+static/          CSS, JavaScript, Bilder
 _tests/          pytest-Tests
 docs/            Projekt-Dokumentation (z.B. Renovierungsplan)
 ```
