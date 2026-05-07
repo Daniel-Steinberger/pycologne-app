@@ -13,11 +13,13 @@
     </div>
 
     <div class="col-md-6">
+      {% if events %}
       <div class="page-header">
         <h1>Aktuelle Veranstaltungen</h1>
       </div>
 
       {{ events | safe }}
+      {% endif %}
 
       <div class="page-header">
         <h1>Terminvorschau</h1>
