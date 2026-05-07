@@ -27,14 +27,12 @@ uv sync
 
 ## Entwicklung
 
-Server starten:
+Server starten (mit Debug-Modus und Auto-Reload):
 
 ```sh
-uv run python -m pycgnweb
-# oder mit Debug-Modus
-uv run python -m pycgnweb -d
-# oder per Makefile
 make run
+# oder direkt:
+uv run python -m pycgnweb -d
 ```
 
 CSS aus LESS-Quellen bauen:

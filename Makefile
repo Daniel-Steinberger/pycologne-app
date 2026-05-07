@@ -8,20 +8,19 @@ STATICDIR = static
 LESSDIR = $(STATICDIR)/less
 CSSDIR = $(STATICDIR)/css
 
-.PHONY: all check less run run-debug test lint typecheck
+.PHONY: all check less run test lint typecheck
 
 all:
-	@echo "Targets: run, run-debug, test, check, lint, typecheck, less"
+	@echo "Targets: run, test, check, lint, typecheck, less"
 
 %.css: $(LESSDIR)/%.less
 	lessc $< > $(CSSDIR)/$@
 
 less: $(CSSFILES)
 
+# Lokaler Entwicklungsserver mit Debug-Modus und Auto-Reload
+# (-d schaltet beides ueber Flask ein).
 run:
-	uv run python -m $(PKG)
-
-run-debug:
 	uv run python -m $(PKG) -d
 
 test:
