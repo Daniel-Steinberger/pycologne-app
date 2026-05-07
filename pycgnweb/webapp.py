@@ -2,8 +2,10 @@
 """A Flask-based webapp for the homepage of the pyCologne Python user group."""
 
 import argparse
+import inspect
 import os
 import sys
+import textwrap
 from datetime import datetime
 from functools import partial
 from importlib.metadata import PackageNotFoundError, version
@@ -12,12 +14,25 @@ from typing import Any, cast
 from babel.dates import format_datetime
 from flask import Flask, Response, abort, render_template, request, url_for
 from markdown_it import MarkdownIt
+from pygments import highlight
+from pygments.formatters.html import HtmlFormatter
+from pygments.lexers.python import PythonLexer
 
 from .config import DATE_FORMAT_LONG, MEETUP_URL, REPO_URL
 from .events import meeting_dates
 from .sayings import get_saying
 
 app = Flask(__name__.split(".")[0])
+
+# Quellcode der Terminberechnung: per inspect zur Render-Zeit aus events.py
+# gelesen — wenn der Code dort geaendert wird, aktualisiert sich auch die
+# auf der Termine-Seite gezeigte Variante. Pygments rendert das Markup
+# einmal, light/dark wird per CSS umgeschaltet.
+_MEETING_SOURCE = textwrap.dedent(inspect.getsource(meeting_dates))
+_PY_LEXER = PythonLexer()
+_PY_FORMATTER = HtmlFormatter(cssclass="highlight")
+PYGMENTS_CSS_LIGHT = HtmlFormatter(style="default").get_style_defs(".highlight")
+PYGMENTS_CSS_DARK = HtmlFormatter(style="monokai").get_style_defs(".highlight")
 
 
 def _pkg_version(name: str) -> str:
@@ -38,6 +53,16 @@ def inject_runtime() -> dict[str, dict[str, str]]:
             "markdown_it": _pkg_version("markdown-it-py"),
             "babel": _pkg_version("babel"),
         }
+    }
+
+
+@app.context_processor
+def inject_code_reveal() -> dict[str, str]:
+    """Provide the live source of meeting_dates(), highlighted for both themes."""
+    return {
+        "meeting_source": cast(str, highlight(_MEETING_SOURCE, _PY_LEXER, _PY_FORMATTER)),
+        "pygments_css_light": PYGMENTS_CSS_LIGHT,
+        "pygments_css_dark": PYGMENTS_CSS_DARK,
     }
 
 

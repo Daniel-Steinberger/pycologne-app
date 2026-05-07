@@ -710,6 +710,57 @@
     font-size: var(--fs-xs);
   }
 
+  /* ---- Code-Reveal (Termine-Seite) ----------------------------------- */
+  .code-reveal {
+    margin-top: var(--space-16);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5) var(--space-6);
+  }
+  .code-reveal > summary {
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    color: var(--text);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-1) 0;
+  }
+  .code-reveal > summary::-webkit-details-marker { display: none; }
+  .code-reveal > summary::after {
+    content: "▾";
+    color: var(--text-soft);
+    transition: transform var(--transition-fast);
+    margin-inline-start: var(--space-2);
+  }
+  .code-reveal[open] > summary::after { transform: rotate(180deg); }
+  .code-reveal__hint {
+    margin-top: var(--space-4);
+    color: var(--text-muted);
+    font-size: var(--fs-sm);
+  }
+  .code-reveal .highlight {
+    margin-top: var(--space-3);
+    padding: var(--space-4);
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow-x: auto;
+    font-size: var(--fs-sm);
+  }
+  .code-reveal .highlight pre {
+    margin: 0;
+    padding: 0;
+    background: none;
+    border: 0;
+    font-family: var(--font-mono);
+    line-height: var(--lh-snug);
+  }
+
   /* ---- Prose (Markdown-Inhalte) --------------------------------------- */
   .prose {
     max-width: var(--content-max);

@@ -583,6 +583,7 @@ dependencies = [
     { name = "babel" },
     { name = "flask" },
     { name = "markdown-it-py" },
+    { name = "pygments" },
     { name = "python-dateutil" },
 ]
 
@@ -600,6 +601,7 @@ requires-dist = [
     { name = "babel", specifier = ">=2.16" },
     { name = "flask", specifier = ">=3.0" },
     { name = "markdown-it-py", specifier = ">=3" },
+    { name = "pygments", specifier = ">=2.20.0" },
     { name = "python-dateutil", specifier = ">=2.9" },
 ]
 

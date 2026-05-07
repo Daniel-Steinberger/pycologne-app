@@ -47,5 +47,18 @@
     </section>
 
   </div>
+
+  <details class="code-reveal">
+    <summary>
+      <span aria-hidden="true">⌗</span>
+      So berechnen wir die Termine
+    </summary>
+    <p class="code-reveal__hint">
+      Genau dieser Python-Code aus <code>pycgnweb/events.py</code> liefert
+      die Termine oben — ausgelesen mit <code>inspect.getsource()</code>
+      und mit <a href="https://pygments.org/">Pygments</a> gehighlightet.
+    </p>
+    {{ meeting_source | safe }}
+  </details>
 </div>
 {% endblock %}
