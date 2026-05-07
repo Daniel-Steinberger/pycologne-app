@@ -70,8 +70,10 @@ docs/            Projekt-Dokumentation (z.B. Renovierungsplan)
 
 Die Inhalte der einzelnen Seiten liegen als Markdown-Dateien unter
 `templates/md/` und werden vom Server zu HTML gerendert (`markdown-it-py` mit
-`html=False`) und mit `|safe` ins Template eingebunden. Quelle dieser Dateien
-sind ausschließlich Maintainer-Commits — es gibt keinen Upload-Pfad zur
+`html=True`) und mit `|safe` ins Template eingebunden. Inline-HTML in den
+Markdown-Dateien ist erlaubt, weil einzelne Seiten (z.B. die Anfahrt mit
+Leaflet-Karte) HTML-Snippets benötigen. Quelle dieser Dateien sind
+ausschließlich Maintainer-Commits — es gibt keinen Upload-Pfad zur
 Laufzeit.
 
 ## Beitragende

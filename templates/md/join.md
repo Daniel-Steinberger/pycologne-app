@@ -7,16 +7,16 @@ haben.
 
 ## Veranstaltungsort
 
-ReHub
-Deutz-Mülheimer Straße 121
-51063 Köln
+DVS AG - Deutsche Verrechnungsstelle AG<br>
+Schanzenstraße 30<br>
+51063 Köln<br>
 Germany
 
 ## Anreise
 
 ### ÖPNV
 
-Die nächste ÖPNV-Haltestelle ist „Stegerwaldsiedlung" (Straßenbahn Linie 3 und 4).
+Die nächste ÖPNV-Haltestelle ist „von-Sparr-Straße" (Straßenbahn Linie 4).
 
 ### Auto
 
@@ -26,5 +26,9 @@ Parken ist mit etwas Glück in der Umgebung kostenfrei möglich.
 
 Auf der folgenden Karte ist die Lage des Veranstaltungsorts zu ersehen.
 
-[Openstreetmap-Link zu diesem Kartenausschnitt](https://www.openstreetmap.org/directions?from=&to=50.94855%2C6.98627#map=19/50.94843/6.98642)
-| [Karte als Bild](/static/images/map.png)
+<div id="map"></div>
+<link rel="stylesheet" href="/static/js/leaflet/leaflet.css" />
+<script src="/static/js/leaflet/leaflet.js"></script>
+<script src="/static/js/map.js"></script>
+
+[Openstreetmap-Link zu diesem Kartenausschnitt](https://www.openstreetmap.org/?mlat=50.96850&mlon=7.01150#map=18/50.96850/7.01150)

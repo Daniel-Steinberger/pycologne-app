@@ -18,9 +18,10 @@ from .sayings import get_saying
 app = Flask(__name__.split(".")[0])
 
 
-# Markdown-Parser. html=False blockt Inline-HTML im Eingang (Default-sicher);
-# Quelle der .md-Dateien sind ausschliesslich Maintainer-Commits, vgl. README.
-_md = MarkdownIt("commonmark", {"html": False, "linkify": True}).enable(["table", "strikethrough"])
+# Markdown-Parser. html=True erlaubt Inline-HTML in den .md-Quellen (z.B. das
+# Leaflet-Karten-Snippet auf /join); Quelle der .md-Dateien sind ausschliesslich
+# Maintainer-Commits, daher kein XSS-Risiko, vgl. README.
+_md = MarkdownIt("commonmark", {"html": True, "linkify": True}).enable(["table", "strikethrough"])
 
 
 def get_urls() -> dict[str, str]:
