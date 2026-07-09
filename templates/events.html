@@ -1,5 +1,23 @@
 {% extends "theme.html" %}
 {% block title %}Termine — PyCologne{% endblock %}
+
+{% macro past_item(meeting) %}
+<li class="upcoming-list__item upcoming-list__item--past">
+  <a class="past-link" href="{{ meeting.url }}">
+    <time class="upcoming-list__date">{{ format_date(meeting.date) }}</time>
+    <span class="upcoming-list__label">
+      {%- if meeting.topics -%}
+        {{ meeting.topics | join(" · ") }}
+      {%- elif meeting.teaser -%}
+        {{ meeting.teaser }}
+      {%- else -%}
+        Kein Protokoll vorhanden
+      {%- endif -%}
+    </span>
+  </a>
+</li>
+{% endmacro %}
+
 {% block body %}
 <div class="container">
   <div class="events-grid">
@@ -23,6 +41,25 @@
       <section class="event-extras prose">
         <h2>Aktuelle Veranstaltungen</h2>
         {{ events | safe }}
+      </section>
+      {% endif %}
+
+      {% if past_meetings %}
+      <section class="event-past">
+        <header class="section-header">
+          <h2>Vergangene Treffen</h2>
+        </header>
+        <ul class="upcoming-list">
+          {% for meeting in past_meetings[:3] %}{{ past_item(meeting) }}{% endfor %}
+        </ul>
+        {% if past_meetings | length > 3 %}
+        <details class="past-more">
+          <summary>Frühere Treffen anzeigen ({{ past_meetings | length - 3 }})</summary>
+          <ul class="upcoming-list">
+            {% for meeting in past_meetings[3:] %}{{ past_item(meeting) }}{% endfor %}
+          </ul>
+        </details>
+        {% endif %}
       </section>
       {% endif %}
     </section>

@@ -4,6 +4,7 @@
 import argparse
 import inspect
 import os
+import re
 import sys
 import textwrap
 from datetime import datetime
@@ -124,6 +125,98 @@ def get_topmenue() -> list[tuple[str, str]]:
     ]
 
 
+# Platzhalter-Satz aus ensure_next_meeting — steht er (ohne Protokoll-
+# Abschnitte) in einer Termin-Datei, gibt es noch kein Protokoll.
+_DEFAULT_PROGRAM_NOTE = "Das Programm für dieses Treffen steht noch nicht fest."
+
+
+def _protocol_topics(md_text: str) -> list[str]:
+    """Extract topic headings from a meeting protocol.
+
+    Neuere Protokolle gliedern die Zusammenfassung in '###'-Abschnitte
+    (mit Nummerierungs-Praefix), aeltere listen das Programm als
+    Aufzaehlung unter '## Programm'.
+    """
+    lines = md_text.splitlines()
+    topics = [
+        re.sub(r"^\d+\.\s*", "", line.removeprefix("### ").strip())
+        for line in lines
+        if line.startswith("### ")
+    ]
+    if topics:
+        return topics
+    in_program = False
+    for line in lines:
+        if line.startswith("## "):
+            in_program = line.removeprefix("## ").strip().lower() == "programm"
+        elif in_program and line.startswith("- "):
+            topics.append(line.removeprefix("- ").strip())
+    return topics
+
+
+def _protocol_teaser(md_text: str) -> str:
+    """Return the first body paragraph of a meeting file.
+
+    Ueberschriften, die fettgedruckten Datum/Ort-Zeilen und der immer
+    gleiche Schlussteil ("Wir suchen Themen!" ff.) werden uebersprungen;
+    umgebrochene Absatzzeilen werden wieder zusammengefuegt. Besteht die
+    Datei nur aus dem Default-Platzhalter, kommt '' zurueck.
+    """
+    body = md_text.split("**Wir suchen Themen!**")[0]
+    paragraph: list[str] = []
+    for line in body.splitlines():
+        stripped = line.strip()
+        if not stripped or stripped.startswith(("#", "**")):
+            if paragraph:
+                break
+            continue
+        if stripped == _DEFAULT_PROGRAM_NOTE:
+            return ""
+        paragraph.append(stripped)
+    return " ".join(paragraph)
+
+
+def get_past_meetings(reference: datetime) -> list[dict[str, Any]]:
+    """Return past meetings that have a Markdown file, newest first.
+
+    Scannt templates/md/events/ nach datumsbenannten Dateien vor
+    *reference* und liefert je Treffen einen Inhaltshinweis: die
+    Themen-Ueberschriften des Protokolls ('topics') oder ersatzweise die
+    erste Textzeile ('teaser'); beides leer, wenn nur der
+    Default-Platzhalter drinsteht.
+    """
+    events_dir = os.path.join(app.template_folder or "", "md", "events")
+    if not os.path.isdir(events_dir):
+        return []
+
+    meetings = []
+    # ISO-Datumsnamen: absteigende Dateinamen == absteigende Daten
+    for name in sorted(os.listdir(events_dir), reverse=True):
+        stem, ext = os.path.splitext(name)
+        if ext != ".md":
+            continue
+        try:
+            # Treffen beginnen immer um 19:00 (vgl. events.meeting_dates);
+            # der Dateiname enthaelt nur das Datum.
+            date = datetime.strptime(stem, "%Y-%m-%d").replace(hour=19)
+        except ValueError:
+            continue
+        if date.date() >= reference.date():
+            continue
+        with open(os.path.join(events_dir, name), encoding="utf-8") as file_:
+            md_text = file_.read()
+        topics = _protocol_topics(md_text)
+        meetings.append(
+            {
+                "date": date,
+                "url": f"/events/{stem}",
+                "topics": topics,
+                "teaser": "" if topics else _protocol_teaser(md_text),
+            }
+        )
+    return meetings
+
+
 def ensure_next_meeting(next_date: datetime) -> bool:
     """Ensure that a Markdown file for the next meeting is present.
 
@@ -238,6 +331,7 @@ def events() -> str:
         meetings=meetings,
         next_meeting=next_meeting,
         next_meeting_url=next_meeting_url,
+        past_meetings=get_past_meetings(datetime.now()),
         events=events_,
         format_date=format_date,
     )
