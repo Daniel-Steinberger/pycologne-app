@@ -4,10 +4,10 @@
 
 PKG = pycgnweb
 
-.PHONY: all check run test lint format typecheck
+.PHONY: all check run test lint format typecheck audit
 
 all:
-	@echo "Targets: run, test, check, lint, format, typecheck"
+	@echo "Targets: run, test, check, lint, format, typecheck, audit"
 
 # Lokaler Entwicklungsserver mit Debug-Modus und Auto-Reload
 # (-d schaltet beides ueber Flask ein).
@@ -27,4 +27,8 @@ format:
 typecheck:
 	uv run mypy $(PKG)
 
-check: lint format typecheck test
+# Security-Audit der Abhaengigkeiten (wie in der CI); braucht Netzwerk.
+audit:
+	uvx pip-audit
+
+check: lint format typecheck test audit
