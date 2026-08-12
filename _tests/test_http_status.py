@@ -1,11 +1,12 @@
 """Smoke-Tests fuer HTTP-Status aller Routen via Flask-Test-Client."""
 
 import os
+import re
 from datetime import datetime
 
 import pytest
 
-from pycgnweb.webapp import app, get_past_meetings
+from pycgnweb.webapp import app, get_next_meeting_teaser, get_past_meetings
 
 
 @pytest.fixture
@@ -81,3 +82,20 @@ def test_events_ics_feed(client):
     assert "END:VCALENDAR" in body
     assert "BEGIN:VEVENT" in body
     assert "PyCologne Treffen" in body
+    # RFC 5545, 3.1: keine Content-Zeile laenger als 75 Oktette
+    assert all(len(line.encode("utf-8")) <= 75 for line in body.split("\r\n"))
+
+
+def test_events_ics_feed_carries_program(client):
+    """Ist das Programm bekannt, steht es in der DESCRIPTION des Termins."""
+    body = client.get("/events.ics").get_data(as_text=True)
+    # Faltung rueckgaengig machen, um die Werte am Stueck pruefen zu koennen
+    unfolded = body.replace("\r\n ", "")
+    for event in unfolded.split("BEGIN:VEVENT")[1:]:
+        date = re.search(r"UID:meeting-(\d{4}-\d{2}-\d{2})@", event).group(1)
+        teaser = get_next_meeting_teaser(datetime.strptime(date, "%Y-%m-%d"))
+        if teaser:
+            # erstes Wort genuegt: der Rest ist ICS-escaped
+            assert teaser.split(",")[0] in event
+        # der allgemeine Hinweistext bleibt in jedem Fall erhalten
+        assert "Monatliches Treffen der Python User Group" in event

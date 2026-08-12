@@ -384,7 +384,29 @@ def page_not_found(_err: Exception) -> tuple[str, int]:
 
 def _ics_escape(text: str) -> str:
     """Escape special chars per RFC 5545 (LOCATION/DESCRIPTION values)."""
-    return text.replace("\\", "\\\\").replace(",", "\\,").replace(";", "\\;")
+    return text.replace("\\", "\\\\").replace(",", "\\,").replace(";", "\\;").replace("\n", "\\n")
+
+
+def _ics_fold(line: str) -> str:
+    """Fold a content line to 75 octets per RFC 5545, section 3.1.
+
+    Fortsetzungszeilen beginnen mit einem Leerzeichen, das selbst als
+    Oktett zaehlt. Gefaltet wird an Zeichen-, nicht an Byte-Grenzen,
+    damit Umlaute nicht mitten in der UTF-8-Sequenz zerreissen.
+    """
+    parts: list[str] = []
+    current = ""
+    used = 0
+    for char in line:
+        size = len(char.encode("utf-8"))
+        if used + size > 75:
+            parts.append(current)
+            current = ""
+            used = 1  # das fuehrende Leerzeichen der Fortsetzungszeile
+        current += char
+        used += size
+    parts.append(current)
+    return "\r\n ".join(parts)
 
 
 @app.route("/events.ics")
@@ -398,7 +420,7 @@ def events_feed() -> Response:
     from datetime import UTC, datetime, timedelta
 
     location = _ics_escape("DVS AG, Schanzenstraße 30, 51063 Köln")
-    description = _ics_escape(
+    boilerplate = (
         "Monatliches Treffen der Python User Group Köln. "
         "Programm und Anmeldung über https://www.meetup.com/pycologne/"
     )
@@ -417,6 +439,11 @@ def events_feed() -> Response:
     for date in meeting_dates(count=12):
         end = date + timedelta(hours=2)
         event_url = url_for("events_date", date=date.strftime("%Y-%m-%d"), _external=True)
+        # Steht das Programm schon in der Termin-Datei, kommt es vor den
+        # immer gleichen Hinweistext — Abonnenten sehen das Thema direkt
+        # im Kalendereintrag.
+        teaser = get_next_meeting_teaser(date)
+        description = _ics_escape(f"{teaser}\n\n{boilerplate}" if teaser else boilerplate)
         lines.extend(
             [
                 "BEGIN:VEVENT",
@@ -433,7 +460,7 @@ def events_feed() -> Response:
         )
 
     lines.append("END:VCALENDAR")
-    body = "\r\n".join(lines) + "\r\n"
+    body = "\r\n".join(_ics_fold(line) for line in lines) + "\r\n"
     return Response(body, mimetype="text/calendar")
 
 
