@@ -15,6 +15,7 @@ from typing import Any, cast
 from babel.dates import format_datetime
 from flask import Flask, Response, abort, render_template, request, url_for
 from markdown_it import MarkdownIt
+from markupsafe import Markup, escape
 from pygments import highlight
 from pygments.formatters.html import HtmlFormatter
 from pygments.lexers.python import PythonLexer
@@ -22,6 +23,7 @@ from pygments.lexers.python import PythonLexer
 from .config import DATE_FORMAT_LONG, MEETUP_URL, REPO_URL
 from .events import meeting_dates
 from .sayings import get_saying
+from .search import HIGHLIGHT_CLOSE, HIGHLIGHT_OPEN, ProtocolIndex
 
 app = Flask(__name__.split(".")[0])
 
@@ -425,6 +427,53 @@ def contact() -> str:
     """Return contact page."""
     content = get_template("md", "contact.md")
     return render_content("contact", content)
+
+
+# Der Index haelt seine Daten im Speicher und baut sich neu, sobald sich im
+# Protokollverzeichnis etwas aendert; er wird beim ersten Suchaufruf gefuellt.
+_protocol_index: ProtocolIndex | None = None
+
+
+def _index() -> ProtocolIndex:
+    """Den Protokoll-Index liefern, passend zum aktuellen Template-Ordner."""
+    global _protocol_index  # noqa: PLW0603
+    events_dir = os.path.join(app.template_folder or "", "md", "events")
+    if _protocol_index is None or _protocol_index.events_dir != events_dir:
+        _protocol_index = ProtocolIndex(events_dir)
+    return _protocol_index
+
+
+def _highlight(excerpt: str) -> Markup:
+    """Trefferausschnitt sicher als HTML aufbereiten.
+
+    Erst escapen, dann die Marker aus der Suche zu <mark> machen: So kann
+    aus dem Protokolltext kein Markup in die Seite gelangen.
+    """
+    # escape() liefert Markup; dessen replace() escapet das Argument, ein
+    # bereits als Markup markiertes Tag also nicht. Damit bleibt der
+    # Protokolltext escaped und nur die Marker werden zu echtem HTML.
+    return (
+        escape(excerpt)
+        .replace(HIGHLIGHT_OPEN, Markup("<mark>"))
+        .replace(HIGHLIGHT_CLOSE, Markup("</mark>"))
+    )
+
+
+@app.route("/suche")
+def search() -> str:
+    """Volltextsuche ueber die Protokolle vergangener Treffen."""
+    query = request.args.get("q", "").strip()
+    results = _index().search(query) if query else []
+    format_date = partial(format_datetime, format=DATE_FORMAT_LONG, locale="DE")
+    return render_template(
+        "search.html",
+        act="search",
+        urls=get_urls(),
+        query=query,
+        results=results,
+        highlight=_highlight,
+        format_date=format_date,
+    )
 
 
 @app.errorhandler(404)

@@ -1,0 +1,53 @@
+{% extends "theme.html" %}
+{% block title %}Protokolle durchsuchen — PyCologne{% endblock %}
+
+{% block body %}
+<div class="container">
+  <section class="search">
+    <header class="section-header">
+      <h1>Protokolle durchsuchen</h1>
+    </header>
+
+    <p class="search__hint">
+      Durchsucht die Protokolle aller vergangenen Treffen, von den
+      Etherpad-Mitschriften ab 2013 bis heute. Mehrere Begriffe werden
+      verknüpft, es genügt jeweils der Wortanfang.
+    </p>
+
+    <form class="search-form" action="/suche" method="get" role="search">
+      <label class="search-form__label" for="q">Suchbegriff</label>
+      <input class="search-form__input" type="search" id="q" name="q"
+             value="{{ query }}" placeholder="pandas, Metaklassen, Django ..."
+             autofocus>
+      <button class="btn btn--primary" type="submit">Suchen</button>
+    </form>
+
+    {% if query %}
+    <p class="search__count">
+      {% if results %}
+        {{ results | length }}
+        {{ "Protokoll" if results | length == 1 else "Protokolle" }} gefunden
+      {% else %}
+        Keine Treffer für <strong>{{ query }}</strong>.
+      {% endif %}
+    </p>
+
+    <ul class="search-results">
+      {% for hit in results %}
+      <li class="search-results__item">
+        <a class="search-results__link" href="{{ hit.url }}">
+          <time class="search-results__date">{{ format_date(hit.date) }}</time>
+          <span class="search-results__title">{{ hit.title }}</span>
+        </a>
+        <p class="search-results__excerpt">{{ highlight(hit.excerpt) }}</p>
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+    <p class="search__back">
+      <a href="/events">Zurück zu den Terminen</a>
+    </p>
+  </section>
+</div>
+{% endblock %}

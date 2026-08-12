@@ -55,6 +55,13 @@
         <ul class="upcoming-list">
           {% for meeting in past_meetings %}{{ past_item(meeting) }}{% endfor %}
         </ul>
+        <form class="search-form search-form--inline" action="/suche" method="get" role="search">
+          <label class="search-form__label" for="q">Protokolle durchsuchen</label>
+          <input class="search-form__input" type="search" id="q" name="q"
+                 placeholder="pandas, Metaklassen, Django ...">
+          <button class="btn btn--small" type="submit">Suchen</button>
+        </form>
+
         {% if past_by_year %}
         <div class="past-years">
           <h3 class="past-years__title">Aus dem Archiv</h3>
