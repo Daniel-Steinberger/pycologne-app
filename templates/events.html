@@ -30,6 +30,9 @@
         <p class="card__date">
           <time>{{ format_date(next_meeting) }}</time>
         </p>
+        {% if next_meeting_teaser %}
+        <p class="card__teaser">{{ next_meeting_teaser }}</p>
+        {% endif %}
         <p class="card__action">
           <a class="btn btn--primary" href="{{ next_meeting_url }}">
             Programm &amp; Anfahrt <span aria-hidden="true">→</span>
