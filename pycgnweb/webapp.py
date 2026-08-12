@@ -253,6 +253,25 @@ Anmeldung läuft unverbindlich und kostenlos über
     return True
 
 
+def get_next_meeting_teaser(next_date: datetime) -> str:
+    """Return a short teaser for the next meeting's program, if known.
+
+    Reads the same Markdown file that ensure_next_meeting writes to;
+    returns '' if the file does not exist yet or only contains the
+    default placeholder (no program announced yet).
+    """
+    path = os.path.join(
+        app.template_folder or "",
+        "md",
+        "events",
+        f"{next_date:%Y-%m-%d}.md",
+    )
+    if not os.path.isfile(path):
+        return ""
+    with open(path, encoding="utf-8") as file_:
+        return _protocol_teaser(file_.read())
+
+
 app.jinja_env.globals.update(get_topmenue=get_topmenue)
 
 
@@ -278,6 +297,7 @@ def index() -> str:
         urls=get_urls(),
         act="",
         next_meeting=next_meeting,
+        next_meeting_teaser=get_next_meeting_teaser(next_meeting),
         format_date=format_date,
         saying=saying,
         author=author,
@@ -331,6 +351,7 @@ def events() -> str:
         meetings=meetings,
         next_meeting=next_meeting,
         next_meeting_url=next_meeting_url,
+        next_meeting_teaser=get_next_meeting_teaser(next_meeting),
         past_meetings=get_past_meetings(datetime.now()),
         events=events_,
         format_date=format_date,
