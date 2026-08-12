@@ -82,7 +82,15 @@ def inject_code_reveal() -> dict[str, str]:
 # Markdown-Parser. html=True erlaubt Inline-HTML in den .md-Quellen (z.B. das
 # Leaflet-Karten-Snippet auf /join); Quelle der .md-Dateien sind ausschliesslich
 # Maintainer-Commits, daher kein XSS-Risiko, vgl. README.
-_md = MarkdownIt("commonmark", {"html": True, "linkify": True}).enable(["table", "strikethrough"])
+#
+# linkify verlangt zweierlei: die Option (unten) und die gleichnamige Regel,
+# die das commonmark-Preset deaktiviert laesst. Dazu das Paket linkify-it-py,
+# das als Extra von markdown-it-py in den Abhaengigkeiten steht. Fehlt es,
+# bleibt die Regel wirkungslos, statt einen Fehler zu werfen; die Adressen in
+# den Protokollen sind deshalb zusaetzlich explizit als Links ausgezeichnet.
+_md = MarkdownIt("commonmark", {"html": True, "linkify": True}).enable(
+    ["table", "strikethrough", "linkify"]
+)
 
 
 def get_urls() -> dict[str, str]:

@@ -11,8 +11,10 @@ maintainers = [
 ]
 dependencies = [
     "flask>=3.0",
+    # linkify-Extra: ohne linkify-it-py ignoriert markdown-it-py die
+    # linkify-Option stillschweigend, Adressen im Text blieben dann Text.
+    "markdown-it-py[linkify]>=3",
     "python-dateutil>=2.9",
-    "markdown-it-py>=3",
     "babel>=2.16",
     "pygments>=2.20.0",
 ]
