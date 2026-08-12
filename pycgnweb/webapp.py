@@ -129,6 +129,10 @@ def get_topmenue() -> list[tuple[str, str]]:
 # Abschnitte) in einer Termin-Datei, gibt es noch kein Protokoll.
 _DEFAULT_PROGRAM_NOTE = "Das Programm für dieses Treffen steht noch nicht fest."
 
+# So viele vergangene Treffen stehen auf /events einzeln untereinander,
+# der Rest wird nach Jahrgang gruppiert.
+RECENT_MEETINGS = 3
+
 
 def _protocol_topics(md_text: str) -> list[str]:
     """Extract topic headings from a meeting protocol.
@@ -176,6 +180,25 @@ def _protocol_teaser(md_text: str) -> str:
     return " ".join(paragraph)
 
 
+# Ergebnis-Cache fuer die Protokoll-Uebersicht. Ohne ihn liest jeder Aufruf
+# von /events jede Protokolldatei komplett; mit dem Archiv ab 2013 sind das
+# ueber neunzig Dateien pro Seitenaufruf. Der Schluessel enthaelt den Zustand
+# des Verzeichnisses, eine geaenderte oder neue Datei laeuft also nicht in
+# einen veralteten Cache.
+_past_meetings_cache: dict[tuple[Any, ...], list[dict[str, Any]]] = {}
+
+
+def _events_dir_state(events_dir: str) -> tuple[tuple[str, int], ...]:
+    """Fingerabdruck des Termin-Verzeichnisses (Dateiname und mtime)."""
+    return tuple(
+        sorted(
+            (entry.name, entry.stat().st_mtime_ns)
+            for entry in os.scandir(events_dir)
+            if entry.name.endswith(".md")
+        )
+    )
+
+
 def get_past_meetings(reference: datetime) -> list[dict[str, Any]]:
     """Return past meetings that have a Markdown file, newest first.
 
@@ -184,10 +207,18 @@ def get_past_meetings(reference: datetime) -> list[dict[str, Any]]:
     Themen-Ueberschriften des Protokolls ('topics') oder ersatzweise die
     erste Textzeile ('teaser'); beides leer, wenn nur der
     Default-Platzhalter drinsteht.
+
+    Das Ergebnis wird gecacht, solange sich weder das Verzeichnis noch der
+    Bezugstag aendert.
     """
     events_dir = os.path.join(app.template_folder or "", "md", "events")
     if not os.path.isdir(events_dir):
         return []
+
+    cache_key = (_events_dir_state(events_dir), reference.date())
+    cached = _past_meetings_cache.get(cache_key)
+    if cached is not None:
+        return cached
 
     meetings = []
     # ISO-Datumsnamen: absteigende Dateinamen == absteigende Daten
@@ -214,7 +245,25 @@ def get_past_meetings(reference: datetime) -> list[dict[str, Any]]:
                 "teaser": "" if topics else _protocol_teaser(md_text),
             }
         )
+    # Nur der aktuelle Verzeichniszustand ist interessant; alte Eintraege
+    # wuerden den Cache mit jeder Aenderung weiter aufblaehen.
+    _past_meetings_cache.clear()
+    _past_meetings_cache[cache_key] = meetings
     return meetings
+
+
+def group_meetings_by_year(
+    meetings: list[dict[str, Any]],
+) -> list[tuple[int, list[dict[str, Any]]]]:
+    """Gruppiere Treffen nach Jahr, neuestes Jahr zuerst.
+
+    Die Termine-Seite zeigt damit pro Jahrgang einen aufklappbaren Block,
+    statt alle Protokolle seit 2013 in eine Liste zu schuetten.
+    """
+    grouped: dict[int, list[dict[str, Any]]] = {}
+    for meeting in meetings:
+        grouped.setdefault(meeting["date"].year, []).append(meeting)
+    return sorted(grouped.items(), reverse=True)
 
 
 def ensure_next_meeting(next_date: datetime) -> bool:
@@ -345,6 +394,9 @@ def events() -> str:
 
     next_meeting_url = f"/events/{next_meeting:%Y-%m-%d}"
     ensure_next_meeting(next_meeting)
+    # Die jüngsten Treffen stehen einzeln, alles Ältere nach Jahrgang
+    # gruppiert darunter.
+    past_meetings = get_past_meetings(datetime.now())
     return render_template(
         "/events.html",
         act="events",
@@ -352,7 +404,8 @@ def events() -> str:
         next_meeting=next_meeting,
         next_meeting_url=next_meeting_url,
         next_meeting_teaser=get_next_meeting_teaser(next_meeting),
-        past_meetings=get_past_meetings(datetime.now()),
+        past_meetings=past_meetings[:RECENT_MEETINGS],
+        past_by_year=group_meetings_by_year(past_meetings[RECENT_MEETINGS:]),
         events=events_,
         format_date=format_date,
     )

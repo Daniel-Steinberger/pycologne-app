@@ -6,7 +6,12 @@ from datetime import datetime
 
 import pytest
 
-from pycgnweb.webapp import app, get_next_meeting_teaser, get_past_meetings
+from pycgnweb.webapp import (
+    app,
+    get_next_meeting_teaser,
+    get_past_meetings,
+    group_meetings_by_year,
+)
 
 
 @pytest.fixture
@@ -70,6 +75,38 @@ def test_get_past_meetings_metadata(client):  # pylint: disable=unused-argument
     assert by_url["/events/2026-06-10"]["teaser"].startswith("Da Daniel")
     # altes Protokoll mit Programmliste
     assert by_url["/events/2017-08-09"]["topics"]
+
+
+def test_group_meetings_by_year(client):  # pylint: disable=unused-argument
+    """Die Gruppierung liefert Jahrgaenge absteigend, Treffen darin ebenso."""
+    meetings = get_past_meetings(datetime(2026, 7, 9))
+    grouped = group_meetings_by_year(meetings)
+
+    years = [year for year, _ in grouped]
+    assert years == sorted(years, reverse=True)
+    # kein Treffen geht bei der Gruppierung verloren oder doppelt hinein
+    assert sum(len(items) for _, items in grouped) == len(meetings)
+    for year, items in grouped:
+        assert all(meeting["date"].year == year for meeting in items)
+        dates = [meeting["date"] for meeting in items]
+        assert dates == sorted(dates, reverse=True)
+
+
+def test_get_past_meetings_uses_cache(client):  # pylint: disable=unused-argument
+    """Zwei Aufrufe ohne Dateiaenderung liefern dasselbe Listenobjekt."""
+    reference = datetime(2026, 7, 9)
+    first = get_past_meetings(reference)
+    second = get_past_meetings(reference)
+    assert first is second
+
+
+def test_events_page_groups_archive_by_year(client):
+    """Aeltere Treffen erscheinen als aufklappbare Jahrgaenge."""
+    html = client.get("/events").get_data(as_text=True)
+    assert "Aus dem Archiv" in html
+    assert 'class="past-year"' in html
+    # das jeweils oberste Jahr ist aufgeklappt
+    assert re.search(r'<details class="past-year" open>', html)
 
 
 def test_events_ics_feed(client):

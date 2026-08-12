@@ -53,15 +53,23 @@
           <h2>Vergangene Treffen</h2>
         </header>
         <ul class="upcoming-list">
-          {% for meeting in past_meetings[:3] %}{{ past_item(meeting) }}{% endfor %}
+          {% for meeting in past_meetings %}{{ past_item(meeting) }}{% endfor %}
         </ul>
-        {% if past_meetings | length > 3 %}
-        <details class="past-more">
-          <summary>Frühere Treffen anzeigen ({{ past_meetings | length - 3 }})</summary>
-          <ul class="upcoming-list">
-            {% for meeting in past_meetings[3:] %}{{ past_item(meeting) }}{% endfor %}
-          </ul>
-        </details>
+        {% if past_by_year %}
+        <div class="past-years">
+          <h3 class="past-years__title">Aus dem Archiv</h3>
+          {% for year, meetings_of_year in past_by_year %}
+          <details class="past-year"{% if loop.first %} open{% endif %}>
+            <summary>
+              {{ year }}
+              <span class="past-year__count">{{ meetings_of_year | length }} Treffen</span>
+            </summary>
+            <ul class="upcoming-list">
+              {% for meeting in meetings_of_year %}{{ past_item(meeting) }}{% endfor %}
+            </ul>
+          </details>
+          {% endfor %}
+        </div>
         {% endif %}
       </section>
       {% endif %}

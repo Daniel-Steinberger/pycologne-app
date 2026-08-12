@@ -839,6 +839,33 @@
   .past-more > summary:hover { color: var(--text); }
   .past-more[open] > summary { margin-bottom: var(--space-3); }
 
+  /* ---- Archiv nach Jahrgang (Termine-Seite) -------------------------- */
+  .past-years { margin-top: var(--space-6); }
+  .past-years__title {
+    font-size: var(--fs-sm);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: var(--space-2);
+  }
+  .past-year + .past-year { border-top: 1px solid var(--border); }
+  .past-year > summary {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-3);
+    cursor: pointer;
+    padding: var(--space-2) 0;
+    font-variant-numeric: tabular-nums;
+  }
+  .past-year > summary:hover { color: var(--accent); }
+  .past-year__count {
+    font-size: var(--fs-xs);
+    color: var(--text-muted);
+  }
+  .past-year[open] > summary { margin-bottom: var(--space-2); }
+  .past-year[open] + .past-year > summary { padding-top: var(--space-3); }
+
   /* ---- Code-Reveal (Termine-Seite) ----------------------------------- */
   .code-reveal {
     margin-top: var(--space-16);
