@@ -168,13 +168,15 @@ def _protocol_topics(md_text: str) -> list[str]:
     return topics
 
 
-def _protocol_teaser(md_text: str) -> str:
-    """Return the first body paragraph of a meeting file.
+def _protocol_teaser(md_text: str) -> Markup:
+    """Return the first body paragraph of a meeting file, as rendered HTML.
 
     Ueberschriften, die fettgedruckten Datum/Ort-Zeilen und der immer
     gleiche Schlussteil ("Wir suchen Themen!" ff.) werden uebersprungen;
     umgebrochene Absatzzeilen werden wieder zusammengefuegt. Besteht die
-    Datei nur aus dem Default-Platzhalter, kommt '' zurueck.
+    Datei nur aus dem Default-Platzhalter, kommt '' zurueck. Das Ergebnis
+    ist inline-gerendertes Markdown (Fett/Kursiv/Links bleiben erhalten),
+    damit es in den Templates nicht als rohes '**...**' auftaucht.
     """
     body = md_text.split("**Wir suchen Themen!**")[0]
     paragraph: list[str] = []
@@ -185,9 +187,11 @@ def _protocol_teaser(md_text: str) -> str:
                 break
             continue
         if stripped == _DEFAULT_PROGRAM_NOTE:
-            return ""
+            return Markup("")
         paragraph.append(stripped)
-    return " ".join(paragraph)
+    # Markdown-Quelle stammt ausschliesslich aus Maintainer-Commits, kein
+    # XSS-Risiko, vgl. Kommentar bei der _md-Definition weiter oben.
+    return Markup(_md.renderInline(" ".join(paragraph)))  # noqa: S704
 
 
 # Ergebnis-Cache fuer die Protokoll-Uebersicht. Ohne ihn liest jeder Aufruf
@@ -312,7 +316,7 @@ Anmeldung läuft unverbindlich und kostenlos über
     return True
 
 
-def get_next_meeting_teaser(next_date: datetime) -> str:
+def get_next_meeting_teaser(next_date: datetime) -> Markup:
     """Return a short teaser for the next meeting's program, if known.
 
     Reads the same Markdown file that ensure_next_meeting writes to;
@@ -326,7 +330,7 @@ def get_next_meeting_teaser(next_date: datetime) -> str:
         f"{next_date:%Y-%m-%d}.md",
     )
     if not os.path.isfile(path):
-        return ""
+        return Markup("")
     with open(path, encoding="utf-8") as file_:
         return _protocol_teaser(file_.read())
 
