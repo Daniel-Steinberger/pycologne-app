@@ -23,6 +23,7 @@ from pygments.formatters.html import HtmlFormatter
 from pygments.lexers.python import PythonLexer
 
 from .config import (
+    CONTENT_REPO_URL,
     CONTENT_TRIGGER_FILE,
     DATE_FORMAT_LONG,
     MEETUP_URL,
@@ -101,6 +102,68 @@ _md = MarkdownIt("commonmark", {"html": True, "linkify": True}).enable(
 )
 
 
+def _content_root() -> str:
+    """Return the root of the content checkout, found via the templates/md link."""
+    return os.path.dirname(os.path.realpath(os.path.join(app.template_folder or "", "md")))
+
+
+def _git_ref_commit(git_dir: str, ref: str) -> str | None:
+    """Return the commit a ref points at, from a loose file or packed-refs."""
+    try:
+        with open(os.path.join(git_dir, ref), encoding="utf-8") as file_:
+            return file_.read().strip()
+    except OSError:
+        pass
+    try:
+        with open(os.path.join(git_dir, "packed-refs"), encoding="utf-8") as file_:
+            for line in file_:
+                if line.startswith(("#", "^")):
+                    continue
+                commit, _, name = line.strip().partition(" ")
+                if name == ref:
+                    return commit
+    except OSError:
+        pass
+    return None
+
+
+def content_commit() -> str | None:
+    """Return the commit the delivered content sits on, or None.
+
+    Wird direkt aus dem Git-Verzeichnis des Content-Checkouts gelesen, ohne
+    Unterprozess: zwei kleine Dateien, das faellt neben dem Rendern einer
+    Protokollseite nicht ins Gewicht. Liegen die Inhalte nicht in einem
+    Checkout, etwa im Test oder wenn jemand sie von Hand hinlegt, kommt None
+    zurueck und die Fusszeile laesst die Angabe weg.
+    """
+    git_dir = os.path.join(_content_root(), ".git")
+    try:
+        with open(os.path.join(git_dir, "HEAD"), encoding="utf-8") as file_:
+            head = file_.read().strip()
+    except OSError:
+        return None
+    commit = (
+        _git_ref_commit(git_dir, head.removeprefix("ref: ").strip())
+        if head.startswith("ref: ")
+        else head
+    )
+    if commit is None or re.fullmatch(r"[0-9a-f]{40}", commit) is None:
+        return None
+    return commit
+
+
+@app.context_processor
+def inject_content_version() -> dict[str, str]:
+    """Make the content checkout's commit available to the footer."""
+    commit = content_commit()
+    if commit is None:
+        return {"content_commit": "", "content_commit_url": ""}
+    return {
+        "content_commit": commit[:7],
+        "content_commit_url": f"{CONTENT_REPO_URL}/commit/{commit}",
+    }
+
+
 def get_urls() -> dict[str, str]:
     """Return a dictionary with fixed (external) URLs."""
     return {
@@ -143,7 +206,7 @@ def get_topmenue() -> list[tuple[str, str]]:
     ]
 
 
-# Platzhalter-Satz aus ensure_next_meeting. Steht er (ohne Protokoll-
+# Platzhalter-Satz aus meeting_placeholder. Steht er (ohne Protokoll-
 # Abschnitte) in einer Termin-Datei, gibt es noch kein Protokoll.
 _DEFAULT_PROGRAM_NOTE = "Das Programm für dieses Treffen steht noch nicht fest."
 

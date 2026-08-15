@@ -5,6 +5,10 @@
       <p class="site-footer__meta">
         Made with <span aria-label="Liebe">♥</span> in Köln ·
         <a href="https://github.com/Daniel-Steinberger/pycologne-app">Quellcode</a>
+        {%- if content_commit %} ·
+        <a href="{{ content_commit_url }}"
+           title="Stand der ausgelieferten Inhalte, verlinkt auf den Commit">Inhalte {{ content_commit }}</a>
+        {%- endif %}
       </p>
     </div>
 
