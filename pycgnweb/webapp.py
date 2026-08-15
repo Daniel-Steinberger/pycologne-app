@@ -168,6 +168,41 @@ def _protocol_topics(md_text: str) -> list[str]:
     return topics
 
 
+_ORT_LINE = re.compile(
+    r"^\*\*Ort:\*\*\s*(?P<loc>.+?)\s*(?:\(\[[^\]]*\]\([^)]*\)\))?\s*$", re.MULTILINE
+)
+
+DEFAULT_LOCATION = "DVS AG, Schanzenstraße 30, 51063 Köln"
+
+
+def _protocol_location(md_text: str) -> str:
+    """Return the plain-text location from a meeting file's '**Ort:**' line.
+
+    Faellt auf DEFAULT_LOCATION zurueck, wenn die Datei keine eigene
+    Ort-Zeile hat (z. B. noch nicht angelegt). Damit zeigen Ausweich-Termine
+    (z. B. Cologne Game Lab statt DVS AG) auch im ICS-Feed die richtige
+    Adresse, statt immer den Standardort zu tragen.
+    """
+    match = _ORT_LINE.search(md_text)
+    if match is None:
+        return DEFAULT_LOCATION
+    return match.group("loc").strip()
+
+
+def get_meeting_location(date: datetime) -> str:
+    """Return the location for a given meeting date, read from its file if present."""
+    path = os.path.join(
+        app.template_folder or "",
+        "md",
+        "events",
+        f"{date:%Y-%m-%d}.md",
+    )
+    if not os.path.isfile(path):
+        return DEFAULT_LOCATION
+    with open(path, encoding="utf-8") as file_:
+        return _protocol_location(file_.read())
+
+
 def _protocol_teaser(md_text: str) -> Markup:
     """Return the first body paragraph of a meeting file, as rendered HTML.
 
@@ -300,7 +335,7 @@ def ensure_next_meeting(next_date: datetime) -> bool:
             f"""# PyCologne Treffen {next_date:%B %Y}
 
 **Datum:** Mi, {next_date:%d.%m.%Y}, 19:00 Uhr
-**Ort:** DVS AG, Schanzenstraße 30, 51063 Köln ([Anfahrt](/join))
+**Ort:** {DEFAULT_LOCATION} ([Anfahrt](/join))
 
 Das Programm für dieses Treffen steht noch nicht fest.
 
@@ -542,7 +577,6 @@ def events_feed() -> Response:
     """
     from datetime import UTC, datetime, timedelta
 
-    location = _ics_escape("DVS AG, Schanzenstraße 30, 51063 Köln")
     boilerplate = (
         "Monatliches Treffen der Python User Group Köln. "
         "Programm und Anmeldung über https://www.meetup.com/pycologne/"
@@ -567,6 +601,7 @@ def events_feed() -> Response:
         # im Kalendereintrag.
         teaser = get_next_meeting_teaser(date)
         description = _ics_escape(f"{teaser}\n\n{boilerplate}" if teaser else boilerplate)
+        location = _ics_escape(get_meeting_location(date))
         lines.extend(
             [
                 "BEGIN:VEVENT",

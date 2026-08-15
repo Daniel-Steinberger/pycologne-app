@@ -8,6 +8,7 @@ import pytest
 
 from pycgnweb.webapp import (
     app,
+    get_meeting_location,
     get_next_meeting_teaser,
     get_past_meetings,
     group_meetings_by_year,
@@ -136,3 +137,25 @@ def test_events_ics_feed_carries_program(client):
             assert teaser.split(",")[0] in event
         # der allgemeine Hinweistext bleibt in jedem Fall erhalten
         assert "Monatliches Treffen der Python User Group" in event
+
+
+def test_events_ics_feed_carries_actual_location(client):
+    """Weicht ein Termin vom Standardort ab, muss LOCATION das auch zeigen.
+
+    Bugfix: LOCATION war frueher fuer alle Termine hart auf die DVS AG
+    codiert, auch fuer Ausweichtermine wie das Cologne Game Lab.
+    """
+    body = client.get("/events.ics").get_data(as_text=True)
+    unfolded = body.replace("\r\n ", "")
+    events = unfolded.split("BEGIN:VEVENT")[1:]
+    found_deviation = False
+    for event in events:
+        date = re.search(r"UID:meeting-(\d{4}-\d{2}-\d{2})@", event).group(1)
+        location = get_meeting_location(datetime.strptime(date, "%Y-%m-%d"))
+        # LOCATION ist ICS-escaped (Komma), Vergleich also am ersten Wort genug
+        assert f"LOCATION:{location.split(',')[0]}" in event
+        if location != "DVS AG, Schanzenstraße 30, 51063 Köln":
+            found_deviation = True
+    # Stellt sicher, dass der Test ueberhaupt einen Ausweichtermin prueft
+    # (aktuell 2026-09-09, Cologne Game Lab) und nicht nur zufaellig passt.
+    assert found_deviation
