@@ -13,7 +13,7 @@ from importlib.metadata import PackageNotFoundError, version
 from typing import Any, cast
 
 from babel.dates import format_datetime
-from flask import Flask, Response, abort, render_template, request, url_for
+from flask import Flask, Response, abort, render_template, request, send_from_directory, url_for
 from markdown_it import MarkdownIt
 from markupsafe import Markup, escape
 from pygments import highlight
@@ -428,6 +428,12 @@ def events_date(date: str) -> str:
     if content == "":
         abort(404)
     return render_content("event", content)
+
+
+@app.route("/favicon.ico")
+def favicon() -> Response:
+    """Serve favicon.ico from the static folder for the browser's default request."""
+    return send_from_directory(app.static_folder or "", "favicon.ico", mimetype="image/vnd.microsoft.icon")
 
 
 @app.route("/contact")
