@@ -599,7 +599,9 @@ def events_feed() -> Response:
         # Steht das Programm schon in der Termin-Datei, kommt es vor den
         # immer gleichen Hinweistext. Abonnenten sehen das Thema direkt
         # im Kalendereintrag.
-        teaser = get_next_meeting_teaser(date)
+        # ICS-DESCRIPTION ist Klartext, kein HTML: die von get_next_meeting_teaser
+        # gerenderten Tags (<strong> etc.) wieder entfernen, statt sie roh zu zeigen.
+        teaser = re.sub(r"<[^>]+>", "", get_next_meeting_teaser(date))
         description = _ics_escape(f"{teaser}\n\n{boilerplate}" if teaser else boilerplate)
         location = _ics_escape(get_meeting_location(date))
         lines.extend(
