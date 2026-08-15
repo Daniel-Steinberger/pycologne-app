@@ -28,7 +28,7 @@ from .search import HIGHLIGHT_CLOSE, HIGHLIGHT_OPEN, ProtocolIndex
 app = Flask(__name__.split(".")[0])
 
 # Quellcode-Snippets per inspect zur Render-Zeit aus den jeweiligen Modulen
-# gelesen — wenn der Code dort geaendert wird, aktualisiert sich automatisch
+# gelesen. Wenn der Code dort geaendert wird, aktualisiert sich automatisch
 # auch die auf der Webseite gezeigte Variante. Pygments rendert das Markup
 # einmal; light/dark wird per CSS umgeschaltet.
 _MEETING_SOURCE = textwrap.dedent(inspect.getsource(meeting_dates))
@@ -135,7 +135,7 @@ def get_topmenue() -> list[tuple[str, str]]:
     ]
 
 
-# Platzhalter-Satz aus ensure_next_meeting — steht er (ohne Protokoll-
+# Platzhalter-Satz aus ensure_next_meeting. Steht er (ohne Protokoll-
 # Abschnitte) in einer Termin-Datei, gibt es noch kein Protokoll.
 _DEFAULT_PROGRAM_NOTE = "Das Programm für dieses Treffen steht noch nicht fest."
 
@@ -283,7 +283,7 @@ def group_meetings_by_year(
 def ensure_next_meeting(next_date: datetime) -> bool:
     """Ensure that a Markdown file for the next meeting is present.
 
-    TODO: side-effect-laden — schreibt Daten in den Templates-Ordner.
+    TODO: side-effect-laden, schreibt Daten in den Templates-Ordner.
     Sollte in einen separaten data/-Pfad oder Cache wandern.
     """
     path = os.path.join(
@@ -307,7 +307,7 @@ Das Programm für dieses Treffen steht noch nicht fest.
 **Wir suchen Themen!** Wenn Du einen Vortrag halten, eine Demo zeigen
 oder einen Programmpunkt anmelden möchtest, melde Dich gerne. Auch für
 spontane Buch- oder Tool-Vorstellungen, Fragen und Coding-Ankündigungen
-ist Platz — bring einfach mit, was Dich gerade beschäftigt.
+ist Platz, bring einfach mit, was Dich gerade beschäftigt.
 
 Anmeldung läuft unverbindlich und kostenlos über
 [Meetup](https://www.meetup.com/pycologne/).
@@ -380,7 +380,7 @@ def about() -> str:
         code_caption="Zitate-Generator (live)",
         code_explainer=(
             "Das Zen-Zitat auf der Startseite kommt aus dieser Funktion in "
-            "<code>pycgnweb/sayings.py</code> — bei jedem Aufruf wird ein "
+            "<code>pycgnweb/sayings.py</code>. Bei jedem Aufruf wird ein "
             "Spruch aus der Liste gelost."
         ),
     )
@@ -563,7 +563,7 @@ def events_feed() -> Response:
         end = date + timedelta(hours=2)
         event_url = url_for("events_date", date=date.strftime("%Y-%m-%d"), _external=True)
         # Steht das Programm schon in der Termin-Datei, kommt es vor den
-        # immer gleichen Hinweistext — Abonnenten sehen das Thema direkt
+        # immer gleichen Hinweistext. Abonnenten sehen das Thema direkt
         # im Kalendereintrag.
         teaser = get_next_meeting_teaser(date)
         description = _ics_escape(f"{teaser}\n\n{boilerplate}" if teaser else boilerplate)

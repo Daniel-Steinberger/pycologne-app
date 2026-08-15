@@ -1,7 +1,7 @@
 # Kontakt
 
 Am schnellsten erreichst Du uns über unsere
-[Meetup-Gruppe](https://www.meetup.com/pycologne/) — dort kündigen wir
+[Meetup-Gruppe](https://www.meetup.com/pycologne/), dort kündigen wir
 alle kommenden Treffen an, und Du kannst Dich kostenlos für ein Treffen
 anmelden.
 

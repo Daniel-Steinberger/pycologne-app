@@ -47,5 +47,5 @@ SAYINGS: list[tuple[str, str]] = [
 
 def get_saying() -> tuple[str, str]:
     """Return a random saying."""
-    saying, author = choice(SAYINGS)  # noqa: S311 — kein Krypto-Kontext
+    saying, author = choice(SAYINGS)  # noqa: S311, kein Krypto-Kontext
     return saying, author

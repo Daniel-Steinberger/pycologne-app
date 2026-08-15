@@ -1,5 +1,5 @@
 /* ==========================================================================
-   PyCologne — "Adaptive Dev-Style"
+   PyCologne, "Adaptive Dev-Style"
    ==========================================================================
    Light/Dark via prefers-color-scheme + light-dark(). System Sans,
    Mono fuer Datenpunkte, Cards mit Border + adaptiver Schattierung.
@@ -131,7 +131,7 @@
 }
 
 /* ==========================================================================
-   Base — Body, Headings, Text, Links
+   Base, Body, Headings, Text, Links
    ========================================================================== */
 @layer base {
   html, body { height: auto; }

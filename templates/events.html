@@ -1,5 +1,5 @@
 {% extends "theme.html" %}
-{% block title %}Termine — PyCologne{% endblock %}
+{% block title %}Termine, PyCologne{% endblock %}
 
 {% macro past_item(meeting) %}
 <li class="upcoming-list__item upcoming-list__item--past">
@@ -110,7 +110,7 @@
     </summary>
     <p class="code-reveal__hint">
       Genau dieser Python-Code aus <code>pycgnweb/events.py</code> liefert
-      die Termine oben — ausgelesen mit <code>inspect.getsource()</code>
+      die Termine oben, ausgelesen mit <code>inspect.getsource()</code>
       und mit <a href="https://pygments.org/">Pygments</a> gehighlightet.
     </p>
     {{ meeting_source | safe }}
