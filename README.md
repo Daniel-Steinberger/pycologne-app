@@ -21,7 +21,8 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 ```sh
 git clone https://github.com/Daniel-Steinberger/pycologne-app
 cd pycologne-app
-uv sync
+uv sync --group dev
+uv run pre-commit install
 ```
 
 ## Entwicklung
@@ -45,6 +46,18 @@ Linting / Type-Checks:
 ```sh
 uv run ruff check .
 uv run mypy pycgnweb
+```
+
+## Pre-Commit-Hook
+
+`ruff check --fix` und `ruff format` laufen automatisch vor jedem Commit
+(via [pre-commit](https://pre-commit.com/)), damit Formatierungsfehler
+nicht erst in der CI auffallen. Einrichtung siehe Setup oben
+(`uv run pre-commit install`); danach greift der Hook bei jedem
+`git commit`. Manueller Lauf über alle Dateien:
+
+```sh
+uv run pre-commit run --all-files
 ```
 
 ## Projektstruktur
