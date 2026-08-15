@@ -720,6 +720,12 @@
     font-size: var(--fs-base);
   }
 
+  .btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
   /* ---- Cards ---------------------------------------------------------- */
   .card {
     background: var(--surface);

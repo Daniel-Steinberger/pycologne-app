@@ -360,6 +360,7 @@ def index() -> str:
         urls=get_urls(),
         act="",
         next_meeting=next_meeting,
+        next_meeting_url=f"/events/{next_meeting:%Y-%m-%d}",
         next_meeting_teaser=get_next_meeting_teaser(next_meeting),
         format_date=format_date,
         saying=saying,

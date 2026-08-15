@@ -25,7 +25,10 @@
       {% if next_meeting_teaser %}
       <p>{{ next_meeting_teaser }}</p>
       {% endif %}
-      <p>
+      <p class="btn-group">
+        <a href="{{ next_meeting_url }}" class="btn">
+          Zum Event <span aria-hidden="true">→</span>
+        </a>
         <a href="{{ url_for('events') }}" class="btn">
           Alle Termine <span aria-hidden="true">→</span>
         </a>
