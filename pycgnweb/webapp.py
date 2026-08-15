@@ -433,7 +433,9 @@ def events_date(date: str) -> str:
 @app.route("/favicon.ico")
 def favicon() -> Response:
     """Serve favicon.ico from the static folder for the browser's default request."""
-    return send_from_directory(app.static_folder or "", "favicon.ico", mimetype="image/vnd.microsoft.icon")
+    return send_from_directory(
+        app.static_folder or "", "favicon.ico", mimetype="image/vnd.microsoft.icon"
+    )
 
 
 @app.route("/contact")
