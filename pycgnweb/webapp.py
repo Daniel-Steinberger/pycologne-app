@@ -2,6 +2,8 @@
 """A Flask-based webapp for the homepage of the pyCologne Python user group."""
 
 import argparse
+import hashlib
+import hmac
 import inspect
 import os
 import re
@@ -20,7 +22,13 @@ from pygments import highlight
 from pygments.formatters.html import HtmlFormatter
 from pygments.lexers.python import PythonLexer
 
-from .config import DATE_FORMAT_LONG, MEETUP_URL, REPO_URL
+from .config import (
+    CONTENT_TRIGGER_FILE,
+    DATE_FORMAT_LONG,
+    MEETUP_URL,
+    REPO_URL,
+    WEBHOOK_SECRET_FILE,
+)
 from .events import meeting_dates
 from .sayings import get_saying
 from .search import HIGHLIGHT_CLOSE, HIGHLIGHT_OPEN, ProtocolIndex
@@ -191,16 +199,7 @@ def _protocol_location(md_text: str) -> str:
 
 def get_meeting_location(date: datetime) -> str:
     """Return the location for a given meeting date, read from its file if present."""
-    path = os.path.join(
-        app.template_folder or "",
-        "md",
-        "events",
-        f"{date:%Y-%m-%d}.md",
-    )
-    if not os.path.isfile(path):
-        return DEFAULT_LOCATION
-    with open(path, encoding="utf-8") as file_:
-        return _protocol_location(file_.read())
+    return _protocol_location(meeting_markdown(date))
 
 
 def _protocol_teaser(md_text: str) -> Markup:
@@ -315,29 +314,22 @@ def group_meetings_by_year(
     return sorted(grouped.items(), reverse=True)
 
 
-def ensure_next_meeting(next_date: datetime) -> bool:
-    """Ensure that a Markdown file for the next meeting is present.
+def meeting_placeholder(date: datetime) -> str:
+    """Return the Markdown shown for a meeting that has no file yet.
 
-    TODO: side-effect-laden, schreibt Daten in den Templates-Ordner.
-    Sollte in einen separaten data/-Pfad oder Cache wandern.
+    Frueher legte ``ensure_next_meeting()`` genau diesen Text als Datei im
+    Template-Ordner an. Seit die Inhalte aus einem eigenen Repo kommen und
+    der Ordner ein Git-Checkout ist, wird dort nicht mehr geschrieben: der
+    Platzhalter entsteht beim Rendern und verschwindet von selbst, sobald
+    eine echte Termin-Datei da ist.
     """
-    path = os.path.join(
-        app.template_folder or "",
-        "md",
-        "events",
-        f"{next_date:%Y-%m-%d}.md",
-    )
-    if os.path.isfile(path):
-        return True
+    month = format_datetime(date, format="MMMM yyyy", locale="DE")
+    return f"""# PyCologne Treffen {month}
 
-    with open(path, "w+", encoding="utf-8") as meeting:
-        meeting.write(
-            f"""# PyCologne Treffen {next_date:%B %Y}
-
-**Datum:** Mi, {next_date:%d.%m.%Y}, 19:00 Uhr
+**Datum:** Mi, {date:%d.%m.%Y}, 19:00 Uhr
 **Ort:** {DEFAULT_LOCATION} ([Anfahrt](/join))
 
-Das Programm für dieses Treffen steht noch nicht fest.
+{_DEFAULT_PROGRAM_NOTE}
 
 **Wir suchen Themen!** Wenn Du einen Vortrag halten, eine Demo zeigen
 oder einen Programmpunkt anmelden möchtest, melde Dich gerne. Auch für
@@ -347,27 +339,29 @@ ist Platz, bring einfach mit, was Dich gerade beschäftigt.
 Anmeldung läuft unverbindlich und kostenlos über
 [Meetup](https://www.meetup.com/pycologne/).
 """
-        )
-    return True
+
+
+def meeting_markdown(date: datetime) -> str:
+    """Return a meeting's Markdown source, or the placeholder if it has none."""
+    path = os.path.join(
+        app.template_folder or "",
+        "md",
+        "events",
+        f"{date:%Y-%m-%d}.md",
+    )
+    if not os.path.isfile(path):
+        return meeting_placeholder(date)
+    with open(path, encoding="utf-8") as file_:
+        return file_.read()
 
 
 def get_next_meeting_teaser(next_date: datetime) -> Markup:
     """Return a short teaser for the next meeting's program, if known.
 
-    Reads the same Markdown file that ensure_next_meeting writes to;
-    returns '' if the file does not exist yet or only contains the
-    default placeholder (no program announced yet).
+    Liefert '', solange nur der Platzhalter greift, das Programm also noch
+    nicht angekuendigt ist.
     """
-    path = os.path.join(
-        app.template_folder or "",
-        "md",
-        "events",
-        f"{next_date:%Y-%m-%d}.md",
-    )
-    if not os.path.isfile(path):
-        return Markup("")
-    with open(path, encoding="utf-8") as file_:
-        return _protocol_teaser(file_.read())
+    return _protocol_teaser(meeting_markdown(next_date))
 
 
 app.jinja_env.globals.update(get_topmenue=get_topmenue)
@@ -443,7 +437,6 @@ def events() -> str:
     format_date = partial(format_datetime, format=DATE_FORMAT_LONG, locale="DE")
 
     next_meeting_url = f"/events/{next_meeting:%Y-%m-%d}"
-    ensure_next_meeting(next_meeting)
     # Die jüngsten Treffen stehen einzeln, alles Ältere nach Jahrgang
     # gruppiert darunter.
     past_meetings = get_past_meetings(datetime.now())
@@ -463,10 +456,22 @@ def events() -> str:
 
 @app.route("/events/<date>")
 def events_date(date: str) -> str:
-    """Serve an event page for a specific meeting."""
+    """Serve an event page for a specific meeting.
+
+    Steht fuer einen anstehenden Termin noch keine Datei bereit, kommt der
+    Platzhalter statt eines 404. Frueher entstand dafuer beim ersten
+    Seitenaufruf eine Datei im Template-Ordner, s. meeting_placeholder().
+    """
     content = get_template("md", "events", f"{date}.md")
     if content == "":
-        abort(404)
+        try:
+            wanted = datetime.strptime(date, "%Y-%m-%d").date()
+        except ValueError:
+            abort(404)
+        upcoming = {meeting.date(): meeting for meeting in meeting_dates(count=12)}
+        if wanted not in upcoming:
+            abort(404)
+        content = cast(str, _md.render(meeting_placeholder(upcoming[wanted])))
     return render_content("event", content)
 
 
@@ -530,6 +535,53 @@ def search() -> str:
         highlight=_highlight,
         format_date=format_date,
     )
+
+
+def _configured_path(variable: str, default: str) -> str:
+    """Return a runtime path, overridable via environment variable."""
+    return os.environ.get(variable, default)
+
+
+def _webhook_secret() -> bytes | None:
+    """Return the shared secret for the refresh hook, or None if unset."""
+    path = _configured_path("PYCOLOGNE_WEBHOOK_SECRET_FILE", WEBHOOK_SECRET_FILE)
+    try:
+        with open(path, "rb") as file_:
+            secret = file_.read().strip()
+    except OSError:
+        return None
+    return secret or None
+
+
+@app.route("/_content/refresh", methods=["POST"])
+def content_refresh() -> tuple[str, int]:
+    """Nimm den Anstoss entgegen, dass es neue Inhalte gibt.
+
+    Der Endpunkt prueft die Signatur und beruehrt danach eine Datei, sonst
+    nichts. Das Holen selbst erledigt eine systemd-Unit, die diese Datei
+    beobachtet. Deshalb laeuft hier kein git im Request-Handler, es braucht
+    kein Locking gegen die anderen Gunicorn-Worker, und die Anwendung kommt
+    ohne erhoehte Rechte aus. Derselbe Sync laeuft zusaetzlich stuendlich
+    per Timer, ein verlorener Anstoss heilt sich also von selbst.
+    """
+    secret = _webhook_secret()
+    if secret is None:
+        return "kein Secret hinterlegt", 503
+    signature = request.headers.get("X-Hub-Signature-256", "")
+    expected = "sha256=" + hmac.new(secret, request.get_data(), hashlib.sha256).hexdigest()
+    if not hmac.compare_digest(signature, expected):
+        return "Signatur passt nicht", 403
+    # Inhalt der Datei ist beliebig, nur das Schreiben zaehlt. Die
+    # Delivery-ID von GitHub steht drin, damit sich ein einzelner Anstoss
+    # im Zweifel bis zur Auslieferung zurueckverfolgen laesst.
+    delivery = request.headers.get("X-GitHub-Delivery", "ohne Delivery-ID")
+    path = _configured_path("PYCOLOGNE_CONTENT_TRIGGER", CONTENT_TRIGGER_FILE)
+    try:
+        with open(path, "w", encoding="utf-8") as trigger:
+            trigger.write(f"{delivery}\n")
+    except OSError:
+        return "Trigger-Datei nicht schreibbar", 500
+    return "", 202
 
 
 @app.errorhandler(404)

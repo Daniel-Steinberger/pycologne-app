@@ -17,10 +17,10 @@ pytestmark = pytest.mark.e2e
 
 
 @pytest.fixture(scope="module")
-def live_server():
+def live_server(template_root):
     """Startet einen Live-WSGI-Server in einem Hintergrund-Thread."""
     app.static_folder = os.path.join(os.getcwd(), "static")
-    app.template_folder = os.path.join(os.getcwd(), "templates")
+    app.template_folder = str(template_root)
     app.config["TESTING"] = True
 
     server = make_server("localhost", 0, app)

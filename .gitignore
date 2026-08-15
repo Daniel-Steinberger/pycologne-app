@@ -35,3 +35,8 @@ htmlcov/
 # Logs / runtime
 *.log
 pid.txt
+
+# Inhalte kommen aus dem Content-Repo und werden von "make content"
+# hierher verlinkt, s. README.
+/templates/md
+/static/images

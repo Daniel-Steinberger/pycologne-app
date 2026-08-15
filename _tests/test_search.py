@@ -40,10 +40,10 @@ def index(tmp_path):
 
 
 @pytest.fixture
-def client():
-    """Flask-Test-Client mit Pfaden auf das Repo-Root konfiguriert."""
+def client(template_root):
+    """Flask-Test-Client auf dem Inhaltsbestand der Tests, s. conftest.py."""
     app.static_folder = os.path.join(os.getcwd(), "static")
-    app.template_folder = os.path.join(os.getcwd(), "templates")
+    app.template_folder = str(template_root)
     app.config["TESTING"] = True
     return app.test_client()
 

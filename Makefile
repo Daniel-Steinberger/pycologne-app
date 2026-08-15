@@ -4,14 +4,36 @@
 
 PKG = pycgnweb
 
-.PHONY: all check run test lint format typecheck audit
+# Termine, Protokolle und Bilder liegen in einem eigenen Repo, das
+# standardmaessig als Schwester-Verzeichnis erwartet wird. Anderer Ort:
+# make run CONTENT=/pfad/zum/checkout
+CONTENT ?= ../pycologne-content
+CONTENT_REPO = https://github.com/Daniel-Steinberger/pycologne-content
+
+.PHONY: all check run test lint format typecheck audit content
 
 all:
-	@echo "Targets: run, test, check, lint, format, typecheck, audit"
+	@echo "Targets: run, content, test, check, lint, format, typecheck, audit"
+
+# Verlinkt die Inhalte in den Arbeitsbaum, genau wie es das Setup-Script auf
+# dem Server im State-Verzeichnis tut. Fehlt der Checkout, wird er daneben
+# geklont. Beide Symlinks stehen in der .gitignore.
+content:
+	@test -d "$(CONTENT)" || git clone $(CONTENT_REPO) "$(CONTENT)"
+	@for pair in templates/md:md static/images:images; do \
+		link="$${pair%%:*}"; \
+		if [ -e "$$link" ] && [ ! -L "$$link" ]; then \
+			echo "FEHLER: $$link ist kein Symlink, sondern liegt echt im Arbeitsbaum."; \
+			echo "        Inhalte gehoeren ins Content-Repo, s. README."; \
+			exit 1; \
+		fi; \
+		ln -sfn "$(abspath $(CONTENT))/$${pair#*:}" "$$link"; \
+	done
+	@echo "Inhalte verlinkt nach $(abspath $(CONTENT))"
 
 # Lokaler Entwicklungsserver mit Debug-Modus und Auto-Reload
 # (-d schaltet beides ueber Flask ein).
-run:
+run: content
 	uv run python -m $(PKG) -d
 
 test:
