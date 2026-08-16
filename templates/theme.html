@@ -10,11 +10,9 @@
     <title>{% block title %}PyCologne{% endblock %}</title>
     <link href="/static/css/pycologne.css" rel="stylesheet">
     <style>
-      {{ pygments_css_light | safe }}
-      @media (prefers-color-scheme: dark) {
-        {{ pygments_css_dark | safe }}
-      }
+      {{ pygments_css_matrix | safe }}
     </style>
+    <script src="/static/js/flip.js" defer></script>
   </head>
   <body>
     <a href="#main" class="skip-link">Zum Inhalt springen</a>

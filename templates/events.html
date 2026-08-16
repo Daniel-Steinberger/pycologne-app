@@ -1,4 +1,5 @@
 {% extends "theme.html" %}
+{% import "flip.html" as flip %}
 {% block title %}Termine, PyCologne{% endblock %}
 
 {% macro past_item(meeting) %}
@@ -26,19 +27,23 @@
       <header class="section-header">
         <h1>Nächstes Treffen</h1>
       </header>
-      <article class="card card--accent">
-        <p class="card__date">
-          <time>{{ format_date(next_meeting) }}</time>
-        </p>
-        {% if next_meeting_teaser %}
-        <p class="card__teaser">{{ next_meeting_teaser }}</p>
-        {% endif %}
-        <p class="card__action">
-          <a class="btn btn--primary" href="{{ next_meeting_url }}">
-            Programm &amp; Anfahrt <span aria-hidden="true">→</span>
-          </a>
-        </p>
-      </article>
+      <div class="flip">
+        <article class="card card--accent flip__face flip__face--front">
+          <p class="card__date">
+            <time>{{ format_date(next_meeting) }}</time>
+          </p>
+          {% if next_meeting_teaser %}
+          <p class="card__teaser">{{ next_meeting_teaser }}</p>
+          {% endif %}
+          <p class="card__action">
+            <a class="btn btn--primary" href="{{ next_meeting_url }}">
+              Programm &amp; Anfahrt <span aria-hidden="true">→</span>
+            </a>
+          </p>
+          {{ flip.chip(code_reveals["meeting"]) }}
+        </article>
+        {{ flip.back(code_reveals["meeting"], "next(meeting_dates())", next_meeting_repr) }}
+      </div>
 
       {% if events %}
       <section class="event-extras prose">
@@ -94,26 +99,25 @@
         </li>
         {% endfor %}
       </ul>
-      <p class="upcoming-list__feed">
-        <a href="{{ url_for('events_feed') }}" class="btn btn--small">
-          <span aria-hidden="true">📅</span> Kalender abonnieren (.ics)
-        </a>
-      </p>
+      <div class="flip flip--roomy">
+        <article class="card flip__face flip__face--front">
+          <p class="eyebrow">Kalender-Abo</p>
+          <p class="card__teaser">
+            Alle Termine als iCalendar-Feed, zum Abonnieren in Apple
+            Calendar, Google Calendar oder Thunderbird. Immer aktuell,
+            inklusive Thema und Ort des jeweiligen Treffens.
+          </p>
+          <p class="card__action">
+            <a href="{{ url_for('events_feed') }}" class="btn btn--small">
+              <span aria-hidden="true">📅</span> Kalender abonnieren (.ics)
+            </a>
+          </p>
+          {{ flip.chip(code_reveals["ics"]) }}
+        </article>
+        {{ flip.back(code_reveals["ics"]) }}
+      </div>
     </section>
 
   </div>
-
-  <details class="code-reveal">
-    <summary>
-      <span aria-hidden="true">⌗</span>
-      So berechnen wir die Termine
-    </summary>
-    <p class="code-reveal__hint">
-      Genau dieser Python-Code aus <code>pycgnweb/events.py</code> liefert
-      die Termine oben, ausgelesen mit <code>inspect.getsource()</code>
-      und mit <a href="https://pygments.org/">Pygments</a> gehighlightet.
-    </p>
-    {{ meeting_source | safe }}
-  </details>
 </div>
 {% endblock %}

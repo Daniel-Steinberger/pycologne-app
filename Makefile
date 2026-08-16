@@ -10,6 +10,10 @@ PKG = pycgnweb
 CONTENT ?= ../pycologne-content
 CONTENT_REPO = https://github.com/Daniel-Steinberger/pycologne-content
 
+# Standardmaessig nur lokal erreichbar. Fuer Zugriff von anderen Rechnern:
+# make run HOST=0.0.0.0
+HOST ?= localhost
+
 .PHONY: all check run test lint format typecheck audit content
 
 all:
@@ -34,7 +38,7 @@ content:
 # Lokaler Entwicklungsserver mit Debug-Modus und Auto-Reload
 # (-d schaltet beides ueber Flask ein).
 run: content
-	uv run python -m $(PKG) -d
+	uv run python -m $(PKG) -d --host $(HOST)
 
 test:
 	uv run pytest

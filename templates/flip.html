@@ -1,0 +1,42 @@
+{# Macros fuer die Flip-Kacheln: Code hinter der Kachel, s. docs/design.md.
+
+   terminal()  das Matrix-Terminal (Kopfzeile, Code, optionale REPL-Zeile),
+               auch eigenstaendig nutzbar (statisch auf /about)
+   back()      das Terminal als Rueckseite einer Flip-Kachel, mit eigenem
+               Schliessen-Knopf in der Kopfzeile
+   chip()      der Griff, gehoert in die Vorderseite und dreht mit ihr weg;
+               ohne JavaScript ein Link auf die Funktion im GitHub-Repo,
+               flip.js wertet ihn zum Umdreh-Knopf auf
+#}
+
+{% macro terminal(reveal, repl_call=None, repl_out=None, extra_class="", closable=False) %}
+<div class="mx{% if extra_class %} {{ extra_class }}{% endif %}">
+  <div class="mx__bar">
+    <span class="mx__dot" aria-hidden="true"></span>
+    <span class="mx__path">{{ reveal.path }}</span>
+    <span class="mx__live">live</span>
+    {% if closable %}
+    <button class="mx__close" type="button" data-flip-close
+            title="Exit the Matrix"
+            aria-label="Quelltext schließen">×</button>
+    {% endif %}
+  </div>
+  <div class="mx__code">{{ reveal.html | safe }}</div>
+  {% if repl_call %}
+  <p class="mx__repl">
+    <span class="mx__prompt" aria-hidden="true">&gt;&gt;&gt;</span> <code>{{ repl_call }}</code><br>
+    <span class="mx__out">{{ repl_out }}</span><span class="mx__cursor" aria-hidden="true"></span>
+  </p>
+  {% endif %}
+</div>
+{% endmacro %}
+
+{% macro back(reveal, repl_call=None, repl_out=None) %}
+{{ terminal(reveal, repl_call, repl_out, extra_class="flip__face flip__face--back", closable=True) }}
+{% endmacro %}
+
+{% macro chip(reveal) %}
+<a class="flip__chip" data-flip-toggle href="{{ reveal.github }}"
+   title="Peek into the code"
+   aria-label="Quelltext zeigen ({{ reveal.path }})"><span aria-hidden="true">&lt;/&gt;</span></a>
+{% endmacro %}

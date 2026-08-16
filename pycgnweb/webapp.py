@@ -9,8 +9,9 @@ import os
 import re
 import sys
 import textwrap
+from collections.abc import Callable
 from datetime import datetime
-from functools import partial
+from functools import lru_cache, partial
 from importlib.metadata import PackageNotFoundError, version
 from typing import Any, cast
 
@@ -31,30 +32,52 @@ from .config import (
     WEBHOOK_SECRET_FILE,
 )
 from .events import meeting_dates
+from .matrixstyle import MatrixStyle
 from .sayings import get_saying
-from .search import HIGHLIGHT_CLOSE, HIGHLIGHT_OPEN, ProtocolIndex
+from .search import HIGHLIGHT_CLOSE, HIGHLIGHT_OPEN, ProtocolIndex, build_query
 
 app = Flask(__name__.split(".")[0])
 
-# Quellcode-Snippets per inspect zur Render-Zeit aus den jeweiligen Modulen
-# gelesen. Wenn der Code dort geaendert wird, aktualisiert sich automatisch
-# auch die auf der Webseite gezeigte Variante. Pygments rendert das Markup
-# einmal; light/dark wird per CSS umgeschaltet.
-_MEETING_SOURCE = textwrap.dedent(inspect.getsource(meeting_dates))
-_SAYING_SOURCE = textwrap.dedent(inspect.getsource(get_saying))
+# Quellcode der Flip-Kacheln, per inspect zur Laufzeit aus den jeweiligen
+# Modulen gelesen. Wenn der Code dort geaendert wird, aktualisiert sich
+# automatisch auch die auf der Webseite gezeigte Variante. Gerendert wird
+# mit dem eigenen Matrix-Stil, die Rueckseiten sind themenfest gruen.
 _PY_LEXER = PythonLexer()
-_PY_FORMATTER = HtmlFormatter(cssclass="highlight")
-PYGMENTS_CSS_LIGHT = HtmlFormatter(style="default").get_style_defs(".highlight")
-PYGMENTS_CSS_DARK = HtmlFormatter(style="monokai").get_style_defs(".highlight")
+_MX_FORMATTER = HtmlFormatter(style=MatrixStyle, cssclass="mx-highlight")
+PYGMENTS_CSS_MATRIX = _MX_FORMATTER.get_style_defs(".mx-highlight")
 
 
-def _hl(source: str) -> str:
-    """Render Python source via Pygments to highlighted HTML."""
-    return cast(str, highlight(source, _PY_LEXER, _PY_FORMATTER))
+def _make_reveal(func: Callable[..., Any]) -> dict[str, str]:
+    """Beschreibe eine Funktion fuer die Rueckseite einer Flip-Kachel.
+
+    Liefert Modulpfad (fuer die Terminal-Kopfzeile), GitHub-Link mit
+    Zeilenanker (der No-JS-Fallback des Griffs) und den gehighlighteten
+    Quelltext.
+    """
+    source = textwrap.dedent(inspect.getsource(func))
+    lineno = inspect.getsourcelines(func)[1]
+    filename = os.path.basename(inspect.getsourcefile(func) or "")
+    path = f"pycgnweb/{filename}"
+    return {
+        "path": path,
+        "github": f"{REPO_URL}/blob/main/{path}#L{lineno}",
+        "html": cast(str, highlight(source, _PY_LEXER, _MX_FORMATTER)),
+    }
 
 
-HIGHLIGHTED_MEETING_SOURCE = _hl(_MEETING_SOURCE)
-HIGHLIGHTED_SAYING_SOURCE = _hl(_SAYING_SOURCE)
+@lru_cache(maxsize=1)
+def get_code_reveals() -> dict[str, dict[str, str]]:
+    """Das Register der Flip-Kacheln: Kennung zu Rueckseite.
+
+    Bewusst lazy (erster Request statt Importzeit), weil _ics_fold weiter
+    unten in diesem Modul definiert ist.
+    """
+    return {
+        "meeting": _make_reveal(meeting_dates),
+        "saying": _make_reveal(get_saying),
+        "query": _make_reveal(build_query),
+        "ics": _make_reveal(_ics_fold),
+    }
 
 
 def _pkg_version(name: str) -> str:
@@ -79,12 +102,11 @@ def inject_runtime() -> dict[str, dict[str, str]]:
 
 
 @app.context_processor
-def inject_code_reveal() -> dict[str, str]:
-    """Provide highlighted live source plus Pygments style defs."""
+def inject_code_reveal() -> dict[str, Any]:
+    """Provide the flip tile registry plus its Pygments style defs."""
     return {
-        "meeting_source": HIGHLIGHTED_MEETING_SOURCE,
-        "pygments_css_light": PYGMENTS_CSS_LIGHT,
-        "pygments_css_dark": PYGMENTS_CSS_DARK,
+        "code_reveals": get_code_reveals(),
+        "pygments_css_matrix": PYGMENTS_CSS_MATRIX,
     }
 
 
@@ -454,6 +476,10 @@ def index() -> str:
         next_meeting=next_meeting,
         next_meeting_url=f"/events/{next_meeting:%Y-%m-%d}",
         next_meeting_teaser=get_next_meeting_teaser(next_meeting),
+        # Fuer die REPL-Zeilen der Flip-Kacheln: dieselben Werte, die die
+        # Vorderseiten zeigen, als Python-repr. Die Rueckseite luegt nie.
+        next_meeting_repr=repr(next_meeting),
+        saying_repr=repr((saying, author)),
         format_date=format_date,
         saying=saying,
         author=author,
@@ -468,12 +494,13 @@ def about() -> str:
     return render_content(
         "about",
         content,
-        code_block=HIGHLIGHTED_SAYING_SOURCE,
+        reveal=get_code_reveals()["saying"],
+        saying_repr=repr(get_saying()),
         code_caption="Zitate-Generator (live)",
         code_explainer=(
             "Das Zen-Zitat auf der Startseite kommt aus dieser Funktion in "
             "<code>pycgnweb/sayings.py</code>. Bei jedem Aufruf wird ein "
-            "Spruch aus der Liste gelost."
+            "Spruch aus der Liste gelost, unten das Ergebnis von gerade eben."
         ),
     )
 
@@ -510,6 +537,7 @@ def events() -> str:
         next_meeting=next_meeting,
         next_meeting_url=next_meeting_url,
         next_meeting_teaser=get_next_meeting_teaser(next_meeting),
+        next_meeting_repr=repr(next_meeting),
         past_meetings=past_meetings[:RECENT_MEETINGS],
         past_by_year=group_meetings_by_year(past_meetings[RECENT_MEETINGS:]),
         events=events_,
@@ -589,6 +617,9 @@ def search() -> str:
     query = request.args.get("q", "").strip()
     results = _index().search(query) if query else []
     format_date = partial(format_datetime, format=DATE_FORMAT_LONG, locale="DE")
+    # REPL-Zeile der Flip-Kachel: die gerade laufende Suche als
+    # FTS5-Ausdruck, ohne Suchbegriff ein Beispiel.
+    fts_input = query or "pandas dataframe"
     return render_template(
         "search.html",
         act="search",
@@ -597,6 +628,8 @@ def search() -> str:
         results=results,
         highlight=_highlight,
         format_date=format_date,
+        fts_call=f"build_query({fts_input!r})",
+        fts_out=repr(build_query(fts_input)),
     )
 
 

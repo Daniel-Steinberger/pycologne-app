@@ -1,4 +1,5 @@
 {% extends "theme.html" %}
+{% import "flip.html" as flip %}
 {% block body %}
 <div class="container">
   <section class="home-grid" aria-label="Übersicht">
@@ -17,23 +18,27 @@
       </p>
     </article>
 
-    <article class="tile">
-      <p class="eyebrow">Nächstes Treffen</p>
-      <p class="tile__date">
-        <time>{{ format_date(next_meeting) }}</time>
-      </p>
-      {% if next_meeting_teaser %}
-      <p>{{ next_meeting_teaser }}</p>
-      {% endif %}
-      <p class="btn-group">
-        <a href="{{ next_meeting_url }}" class="btn">
-          Zum Event <span aria-hidden="true">→</span>
-        </a>
-        <a href="{{ url_for('events') }}" class="btn">
-          Alle Termine <span aria-hidden="true">→</span>
-        </a>
-      </p>
-    </article>
+    <div class="flip">
+      <article class="tile flip__face flip__face--front">
+        <p class="eyebrow">Nächstes Treffen</p>
+        <p class="tile__date">
+          <time>{{ format_date(next_meeting) }}</time>
+        </p>
+        {% if next_meeting_teaser %}
+        <p>{{ next_meeting_teaser }}</p>
+        {% endif %}
+        <p class="btn-group">
+          <a href="{{ next_meeting_url }}" class="btn">
+            Zum Event <span aria-hidden="true">→</span>
+          </a>
+          <a href="{{ url_for('events') }}" class="btn">
+            Alle Termine <span aria-hidden="true">→</span>
+          </a>
+        </p>
+        {{ flip.chip(code_reveals["meeting"]) }}
+      </article>
+      {{ flip.back(code_reveals["meeting"], "next(meeting_dates())", next_meeting_repr) }}
+    </div>
 
     <article class="tile">
       <p class="eyebrow">Was wir bieten</p>
@@ -51,13 +56,17 @@
       </p>
     </article>
 
-    <article class="tile tile--saying" aria-label="Zitat">
-      <p class="eyebrow">Zen of Python</p>
-      <blockquote class="tile__quote">
-        <p>{{ saying }}</p>
-        <cite class="tile__cite">{{ author }}</cite>
-      </blockquote>
-    </article>
+    <div class="flip">
+      <article class="tile tile--saying flip__face flip__face--front" aria-label="Zitat">
+        <p class="eyebrow">Zen of Python</p>
+        <blockquote class="tile__quote">
+          <p>{{ saying }}</p>
+          <cite class="tile__cite">{{ author }}</cite>
+        </blockquote>
+        {{ flip.chip(code_reveals["saying"]) }}
+      </article>
+      {{ flip.back(code_reveals["saying"], "get_saying()", saying_repr) }}
+    </div>
 
   </section>
 </div>

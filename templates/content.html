@@ -1,4 +1,5 @@
 {% extends "theme.html" %}
+{% import "flip.html" as flip %}
 {% block body %}
 <div class="container">
   <div class="content-grid">
@@ -6,7 +7,7 @@
       {{ content | safe }}
     </article>
 
-    {% if code_block %}
+    {% if reveal %}
     <aside class="content-side">
       <article class="tile tile--code" aria-label="Live-Code">
         <div class="tile__head">
@@ -15,7 +16,7 @@
           <p>{{ code_explainer | safe }}</p>
           {% endif %}
         </div>
-        {{ code_block | safe }}
+        {{ flip.terminal(reveal, "get_saying()", saying_repr) }}
       </article>
     </aside>
     {% endif %}

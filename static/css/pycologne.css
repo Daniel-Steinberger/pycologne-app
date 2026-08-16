@@ -3,7 +3,9 @@
    ==========================================================================
    Light/Dark via prefers-color-scheme + light-dark(). System Sans,
    Mono fuer Datenpunkte, Cards mit Border + adaptiver Schattierung.
-   Kein Bootstrap, keine externen Webfonts, kein JavaScript.
+   Kein Bootstrap, keine externen Webfonts. Einziges JavaScript ist
+   static/js/flip.js fuer die Flip-Kacheln (progressive enhancement,
+   ohne Script bleiben es Links auf den Quelltext bei GitHub).
    ========================================================================== */
 
 @layer reset, tokens, base, layout, components, utilities;
@@ -103,6 +105,19 @@
     --transition:      200ms cubic-bezier(0.4, 0, 0.2, 1);
 
     --ring-accent: 0 0 0 3px light-dark(#fef08a99, #ffd43b40);
+
+    /* ---- Matrix-Rueckseiten der Flip-Kacheln -------------------------- */
+    /* Bewusst themenfest, kein light-dark(): die Rueckseite sieht in
+       hellem wie dunklem Theme gleich aus, das Umdrehen ist der
+       Moduswechsel. Palette dokumentiert in docs/design.md, die
+       Code-Farben liegen im Pygments-Stil (pycgnweb/matrixstyle.py). */
+    --mx-bg:     #04120a;
+    --mx-bar:    #061609;
+    --mx-border: #14402a;
+    --mx-text:   #a9f5c4;
+    --mx-bright: #00ff41;
+    --mx-dim:    #56c07f;
+    --mx-out:    #eafff2;
   }
 }
 
@@ -528,22 +543,10 @@
   .tile--code .tile__head {
     padding: var(--space-4) var(--space-5) var(--space-2);
   }
-  .tile--code .highlight {
-    margin: 0;
-    padding: var(--space-4) var(--space-5);
-    background: var(--code-bg);
-    border-top: 1px solid var(--border);
-    border-radius: 0;
-    overflow-x: auto;
-    font-size: var(--fs-sm);
-  }
-  .tile--code .highlight pre {
-    margin: 0;
-    padding: 0;
-    background: none;
+  .tile--code .mx {
     border: 0;
-    font-family: var(--font-mono);
-    line-height: var(--lh-snug);
+    border-top: 1px solid var(--mx-border);
+    border-radius: 0;
   }
 
   .tile--map { padding: 0; overflow: hidden; }
@@ -944,55 +947,204 @@
     font-weight: 600;
   }
 
-  /* ---- Code-Reveal (Termine-Seite) ----------------------------------- */
-  .code-reveal {
-    margin-top: var(--space-16);
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: var(--space-5) var(--space-6);
+  /* ---- Flip-Kacheln: Code hinter der Kachel (s. docs/design.md) ------- */
+  /* Ohne JavaScript bleibt die Rueckseite verborgen und der Griff ist
+     ein Link auf die Funktion im GitHub-Repo. flip.js ersetzt ihn durch
+     einen Umdreh-Knopf und schaltet .flip--ready frei. Die Vorderseite
+     bestimmt die Hoehe, die Rueckseite liegt absolut darueber und
+     scrollt intern. */
+  .flip {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    perspective: 1400px;
   }
-  .code-reveal > summary {
-    cursor: pointer;
-    list-style: none;
+  .flip__face--front { flex: 1; position: relative; }
+  .flip__face--back { display: none; }
+  .flip--roomy { min-height: 24rem; }
+
+  /* Der Griff ist Teil der Vorderseite und dreht mit ihr weg. Die
+     Rueckseite bringt ihr eigenes Schliessen-Element mit (.mx__close). */
+  .flip__chip {
+    position: absolute;
+    top: var(--space-3);
+    inset-inline-end: var(--space-3);
+    z-index: 5;
+    display: inline-grid;
+    place-items: center;
+    min-width: 2.2rem;
+    height: 1.7rem;
+    padding-inline: var(--space-2);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-pill);
+    background: var(--bg-elevated);
+    color: var(--text-soft);
     font-family: var(--font-mono);
-    font-size: var(--fs-sm);
-    color: var(--text);
+    font-size: var(--fs-xs);
     font-weight: 600;
-    display: inline-flex;
+    line-height: 1;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color var(--transition-fast), border-color var(--transition-fast),
+                background var(--transition-fast), box-shadow var(--transition-fast);
+  }
+  .flip__chip:hover,
+  .flip__chip:focus-visible {
+    color: var(--mx-bright);
+    border-color: var(--mx-bright);
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.35);
+  }
+  .flip__chip:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  .flip--ready .flip__face {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transition: transform 650ms cubic-bezier(0.25, 0.7, 0.3, 1);
+  }
+  .flip--ready .flip__face--front { transform: rotateY(0deg); }
+  .flip--ready .flip__face--back {
+    display: flex;
+    position: absolute;
+    inset: 0;
+    transform: rotateY(-180deg);
+  }
+  .flip--ready.is-flipped .flip__face--front { transform: rotateY(180deg); }
+  .flip--ready.is-flipped .flip__face--back { transform: rotateY(0deg); }
+
+  /* ---- Matrix-Terminal (Rueckseiten der Flip-Kacheln, /about) --------- */
+  .mx {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+    background: var(--mx-bg);
+    border: 1px solid var(--mx-border);
+    border-radius: var(--radius-xl);
+    color: var(--mx-text);
+  }
+  .mx::after {
+    /* Scanlines */
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(0deg,
+      rgba(0, 255, 65, 0.045) 0 1px, transparent 1px 3px);
+    pointer-events: none;
+  }
+  .mx__bar {
+    display: flex;
     align-items: center;
     gap: var(--space-2);
-    padding: var(--space-1) 0;
-  }
-  .code-reveal > summary::-webkit-details-marker { display: none; }
-  .code-reveal > summary::after {
-    content: "▾";
-    color: var(--text-soft);
-    transition: transform var(--transition-fast);
-    margin-inline-start: var(--space-2);
-  }
-  .code-reveal[open] > summary::after { transform: rotate(180deg); }
-  .code-reveal__hint {
-    margin-top: var(--space-4);
-    color: var(--text-muted);
-    font-size: var(--fs-sm);
-  }
-  .code-reveal .highlight {
-    margin-top: var(--space-3);
-    padding: var(--space-4);
-    background: var(--code-bg);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow-x: auto;
-    font-size: var(--fs-sm);
-  }
-  .code-reveal .highlight pre {
-    margin: 0;
-    padding: 0;
-    background: none;
-    border: 0;
+    flex: none;
+    padding: var(--space-2) var(--space-4);
+    background: var(--mx-bar);
+    border-bottom: 1px solid var(--mx-border);
     font-family: var(--font-mono);
-    line-height: var(--lh-snug);
+    font-size: var(--fs-xs);
+    color: var(--mx-dim);
+  }
+  .mx__dot {
+    width: 8px;
+    height: 8px;
+    flex: none;
+    border-radius: var(--radius-pill);
+    background: var(--mx-bright);
+    box-shadow: 0 0 8px rgba(0, 255, 65, 0.7);
+  }
+  .mx__path {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .mx__live {
+    margin-inline-start: auto;
+    color: var(--mx-bright);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    font-size: 0.65rem;
+  }
+  .mx__close {
+    flex: none;
+    margin-inline-start: var(--space-2);
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
+    display: inline-grid;
+    place-items: center;
+    padding: 0;
+    border: 1px solid var(--mx-border);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--mx-dim);
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    line-height: 1;
+    cursor: pointer;
+    transition: color var(--transition-fast), border-color var(--transition-fast),
+                box-shadow var(--transition-fast);
+  }
+  .mx__close:hover,
+  .mx__close:focus-visible {
+    color: var(--mx-bright);
+    border-color: var(--mx-bright);
+    box-shadow: 0 0 8px rgba(0, 255, 65, 0.4);
+  }
+  .mx__close:focus-visible {
+    outline: 2px solid var(--mx-bright);
+    outline-offset: 2px;
+  }
+  .mx__code {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    padding: var(--space-4) var(--space-5);
+  }
+  .mx__code .mx-highlight pre {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    line-height: 1.65;
+  }
+  /* Gluehen nur auf Schluesselwoertern und Wort-Operatoren */
+  .mx__code .k, .mx__code .kn, .mx__code .kd, .mx__code .ow {
+    text-shadow: 0 0 9px rgba(0, 255, 65, 0.4);
+  }
+  .mx__repl {
+    flex: none;
+    margin: 0;
+    padding: var(--space-3) var(--space-4);
+    border-top: 1px solid var(--mx-border);
+    background: rgba(0, 255, 65, 0.05);
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+  }
+  .mx__repl code {
+    font-family: inherit;
+    color: var(--mx-text);
+    background: none;
+    padding: 0;
+  }
+  .mx__prompt { color: var(--mx-bright); }
+  .mx__out { color: var(--mx-out); }
+  .mx__cursor {
+    display: inline-block;
+    width: 0.55em;
+    height: 1.05em;
+    margin-inline-start: 0.15em;
+    background: var(--mx-bright);
+    vertical-align: text-bottom;
+    box-shadow: 0 0 8px rgba(0, 255, 65, 0.8);
+    animation: mx-blink 1.1s steps(1) infinite;
+  }
+  @keyframes mx-blink { 50% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    .mx__cursor { animation: none; }
   }
 
   /* ---- Prose (Markdown-Inhalte) --------------------------------------- */

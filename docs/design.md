@@ -2,7 +2,10 @@
 
 Stand: 2026-08-16. Zwei Teile: erst der Bestand, wie er in
 `static/css/pycologne.css` und den Templates umgesetzt ist, danach das
-Konzept "Code hinter den Kacheln", das als Nächstes ansteht.
+Konzept "Code hinter den Kacheln". Das Konzept ist inzwischen
+**umgesetzt** (Entscheidungen vom 16.08.2026: Variante A "Phosphor pur",
+nur der Griff, alle vier Kandidaten sofort); Teil 2 dient damit als
+Referenz der gebauten Lösung.
 
 ## Teil 1: Bestand, der "Adaptive Dev-Style"
 
@@ -19,10 +22,12 @@ Group, gebaut von Leuten, die Code mögen. Daraus folgen die Leitplanken:
   `ui-monospace`-Stack für alles Datenhafte. Termine, Datumsangaben,
   Eyebrows und Suchtreffer-Daten stehen bewusst in Mono, das ist das
   wiederkehrende "Dev"-Signal der Seite.
-- **Kein Bootstrap, kein JavaScript**: Die Seite kommt bisher komplett ohne
-  Script aus. Interaktivität gibt es nur über native HTML-Elemente
-  (`<details>` für aufklappbare Jahrgänge und den Code-Einblick auf der
-  Terminseite). Einzige Ausnahme ist Leaflet auf der Anfahrtsseite.
+- **Kein Bootstrap, fast kein JavaScript**: Die Seite kam bis August 2026
+  komplett ohne eigenes Script aus, Interaktivität lief über native
+  HTML-Elemente (`<details>` für aufklappbare Jahrgänge). Seit den
+  Flip-Kacheln gibt es genau ein Script, `static/js/flip.js`, als
+  progressive enhancement (s. Teil 2). Daneben Leaflet auf der
+  Anfahrtsseite.
 
 ### Token-System
 
@@ -72,18 +77,14 @@ Skip-Link, `.sr-only`, sichtbarer Fokusring (`--ring-accent`), globales
 
 ### Code-Einblicke im Bestand (der Vorläufer des neuen Konzepts)
 
-Die Seite zeigt an zwei Stellen bereits echten Quelltext, beide gespeist aus
-`inspect.getsource()` in `webapp.py` (Context-Processor `inject_code_reveal`
-und die `HIGHLIGHTED_*`-Konstanten), gerendert mit Pygments, ein Style pro
-Theme (`default` hell, `monokai` dunkel):
-
-1. `/events`: ein `<details class="code-reveal">` unter der Terminliste
-   zeigt `meeting_dates()`.
-2. `/about`: eine statische Beistellkachel (`.tile--code`) zeigt
-   `get_saying()`.
-
-Zwei Stellen, zwei verschiedene Mechaniken. Das neue Konzept ersetzt beide
-durch ein einheitliches Muster.
+Bis August 2026 zeigte die Seite an zwei Stellen echten Quelltext, beide
+gespeist aus `inspect.getsource()`, gerendert mit Pygments, ein Style pro
+Theme (`default` hell, `monokai` dunkel): ein `<details class="code-reveal">`
+unter der Terminliste auf `/events` (`meeting_dates()`) und eine statische
+Beistellkachel (`.tile--code`) auf `/about` (`get_saying()`). Zwei Stellen,
+zwei verschiedene Mechaniken. Beide sind im Flip-Muster aus Teil 2
+aufgegangen, die Theme-Pygments-Styles wurden dabei durch den einen
+Matrix-Stil ersetzt.
 
 ## Teil 2: Konzept "Code hinter den Kacheln"
 
@@ -150,8 +151,15 @@ REPL-Fußzeile mit Prompt und Ergebnis.
 
 - **Griff statt ganzer Kachel**: Die Vorderseiten enthalten Links und
   Buttons ("Zum Event", "Mitmachen"). Eine komplett klickbare Kachel würde
-  damit kollidieren, der Griff in der Ecke bleibt eindeutig. Er sitzt über
-  beiden Seiten, dreht nicht mit und wechselt sein Label von `</>` zu `×`.
+  damit kollidieren, der Griff in der Ecke bleibt eindeutig. Der Griff
+  gehört zur Vorderseite und **dreht mit ihr weg**; die Rückseite bringt
+  ihren eigenen Schließen-Knopf (`×`) fest in der Terminal-Kopfzeile mit.
+  Kein Element schwebt über beiden Seiten, das Drehen wirkt dadurch wie
+  ein Stück. (Erste Fassung hatte einen feststehenden Griff mit
+  Label-Wechsel, auf Daniels Feedback hin verworfen.) Als Tooltip trägt
+  der Griff "Peek into the code", der Schließen-Knopf "Exit the Matrix";
+  die `aria-label` bleiben deutsch und funktional (Quelltext
+  zeigen/schließen).
 - **Flip**: 3D-Rotation um die Y-Achse, etwa 650ms,
   `cubic-bezier(.25,.7,.3,1)`, `backface-visibility: hidden`. Die
   Vorderseite bestimmt die Höhe, die Rückseite liegt absolut darüber und
@@ -172,8 +180,8 @@ REPL-Fußzeile mit Prompt und Ergebnis.
   hinter dem Code, Deckung um 17 Prozent, läuft nur bei umgedrehter Kachel
   und pausiert bei `prefers-reduced-motion`.
 
-Empfehlung aus dem Konzept: A überall, B allenfalls als Osterei auf der
-Zen-Kachel. Entscheidung steht aus.
+**Entschieden (16.08.2026): Variante A**, überall. Der Regen aus Variante B
+wurde nicht gebaut.
 
 ### Umsetzungsplan
 
@@ -194,8 +202,27 @@ Zen-Kachel. Entscheidung steht aus.
 Jeder Schritt ist einzeln deploybar, nichts davon ändert Inhalte oder
 Routen.
 
-### Offene Entscheidungen
+### Umsetzung (16.08.2026)
 
-- Variante A oder B (oder A mit B als Osterei)?
-- Alle vier Kandidaten in v1 oder Start mit den beiden Startseiten-Kacheln?
-- Regen, falls gewählt: nur Startseite oder überall?
+Alle vier Schritte wurden in einem Zug gebaut, die drei offenen Fragen hat
+Daniel entschieden: Variante A (Phosphor pur), nur der Griff, alle vier
+Kandidaten sofort. Die Bausteine im Repo:
+
+- `pycgnweb/matrixstyle.py`: der Pygments-Stil mit der Phosphor-Palette.
+- `pycgnweb/webapp.py`: `get_code_reveals()` als Register (Kennung zu
+  Modulpfad, GitHub-Link mit Zeilenanker, gehighlightetem Quelltext),
+  lazy beim ersten Request gebaut. Die REPL-Werte kommen aus den Routen
+  als `repr()` genau der Werte, die auch die Vorderseite zeigt.
+- `templates/flip.html`: Macros `terminal` (Matrix-Terminal, auch statisch
+  nutzbar wie auf `/about`), `back` (Terminal als Rückseite) und `chip`
+  (der Griff als Link, No-JS-Fallback).
+- `static/js/flip.js`: ersetzt den Link durch einen Umdreh-Knopf
+  (`aria-expanded`), schaltet `.flip--ready` frei und setzt die jeweils
+  abgewandte Seite `inert`, damit Fokus und Screenreader nicht hinter der
+  Kachel landen. Beim Drehen wandert der Fokus auf das Bedienelement der
+  neuen Seite, Escape dreht zurück.
+- `static/css/pycologne.css`: Matrix-Tokens im Token-Layer, Komponenten
+  `.flip` und `.mx` im Components-Layer. Die alten Blöcke `.code-reveal`
+  und `.tile--code .highlight` sind entfernt.
+- `_tests/test_flip.py`: Register, alle vier Seiten, No-JS-Fallback, und
+  dass Kacheln ohne Code keinen Griff bekommen.
