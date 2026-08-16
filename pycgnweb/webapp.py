@@ -684,7 +684,12 @@ def content_refresh() -> tuple[str, int]:
 def page_not_found(_err: Exception) -> tuple[str, int]:
     """Default error handler. Serve error page for 404 responses."""
     msg = "Seite nicht gefunden"
-    info = f"Die angeforderte URL ({request.url}) existiert nicht oder ist nicht mehr verfügbar."
+    # Bewusst request.path statt request.url: die absolute URL braucht den
+    # Host-Header, und bei kaputten Headern (Scanner schicken z. B. offene
+    # eckige Klammern) warf request.url unter Werkzeug 3.1.4 einen
+    # ValueError, aus dem 404 wurde dann ein 500. Upstream zwischen 3.1.4
+    # und 3.1.8 behoben, aber der Pfad genuegt hier ohnehin.
+    info = f"Die angeforderte URL ({request.path}) existiert nicht oder ist nicht mehr verfügbar."
     return render_template("404.html", msg=msg, info=info), 404
 
 

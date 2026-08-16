@@ -44,6 +44,21 @@ def test_unknown_url_returns_404(client):
     """Unbekannte URLs muessen 404 liefern."""
     response = client.get("/this-does-not-exist")
     assert response.status_code == 404
+    # die Fehlerseite nennt den angefragten Pfad
+    assert "/this-does-not-exist" in response.get_data(as_text=True)
+
+
+def test_broken_host_header_does_not_crash_the_404_page(client):
+    """Scanner mit kaputtem Host-Header duerfen keinen 500 ausloesen.
+
+    Unter Werkzeug 3.1.4 (Produktion, nixpkgs 25.11) warf request.url im
+    404-Handler fuer Host-Header mit offener eckiger Klammer einen
+    ValueError; der Handler nutzt deshalb request.path. In Produktion
+    weist zusaetzlich TRUSTED_HOSTS (gesetzt im wsgi-Wrapper des Servers)
+    solche Requests schon vorher mit 400 ab.
+    """
+    response = client.get("/webui/", headers={"Host": "[fe80::kaputt"})
+    assert response.status_code == 404
 
 
 def test_events_page_lists_past_meetings(client):
