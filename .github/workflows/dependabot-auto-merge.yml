@@ -23,13 +23,21 @@ jobs:
     steps:
       - name: Metadaten des Updates lesen
         id: metadata
-        uses: dependabot/fetch-metadata@v2
+        uses: dependabot/fetch-metadata@v3
 
       # Bei gruppierten PRs meldet fetch-metadata den hoechsten enthaltenen
       # Update-Typ. Majors kommen ueber dependabot.yml ohnehin als eigener
       # PR, die Bedingung hier ist die zweite Sicherung.
+      #
+      # Bewusst positiv formuliert: bis v3.1.0 lieferte fetch-metadata bei
+      # Python-PRs teilweise gar keinen update-type. Eine Bedingung der Form
+      # "ungleich major" waere dann wahr gewesen und haette genau die PRs
+      # durchgewunken, die niemand ungesehen mergen will. So merged nur, was
+      # sich ausdruecklich als Patch oder Minor ausweist.
       - name: Auto-Merge fuer Patch und Minor einschalten
-        if: steps.metadata.outputs.update-type != 'version-update:semver-major'
+        if: >-
+          steps.metadata.outputs.update-type == 'version-update:semver-patch' ||
+          steps.metadata.outputs.update-type == 'version-update:semver-minor'
         run: gh pr merge --auto --squash "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
