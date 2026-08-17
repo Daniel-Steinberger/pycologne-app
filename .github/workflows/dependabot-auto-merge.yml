@@ -23,7 +23,7 @@ jobs:
     steps:
       - name: Metadaten des Updates lesen
         id: metadata
-        uses: dependabot/fetch-metadata@v2
+        uses: dependabot/fetch-metadata@v3
 
       # Bei gruppierten PRs meldet fetch-metadata den hoechsten enthaltenen
       # Update-Typ. Majors kommen ueber dependabot.yml ohnehin als eigener
