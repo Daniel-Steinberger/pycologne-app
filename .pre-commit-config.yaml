@@ -1,6 +1,6 @@
 # Ruff kommt bewusst aus dem Projekt-venv (uv.lock) statt aus einem eigenen
 # pre-commit-Environment. Sonst gaebe es eine zweite Ruff-Version, die hier
-# per Hand gepflegt werden muesste und von der CI-Version abdriftet -- fuer
+# per Hand gepflegt werden muesste und von der CI-Version abdriftet. Fuer
 # pre-commit-Revisionen gibt es keine Dependabot-Updates.
 repos:
   - repo: local

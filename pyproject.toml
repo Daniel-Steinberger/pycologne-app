@@ -21,7 +21,7 @@ dependencies = [
     # macht die Anforderung beim Deployment zugleich unerfuellbar.
     # Angehoben wird, sobald der Server auf einem Kanal mit 4er-Version
     # laeuft (nixos-26.05 hat 4.0.0, 4.2.0 steht in unstable und wird
-    # regulaer mit 26.11 stabil). Dann passt ">=4" -- nicht ">=4.2.0",
+    # regulaer mit 26.11 stabil). Dann passt ">=4", nicht ">=4.2.0",
     # das erfuellt auch 26.05 noch nicht.
     "markdown-it-py[linkify]>=3",
     "python-dateutil>=2.9",

@@ -11,7 +11,7 @@ updates:
     open-pull-requests-limit: 5
     # Nur uv.lock aktualisieren, die Untergrenzen in pyproject.toml in Ruhe
     # lassen. Auf dem Server werden die Abhaengigkeiten nicht aus uv.lock,
-    # sondern aus nixpkgs aufgeloest -- dort liegt z.B. markdown-it-py 3.0.0.
+    # sondern aus nixpkgs aufgeloest, dort liegt z.B. markdown-it-py 3.0.0.
     # Eine angehobene Untergrenze (PR #9 wollte ">=3" zu ">=4.2.0" machen)
     # laesst die CI gruen und macht die Anforderung auf dem Server zugleich
     # unerfuellbar. Die Constraints bleiben deshalb bewusst weit.
