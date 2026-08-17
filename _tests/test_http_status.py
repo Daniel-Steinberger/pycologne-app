@@ -32,7 +32,7 @@ def client(template_root):
 
 @pytest.mark.parametrize(
     "path",
-    ["/", "/index", "/about", "/join", "/events", "/contact"],
+    ["/", "/index", "/about", "/join", "/events", "/news", "/contact"],
 )
 def test_page_returns_ok(client, path):
     """Jede der oeffentlichen Routen muss HTTP 200 liefern."""

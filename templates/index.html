@@ -68,6 +68,32 @@
       {{ flip.back(code_reveals["saying"], "get_saying()", saying_repr) }}
     </div>
 
+    {% if news_entries %}
+    <article class="tile tile--news">
+      <p class="eyebrow">Neuigkeiten</p>
+      <ul class="news-list news-list--compact">
+        {% for entry in news_entries %}
+        <li class="news-list__item">
+          <time class="news-list__date" datetime="{{ entry.date.strftime('%Y-%m-%d') }}">
+            {{ format_day(entry.date) }}
+          </time>
+          <h2 class="news-list__title">
+            <a href="{{ entry.url }}">{{ entry.title }}</a>
+          </h2>
+        </li>
+        {% endfor %}
+      </ul>
+      <p class="btn-group">
+        <a href="{{ url_for('news') }}" class="btn">
+          Alle News <span aria-hidden="true">→</span>
+        </a>
+        <a href="{{ url_for('news_feed') }}" class="btn">
+          <span aria-hidden="true">📡</span> Atom-Feed
+        </a>
+      </p>
+    </article>
+    {% endif %}
+
   </section>
 </div>
 {% endblock %}

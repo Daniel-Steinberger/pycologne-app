@@ -1,0 +1,43 @@
+{% extends "theme.html" %}
+{% block title %}News, PyCologne{% endblock %}
+
+{% block body %}
+<div class="container">
+  <section class="news">
+    <header class="section-header">
+      <h1>News</h1>
+    </header>
+
+    {% if entries %}
+    <ul class="news-list">
+      {% for entry in entries %}
+      <li class="news-list__item">
+        <article>
+          <time class="news-list__date" datetime="{{ entry.date.strftime('%Y-%m-%d') }}">
+            {{ format_date(entry.date) }}
+          </time>
+          <h2 class="news-list__title">
+            <a href="{{ entry.url }}">{{ entry.title }}</a>
+          </h2>
+          {% if entry.teaser %}
+          <p class="news-list__teaser">{{ entry.teaser }}</p>
+          {% endif %}
+        </article>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="news-empty">
+      Hier stehen künftig Neuigkeiten rund um PyCologne, alles also, was
+      keinen eigenen Termin hat. Noch ist nichts eingetragen.
+    </p>
+    {% endif %}
+
+    <p class="upcoming-list__feed">
+      <a href="{{ url_for('news_feed') }}" class="btn btn--small">
+        <span aria-hidden="true">📡</span> Als Atom-Feed abonnieren
+      </a>
+    </p>
+  </section>
+</div>
+{% endblock %}

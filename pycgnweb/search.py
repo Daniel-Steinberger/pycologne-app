@@ -53,8 +53,12 @@ def _plain_text(md_text: str) -> str:
     return "\n".join(lines)
 
 
-def _title(md_text: str, fallback: str) -> str:
-    """Erste Ueberschrift des Protokolls, sonst *fallback*."""
+def first_heading(md_text: str, fallback: str) -> str:
+    """Erste Ueberschrift eines Markdown-Textes, sonst *fallback*.
+
+    Wird auch fuer die News-Eintraege gebraucht, die ihren Titel genauso
+    tragen wie die Protokolle: als erste Zeile der Datei.
+    """
     for line in md_text.splitlines():
         if line.startswith("# "):
             return line.removeprefix("# ").strip()
@@ -121,7 +125,7 @@ class ProtocolIndex:
             path = os.path.join(self.events_dir, name)
             with open(path, encoding="utf-8") as file_:
                 md_text = file_.read()
-            rows.append((stem, _title(md_text, stem), _plain_text(md_text)))
+            rows.append((stem, first_heading(md_text, stem), _plain_text(md_text)))
         connection.executemany("INSERT INTO protocols VALUES (?, ?, ?)", rows)
         connection.commit()
         return connection

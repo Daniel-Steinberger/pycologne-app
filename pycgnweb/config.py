@@ -4,6 +4,8 @@ from typing import Final
 
 # Format strings for babel.dates.format_datetime
 DATE_FORMAT_LONG: Final[str] = "EEEE, d. MMMM yyyy, HH:mm 'Uhr'"
+# Ohne Uhrzeit, fuer News-Eintraege: die tragen nur einen Tag, keine Zeit.
+DATE_FORMAT_DAY: Final[str] = "d. MMMM yyyy"
 
 
 WEBSITE_URL: Final[str] = "https://www.pycologne.de"

@@ -14,6 +14,8 @@ from datetime import datetime
 from functools import lru_cache, partial
 from importlib.metadata import PackageNotFoundError, version
 from typing import Any, cast
+from xml.sax.saxutils import escape as xml_escape
+from xml.sax.saxutils import quoteattr
 
 from babel.dates import format_datetime
 from flask import Flask, Response, abort, render_template, request, send_from_directory, url_for
@@ -26,15 +28,17 @@ from pygments.lexers.python import PythonLexer
 from .config import (
     CONTENT_REPO_URL,
     CONTENT_TRIGGER_FILE,
+    DATE_FORMAT_DAY,
     DATE_FORMAT_LONG,
     MEETUP_URL,
     REPO_URL,
     WEBHOOK_SECRET_FILE,
+    WEBSITE_URL,
 )
 from .events import meeting_dates
 from .matrixstyle import MatrixStyle
 from .sayings import get_saying
-from .search import HIGHLIGHT_CLOSE, HIGHLIGHT_OPEN, ProtocolIndex, build_query
+from .search import HIGHLIGHT_CLOSE, HIGHLIGHT_OPEN, ProtocolIndex, build_query, first_heading
 
 app = Flask(__name__.split(".")[0])
 
@@ -224,6 +228,7 @@ def get_topmenue() -> list[tuple[str, str]]:
         ("/about", "Die User Group"),
         ("/join", "Mitmachen"),
         ("/events", "Termine"),
+        ("/news", "News"),
         ("/contact", "Kontakt"),
     ]
 
@@ -321,12 +326,17 @@ def _protocol_teaser(md_text: str) -> Markup:
 _past_meetings_cache: dict[tuple[Any, ...], list[dict[str, Any]]] = {}
 
 
-def _events_dir_state(events_dir: str) -> tuple[tuple[str, int], ...]:
-    """Fingerabdruck des Termin-Verzeichnisses (Dateiname und mtime)."""
+def _dir_state(directory: str) -> tuple[tuple[str, int], ...]:
+    """Fingerabdruck eines Inhalts-Verzeichnisses (Dateiname und mtime).
+
+    Traegt die Caches der Termin-Uebersicht und der News. Eine geaenderte
+    oder neue Datei aendert den Fingerabdruck, ein Abgleich des
+    Content-Checkouts ist damit sofort sichtbar, ohne Neustart.
+    """
     return tuple(
         sorted(
             (entry.name, entry.stat().st_mtime_ns)
-            for entry in os.scandir(events_dir)
+            for entry in os.scandir(directory)
             if entry.name.endswith(".md")
         )
     )
@@ -348,7 +358,7 @@ def get_past_meetings(reference: datetime) -> list[dict[str, Any]]:
     if not os.path.isdir(events_dir):
         return []
 
-    cache_key = (_events_dir_state(events_dir), reference.date())
+    cache_key = (_dir_state(events_dir), reference.date())
     cached = _past_meetings_cache.get(cache_key)
     if cached is not None:
         return cached
@@ -397,6 +407,112 @@ def group_meetings_by_year(
     for meeting in meetings:
         grouped.setdefault(meeting["date"].year, []).append(meeting)
     return sorted(grouped.items(), reverse=True)
+
+
+# News-Eintraege liegen als md/news/JJJJ-MM-TT-slug.md im Content-Repo.
+#
+# Das Datum steht im Dateinamen und nicht in der Datei, aus demselben Grund
+# wie bei den Terminen: nur der Dateiname uebersteht einen frischen Checkout
+# unveraendert. Git uebertraegt keine mtimes, ein Sortieren nach Dateizeit
+# wuerde die Reihenfolge im Feed also bei jedem Abgleich neu erfinden und in
+# den Readern alles erneut als ungelesen zeigen.
+_NEWS_SLUG = re.compile(r"\d{4}-\d{2}-\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*")
+
+# Uhrzeit, mit der ein Eintrag im Atom-Feed steht. Reine Konvention: der
+# Dateiname gibt nur den Tag her, Atom verlangt einen vollen Zeitstempel.
+# Auf der Seite selbst wird die Uhrzeit nie gezeigt.
+NEWS_HOUR = 9
+
+# So viele Eintraege stehen im Feed. Wie beim ICS-Feed bewusst begrenzt,
+# damit er nicht mit dem Archiv mitwaechst.
+NEWS_FEED_LIMIT = 20
+
+# So viele Eintraege zeigt die Kachel auf der Startseite.
+HOME_NEWS = 3
+
+_news_cache: dict[tuple[Any, ...], list[dict[str, Any]]] = {}
+
+
+def _news_date(stem: str) -> datetime | None:
+    """Datum eines News-Dateinamens, oder None wenn er nicht passt.
+
+    Eine Stelle fuer beides, Muster und Datum, damit Uebersicht, Feed und
+    Einzelseite nie auseinanderlaufen: eine Datei, die in der Uebersicht
+    fehlt, darf auch nicht unter ihrer URL erreichbar sein.
+    """
+    if _NEWS_SLUG.fullmatch(stem) is None:
+        return None
+    try:
+        return datetime.strptime(stem[:10], "%Y-%m-%d").replace(hour=NEWS_HOUR)
+    except ValueError:
+        return None
+
+
+def _news_teaser(md_text: str) -> Markup:
+    """Ersten Textabsatz eines News-Eintrags als gerendertes HTML.
+
+    Anders als bei den Protokollen wird nur die Ueberschrift uebersprungen
+    (und ein einleitendes Bild): ein News-Absatz darf mit Fettschrift
+    beginnen, waehrend die Termin-Dateien an derselben Stelle ihre
+    Datum- und Ort-Zeilen tragen, vgl. _protocol_teaser().
+    """
+    paragraph: list[str] = []
+    for line in md_text.splitlines():
+        stripped = line.strip()
+        if not stripped or stripped.startswith(("#", "!")):
+            if paragraph:
+                break
+            continue
+        paragraph.append(stripped)
+    # Markdown-Quelle stammt ausschliesslich aus Maintainer-Commits, kein
+    # XSS-Risiko, vgl. Kommentar bei der _md-Definition weiter oben.
+    return Markup(_md.renderInline(" ".join(paragraph)))  # noqa: S704
+
+
+def get_news() -> list[dict[str, Any]]:
+    """Alle News-Eintraege, neuester zuerst.
+
+    Dateien, deren Name nicht dem Muster JJJJ-MM-TT-slug entspricht, werden
+    uebersprungen. Gemeldet werden sie von der Pruefung im Content-Repo, die
+    Seite soll daran nicht zerbrechen.
+
+    Gecacht, solange sich im Verzeichnis nichts aendert, analog zu
+    get_past_meetings(). Fehlt das Verzeichnis ganz, etwa weil der
+    Content-Checkout aelter ist als diese Funktion, kommt eine leere Liste
+    zurueck und die Seite bleibt heil.
+    """
+    news_dir = os.path.join(app.template_folder or "", "md", "news")
+    if not os.path.isdir(news_dir):
+        return []
+
+    cache_key = (_dir_state(news_dir),)
+    cached = _news_cache.get(cache_key)
+    if cached is not None:
+        return cached
+
+    entries = []
+    # ISO-Datum am Anfang: absteigende Dateinamen == absteigende Daten
+    for name in sorted(os.listdir(news_dir), reverse=True):
+        stem, ext = os.path.splitext(name)
+        date = _news_date(stem) if ext == ".md" else None
+        if date is None:
+            continue
+        with open(os.path.join(news_dir, name), encoding="utf-8") as file_:
+            md_text = file_.read()
+        entries.append(
+            {
+                "date": date,
+                "slug": stem,
+                "url": f"/news/{stem}",
+                "title": first_heading(md_text, stem),
+                "teaser": _news_teaser(md_text),
+            }
+        )
+    # Nur der aktuelle Verzeichniszustand ist interessant, vgl.
+    # get_past_meetings().
+    _news_cache.clear()
+    _news_cache[cache_key] = entries
+    return entries
 
 
 def meeting_placeholder(date: datetime) -> str:
@@ -476,6 +592,8 @@ def index() -> str:
         next_meeting=next_meeting,
         next_meeting_url=f"/events/{next_meeting:%Y-%m-%d}",
         next_meeting_teaser=get_next_meeting_teaser(next_meeting),
+        news_entries=get_news()[:HOME_NEWS],
+        format_day=partial(format_datetime, format=DATE_FORMAT_DAY, locale="DE"),
         # Fuer die REPL-Zeilen der Flip-Kacheln: dieselben Werte, die die
         # Vorderseiten zeigen, als Python-repr. Die Rueckseite luegt nie.
         next_meeting_repr=repr(next_meeting),
@@ -564,6 +682,127 @@ def events_date(date: str) -> str:
             abort(404)
         content = cast(str, _md.render(meeting_placeholder(upcoming[wanted])))
     return render_content("event", content)
+
+
+@app.route("/news")
+def news() -> str:
+    """Uebersicht der News-Eintraege, neuester zuerst."""
+    format_date = partial(format_datetime, format=DATE_FORMAT_DAY, locale="DE")
+    return render_template(
+        "news.html",
+        act="news",
+        urls=get_urls(),
+        entries=get_news(),
+        format_date=format_date,
+    )
+
+
+@app.route("/news/<slug>")
+def news_entry(slug: str) -> str:
+    """Einen einzelnen News-Eintrag ausliefern.
+
+    Der Slug wird gegen das Namensmuster geprueft, bevor daraus ein Pfad
+    wird. Anders als bei den Terminen gibt es hier keinen Platzhalter: was
+    es nicht gibt, gibt es nicht.
+    """
+    if _news_date(slug) is None:
+        abort(404)
+    content = get_template("md", "news", f"{slug}.md")
+    if content == "":
+        abort(404)
+    return render_content("news", content)
+
+
+# Autoritaet und Datum der Atom-IDs, nach RFC 4151. Beides muss auf immer
+# unveraendert bleiben: die ID ist das Merkmal, an dem ein Reader einen
+# bekannten Eintrag wiedererkennt. Deshalb bewusst nicht die URL selbst, die
+# sich mit Host oder Schema aendern kann.
+_ATOM_TAG_AUTHORITY = "pycologne.de"
+_ATOM_TAG_DATE = "2026"
+
+
+def _atom_tag(path: str) -> str:
+    """Stabile Atom-ID als tag-URI."""
+    return f"tag:{_ATOM_TAG_AUTHORITY},{_ATOM_TAG_DATE}:{path}"
+
+
+# Wurzelrelative Verweise ("/events/...", "/static/images/...") zeigen ins
+# Nichts, sobald der Text die Webseite verlaesst: ein Feed-Reader hat keinen
+# Bezugspunkt, gegen den er sie aufloesen koennte, Bilder blieben leer und
+# Links toter Text. Im Feed werden sie deshalb absolut gemacht. Bewusst nicht
+# ueber xml:base, das nicht jeder Reader beachtet.
+_ROOT_REF = re.compile(r'(href|src)="/(?!/)')
+
+
+def _absolutize(html: str) -> str:
+    """Wurzelrelative Verweise auf die eigene Adresse umschreiben."""
+    return _ROOT_REF.sub(lambda match: f'{match.group(1)}="{WEBSITE_URL}/', html)
+
+
+def _rfc3339(moment: datetime) -> str:
+    """Zeitstempel im Format, das Atom verlangt.
+
+    Die News-Daten sind naive Zeitstempel aus einem Dateinamen, deren
+    Uhrzeit ohnehin nur Konvention ist (NEWS_HOUR). Sie werden als UTC
+    ausgegeben, statt eine Zeitzonendatenbank dafuer heranzuziehen.
+    """
+    return moment.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+@app.route("/news.atom")
+def news_feed() -> Response:
+    """Atom-Feed der News-Eintraege (RFC 4287).
+
+    Wie beim ICS-Feed wird das XML hier zusammengesetzt und nicht als
+    Jinja-Template gerendert. Grund ist das Deployment: es installiert nur
+    templates/*.html, ein .xml-Template kaeme auf dem Server nie an und der
+    Feed waere im Betrieb leer, ohne dass lokal etwas aufgefallen waere.
+    """
+    entries = get_news()[:NEWS_FEED_LIMIT]
+    # Ohne Eintraege gibt es kein Datum, das der Bestand hergibt. Der
+    # Zeitpunkt des Abrufs ist dann die ehrlichste Angabe.
+    updated = _rfc3339(entries[0]["date"]) if entries else _rfc3339(datetime.now())
+    self_href = quoteattr(f"{WEBSITE_URL}/news.atom")
+    page_href = quoteattr(f"{WEBSITE_URL}/news")
+    atom_type = 'type="application/atom+xml"'
+
+    lines = [
+        '<?xml version="1.0" encoding="utf-8"?>',
+        '<feed xmlns="http://www.w3.org/2005/Atom">',
+        "  <title>PyCologne, Neuigkeiten</title>",
+        "  <subtitle>Neuigkeiten der Python User Group Köln</subtitle>",
+        f"  <id>{_atom_tag('news')}</id>",
+        f"  <updated>{updated}</updated>",
+        f'  <link rel="self" {atom_type} href={self_href}/>',
+        f'  <link rel="alternate" type="text/html" href={page_href}/>',
+        "  <author><name>PyCologne</name></author>",
+    ]
+
+    for entry in entries:
+        stamp = _rfc3339(entry["date"])
+        slug = entry["slug"]
+        href = quoteattr(f"{WEBSITE_URL}{entry['url']}")
+        title = xml_escape(entry["title"])
+        summary = xml_escape(_absolutize(str(entry["teaser"])))
+        # Der ganze Eintrag, nicht nur der Teaser: ein Feed, den man im
+        # Reader zu Ende lesen kann, ist der Sinn der Sache.
+        body = xml_escape(_absolutize(get_template("md", "news", f"{slug}.md")))
+        lines.extend(
+            [
+                "  <entry>",
+                f"    <title>{title}</title>",
+                f"    <id>{_atom_tag('news/' + slug)}</id>",
+                f'    <link rel="alternate" type="text/html" href={href}/>',
+                f"    <updated>{stamp}</updated>",
+                f"    <published>{stamp}</published>",
+                f'    <summary type="html">{summary}</summary>',
+                f'    <content type="html">{body}</content>',
+                "  </entry>",
+            ]
+        )
+
+    lines.append("</feed>")
+    return Response("\n".join(lines) + "\n", mimetype="application/atom+xml")
 
 
 @app.route("/favicon.ico")

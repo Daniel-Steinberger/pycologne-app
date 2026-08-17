@@ -875,6 +875,55 @@
   .past-year[open] > summary { margin-bottom: var(--space-2); }
   .past-year[open] + .past-year > summary { padding-top: var(--space-3); }
 
+  /* ---- News ----------------------------------------------------------
+     Eigene Liste statt .upcoming-list: dort tragen Datum und Kurzlabel eine
+     Zeile, ein News-Eintrag braucht Datum, Titel und Teaser untereinander.
+  */
+  .news { max-width: 46rem; }
+  .news-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-6);
+  }
+  .news-list__item + .news-list__item {
+    border-top: 1px solid var(--border);
+    padding-top: var(--space-6);
+  }
+  .news-list__date {
+    display: block;
+    font-family: var(--font-mono);
+    font-feature-settings: "tnum";
+    font-size: var(--fs-xs);
+    color: var(--text-muted);
+  }
+  .news-list__title {
+    font-size: var(--fs-xl);
+    line-height: var(--lh-snug);
+    margin: var(--space-2) 0 var(--space-3);
+  }
+  .news-list__title a { color: inherit; text-decoration: none; }
+  .news-list__title a:hover { color: var(--accent); }
+  .news-list__teaser {
+    margin: 0;
+    color: var(--text-muted);
+    max-width: var(--content-max);
+  }
+  .news-empty { color: var(--text-muted); }
+
+  /* Kachel auf der Startseite: ueber die ganze Breite, damit das
+     zweispaltige Raster mit einer ungeraden Zahl Kacheln aufgeht. */
+  .tile--news { grid-column: 1 / -1; }
+  .news-list--compact { gap: var(--space-4); }
+  .news-list--compact .news-list__item + .news-list__item {
+    padding-top: var(--space-4);
+  }
+  .news-list--compact .news-list__title {
+    font-size: var(--fs-lg);
+    margin: var(--space-1) 0 0;
+  }
+
   /* ---- Protokollsuche ------------------------------------------------ */
   .search { max-width: 46rem; }
   .search__hint {

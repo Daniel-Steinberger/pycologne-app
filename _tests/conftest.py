@@ -101,6 +101,26 @@ ABOUT = """# Die User Group
 PyCologne ist die Python User Group Koeln.
 """
 
+# News-Eintraege. Der aelteste beginnt bewusst mit Fettschrift und einem
+# Bild, das ist der Unterschied zu den Termin-Dateien: dort stehen an
+# derselben Stelle die Datum- und Ort-Zeilen, hier gehoert es zum Text.
+NEWEST_NEWS = "2026-08-17-facebook-nach-zehn-jahren"
+OLDEST_NEWS = "2026-08-01-neue-webseite"
+
+NEWS_ENTRIES = {
+    NEWEST_NEWS: """# Facebook nach zehn Jahren
+
+Unsere alte Facebook-Seite lebt wieder, der erste Beitrag seit 2016 ist
+draussen. Mehr dazu auf [Meetup](https://www.meetup.com/pycologne/).
+""",
+    OLDEST_NEWS: """# Neue Webseite
+
+![Ein Screenshot](/static/images/events/beispiel.svg)
+
+**Endlich:** die Seite laeuft wieder unter eigener Adresse.
+""",
+}
+
 CONTACT = """# Kontakt
 
 Am einfachsten ueber [Meetup](https://www.meetup.com/pycologne/).
@@ -153,6 +173,14 @@ def template_root(tmp_path_factory, upcoming) -> pathlib.Path:
     (root / "md" / "contact.md").write_text(CONTACT, encoding="utf-8")
     for stem, text in PAST_PROTOCOLS.items():
         (events / f"{stem}.md").write_text(text, encoding="utf-8")
+
+    news = root / "md" / "news"
+    news.mkdir(parents=True)
+    for stem, text in NEWS_ENTRIES.items():
+        (news / f"{stem}.md").write_text(text, encoding="utf-8")
+    # Ein Name, der dem Muster nicht entspricht: die Uebersicht muss ihn
+    # ueberspringen, statt daran zu zerbrechen.
+    (news / "kein-datum.md").write_text("# Ohne Datum\n", encoding="utf-8")
 
     # Der naechste Termin hat ein angekuendigtes Programm, der uebernaechste
     # weicht vom Standardort ab. Beides braucht der ICS-Feed.
