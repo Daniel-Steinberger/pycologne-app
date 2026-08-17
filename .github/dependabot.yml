@@ -1,3 +1,7 @@
+# Patch- und Minor-Updates kommen getrennt von den Major-Updates, damit der
+# Auto-Merge-Workflow die harmlosen Gruppen durchwinken kann, waehrend Majors
+# als eigener PR liegen bleiben. Ohne die Trennung wuerde ein einzelnes
+# Major-Update die uebrigen Updates im selben PR mit blockieren.
 version: 2
 updates:
   - package-ecosystem: "uv"
@@ -8,6 +12,10 @@ updates:
     groups:
       python-deps:
         patterns: ["*"]
+        update-types: ["minor", "patch"]
+      python-deps-major:
+        patterns: ["*"]
+        update-types: ["major"]
 
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -19,3 +27,7 @@ updates:
     groups:
       github-actions:
         patterns: ["*"]
+        update-types: ["minor", "patch"]
+      github-actions-major:
+        patterns: ["*"]
+        update-types: ["major"]

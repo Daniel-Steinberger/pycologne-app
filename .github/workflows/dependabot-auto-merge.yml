@@ -1,0 +1,36 @@
+name: Dependabot Auto-Merge
+
+# Schaltet bei Dependabot-PRs den Auto-Merge ein, wenn kein Major-Update
+# dabei ist. Gemergt wird dadurch nicht sofort: GitHub wartet, bis die in
+# der Branch-Protection von main verlangten Checks aus ci.yml gruen sind.
+# Faellt einer durch, bleibt der PR offen liegen.
+#
+# pull_request_target statt pull_request, weil der GITHUB_TOKEN in
+# Workflows aus Dependabot-PRs sonst nur Leserechte hat und den Merge
+# nicht anschalten koennte. Der Job checkt bewusst keinen Branch-Code aus
+# und fuehrt nichts aus dem PR aus, sondern liest nur dessen Metadaten.
+
+on: pull_request_target
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  auto-merge:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
+    steps:
+      - name: Metadaten des Updates lesen
+        id: metadata
+        uses: dependabot/fetch-metadata@v2
+
+      # Bei gruppierten PRs meldet fetch-metadata den hoechsten enthaltenen
+      # Update-Typ. Majors kommen ueber dependabot.yml ohnehin als eigener
+      # PR, die Bedingung hier ist die zweite Sicherung.
+      - name: Auto-Merge fuer Patch und Minor einschalten
+        if: steps.metadata.outputs.update-type != 'version-update:semver-major'
+        run: gh pr merge --auto --squash "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
