@@ -56,18 +56,6 @@
       </p>
     </article>
 
-    <div class="flip">
-      <article class="tile tile--saying flip__face flip__face--front" aria-label="Zitat">
-        <p class="eyebrow">Zen of Python</p>
-        <blockquote class="tile__quote">
-          <p>{{ saying }}</p>
-          <cite class="tile__cite">{{ author }}</cite>
-        </blockquote>
-        {{ flip.chip(code_reveals["saying"]) }}
-      </article>
-      {{ flip.back(code_reveals["saying"], "get_saying()", saying_repr) }}
-    </div>
-
     {% if news_entries %}
     <article class="tile tile--news">
       <p class="eyebrow">Neuigkeiten</p>
@@ -93,6 +81,18 @@
       </p>
     </article>
     {% endif %}
+
+    <div class="flip">
+      <article class="tile tile--saying flip__face flip__face--front" aria-label="Zitat">
+        <p class="eyebrow">Zen of Python</p>
+        <blockquote class="tile__quote">
+          <p>{{ saying }}</p>
+          <cite class="tile__cite">{{ author }}</cite>
+        </blockquote>
+        {{ flip.chip(code_reveals["saying"]) }}
+      </article>
+      {{ flip.back(code_reveals["saying"], "get_saying()", saying_repr) }}
+    </div>
 
   </section>
 </div>

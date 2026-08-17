@@ -595,6 +595,12 @@
       grid-template-columns: 1fr 1fr;
       gap: var(--space-6);
     }
+    /* Bei ungerader Kachelzahl bliebe neben der letzten eine Luecke. Dann
+       nimmt sie beide Spalten. Bewusst ueber die Position statt ueber eine
+       bestimmte Kachel: so geht das Raster weiter auf, wenn eine Kachel
+       dazukommt oder wegfaellt (die Neuigkeiten etwa fehlen, solange es
+       keinen Eintrag gibt). */
+    .home-grid > :last-child:nth-child(odd) { grid-column: 1 / -1; }
   }
 
   /* Features-Liste (innerhalb einer .tile--features) */
@@ -912,9 +918,8 @@
   }
   .news-empty { color: var(--text-muted); }
 
-  /* Kachel auf der Startseite: ueber die ganze Breite, damit das
-     zweispaltige Raster mit einer ungeraden Zahl Kacheln aufgeht. */
-  .tile--news { grid-column: 1 / -1; }
+  /* Kachel auf der Startseite. Ob sie eine oder beide Spalten belegt,
+     entscheidet ihre Position im Raster, s. .home-grid. */
   .news-list--compact { gap: var(--space-4); }
   .news-list--compact .news-list__item + .news-list__item {
     padding-top: var(--space-4);
