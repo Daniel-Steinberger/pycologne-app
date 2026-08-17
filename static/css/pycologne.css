@@ -350,9 +350,16 @@
   @media (max-width: 639px) {
     .site-header__inner { flex-wrap: wrap; }
     .primary-nav { width: 100%; margin-inline-start: 0; }
-    .primary-nav ul { width: 100%; }
-    .primary-nav li { flex: 1; }
-    .primary-nav a { width: 100%; text-align: center; padding-block: var(--space-3); }
+    /* Punkte behalten ihre natuerliche Breite und umbrechen mittig. Vorher
+       bekam jeder flex: 1, also gleiche Breite bei Basis 0: laengere
+       Beschriftungen passten dann nicht in ihr Feld und drueckten die Zeile
+       ueber den Bildschirmrand. */
+    .primary-nav ul {
+      width: 100%;
+      justify-content: center;
+      gap: var(--space-1) var(--space-2);
+    }
+    .primary-nav a { padding-block: var(--space-2); }
     .primary-nav a[aria-current="page"]::after { display: none; }
     .primary-nav a[aria-current="page"] {
       background: var(--accent-soft);
@@ -629,7 +636,12 @@
   .content-grid {
     display: grid;
     gap: var(--space-8);
-    grid-template-columns: 1fr;
+    /* minmax(0, 1fr) und nicht 1fr: bei 1fr ist der Mindestwert der Spalte
+       die Min-Content-Breite ihres breitesten Kindes, und das ist hier der
+       Code-Block im Terminal. Die Spalte wuchs dadurch auf schmalen
+       Schirmen ueber den Bildschirm hinaus, die ganze Seite liess sich
+       waagerecht schieben. */
+    grid-template-columns: minmax(0, 1fr);
     padding-block: var(--space-4) var(--space-8);
   }
   @media (min-width: 900px) {
@@ -644,6 +656,10 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
+    /* Damit das Terminal darin schrumpfen darf, statt seine Min-Content-
+       Breite durchzusetzen. Der Quelltext scrollt dann in seinem eigenen
+       Rahmen, s. .mx__code. */
+    min-width: 0;
     position: sticky;
     top: calc(64px + var(--space-4));
   }

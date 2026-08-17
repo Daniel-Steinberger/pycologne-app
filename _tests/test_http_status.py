@@ -61,6 +61,26 @@ def test_broken_host_header_does_not_crash_the_404_page(client):
     assert response.status_code == 404
 
 
+def test_navigation_order_and_labels(client):
+    """Die Leiste steht in der abgestimmten Reihenfolge.
+
+    Nach Nutzen sortiert, das Erklaerende hinten, und mit kurzen
+    Beschriftungen: laengere brachten die Leiste auf dem Handy dazu, ueber
+    den Bildschirmrand zu laufen.
+    """
+    html = client.get("/").get_data(as_text=True)
+    nav = html.split('class="primary-nav"')[1].split("</nav>")[0]
+    order = re.findall(r'<a href="([^"]+)"[^>]*>([^<]+)</a>', nav)
+    assert order == [
+        ("/", "Startseite"),
+        ("/news", "News"),
+        ("/events", "Termine"),
+        ("/join", "Mitmachen"),
+        ("/contact", "Kontakt"),
+        ("/about", "Über"),
+    ]
+
+
 def test_events_page_lists_past_meetings(client):
     """Die Termine-Seite verlinkt vergangene Treffen mit Protokoll-Hinweis."""
     response = client.get("/events")

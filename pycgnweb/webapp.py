@@ -260,13 +260,16 @@ def get_template(*args: str) -> str:
 
 def get_topmenue() -> list[tuple[str, str]]:
     """Return top-level menu structure as a list of (urlpath, label) tuples."""
+    # Reihenfolge nach Nutzen: was jemand am haeufigsten sucht, steht vorn,
+    # das Erklaerende hinten. Kurze Beschriftungen, damit die Leiste auf dem
+    # Handy in zwei Zeilen passt (s. .primary-nav in pycologne.css).
     return [
         ("/", "Startseite"),
-        ("/about", "Die User Group"),
-        ("/join", "Mitmachen"),
-        ("/events", "Termine"),
         ("/news", "News"),
+        ("/events", "Termine"),
+        ("/join", "Mitmachen"),
         ("/contact", "Kontakt"),
+        ("/about", "Über"),
     ]
 
 
