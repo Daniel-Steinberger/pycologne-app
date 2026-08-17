@@ -3,9 +3,23 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="PyCologne, die Python User Group Köln. Monatliche Treffen, Vorträge, Diskussionen rund um Python.">
+    <meta name="description" content="{{ site_description }}">
     <meta name="theme-color" content="#facc15" media="(prefers-color-scheme: dark)">
     <meta name="theme-color" content="#ca8a04" media="(prefers-color-scheme: light)">
+
+    {# Vorschau in sozialen Netzen. Ohne diese Angaben bauen Facebook und X
+       sich selbst etwas zusammen, und ein geteilter Link sieht kahl aus.
+       Einzelseiten koennen Titel, Beschreibung und Typ ueberschreiben. #}
+    <meta property="og:site_name" content="PyCologne">
+    <meta property="og:locale" content="de_DE">
+    <meta property="og:type" content="{{ og_type | default('website', true) }}">
+    <meta property="og:title" content="{{ og_title | default(self.title(), true) }}">
+    <meta property="og:description" content="{{ og_description | default(site_description, true) }}">
+    <meta property="og:url" content="{{ og_url }}">
+    <meta property="og:image" content="{{ og_image }}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
     <link rel="alternate" type="application/atom+xml" title="PyCologne, Neuigkeiten" href="/news.atom">
     <link rel="alternate" type="text/calendar" title="PyCologne, Termine" href="/events.ics">

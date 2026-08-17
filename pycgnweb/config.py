@@ -9,6 +9,18 @@ DATE_FORMAT_DAY: Final[str] = "d. MMMM yyyy"
 
 
 WEBSITE_URL: Final[str] = "https://www.pycologne.de"
+
+# Beschreibung der Seite, im Head als meta description und als Rueckfall fuer
+# die Vorschau in sozialen Netzen.
+SITE_DESCRIPTION: Final[str] = (
+    "PyCologne, die Python User Group Köln. Monatliche Treffen, Vorträge, "
+    "Diskussionen rund um Python."
+)
+
+# Vorschaubild fuer Facebook und X, 1200x630 Pixel. Bewusst ein PNG: die
+# Logos der Seite sind SVG, und das rendert dort keine Vorschau. Es liegt im
+# Content-Repo, weil static/images auf dessen Checkout zeigt.
+OG_IMAGE: Final[str] = "/static/images/og-default.png"
 MEETUP_URL: Final[str] = "https://www.meetup.com/pyCologne/"
 REPO_URL: Final[str] = "https://github.com/Daniel-Steinberger/pycologne-app"
 

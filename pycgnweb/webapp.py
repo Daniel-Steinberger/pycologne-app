@@ -31,7 +31,9 @@ from .config import (
     DATE_FORMAT_DAY,
     DATE_FORMAT_LONG,
     MEETUP_URL,
+    OG_IMAGE,
     REPO_URL,
+    SITE_DESCRIPTION,
     WEBHOOK_SECRET_FILE,
     WEBSITE_URL,
 )
@@ -187,6 +189,41 @@ def inject_content_version() -> dict[str, str]:
     return {
         "content_commit": commit[:7],
         "content_commit_url": f"{CONTENT_REPO_URL}/commit/{commit}",
+    }
+
+
+# So lang darf eine Beschreibung fuer die Vorschau werden. Facebook und X
+# schneiden laengere selbst ab, dann lieber an einer Wortgrenze.
+OG_DESCRIPTION_MAX = 200
+
+
+def _untag(html: str) -> str:
+    """HTML-Tags entfernen, fuer Felder die reinen Text verlangen."""
+    return re.sub(r"<[^>]+>", "", html)
+
+
+def _shorten(text: str, limit: int = OG_DESCRIPTION_MAX) -> str:
+    """Text auf *limit* Zeichen kuerzen, an der letzten Wortgrenze davor."""
+    text = " ".join(text.split())
+    if len(text) <= limit:
+        return text
+    return text[:limit].rsplit(" ", 1)[0] + " …"
+
+
+@app.context_processor
+def inject_open_graph() -> dict[str, str]:
+    """Absolute Angaben fuer die Vorschau in sozialen Netzen.
+
+    Facebook und X holen sich diese Werte von aussen und koennen mit
+    relativen Pfaden nichts anfangen. Vorangestellt wird bewusst WEBSITE_URL
+    und nicht der Host des laufenden Requests: die Vorschau soll auf die
+    richtige Adresse zeigen, auch wenn die Seite gerade unter einem anderen
+    Namen erreicht wurde.
+    """
+    return {
+        "site_description": SITE_DESCRIPTION,
+        "og_url": f"{WEBSITE_URL}{request.path}",
+        "og_image": f"{WEBSITE_URL}{OG_IMAGE}",
     }
 
 
@@ -707,10 +744,20 @@ def news_entry(slug: str) -> str:
     """
     if _news_date(slug) is None:
         abort(404)
-    content = get_template("md", "news", f"{slug}.md")
-    if content == "":
+    path = os.path.join(app.template_folder or "", "md", "news", f"{slug}.md")
+    if not os.path.isfile(path):
         abort(404)
-    return render_content("news", content)
+    with open(path, encoding="utf-8") as file_:
+        md_text = file_.read()
+    # Titel und Teaser gehen zusaetzlich in die Vorschau: geteilt wird ein
+    # einzelner Eintrag, nicht die Seite als Ganzes.
+    return render_content(
+        "news",
+        cast(str, _md.render(md_text)),
+        og_type="article",
+        og_title=first_heading(md_text, "News"),
+        og_description=_shorten(_untag(_news_teaser(md_text))),
+    )
 
 
 # Autoritaet und Datum der Atom-IDs, nach RFC 4151. Beides muss auf immer
@@ -993,7 +1040,7 @@ def events_feed() -> Response:
         # im Kalendereintrag.
         # ICS-DESCRIPTION ist Klartext, kein HTML: die von get_next_meeting_teaser
         # gerenderten Tags (<strong> etc.) wieder entfernen, statt sie roh zu zeigen.
-        teaser = re.sub(r"<[^>]+>", "", get_next_meeting_teaser(date))
+        teaser = _untag(get_next_meeting_teaser(date))
         description = _ics_escape(f"{teaser}\n\n{boilerplate}" if teaser else boilerplate)
         location = _ics_escape(get_meeting_location(date))
         lines.extend(
