@@ -13,3 +13,9 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    # Ohne Gruppe kommt pro Action ein eigener PR (frueher #1, #2, #6 fuer
+    # zwei Actions). Die Workflows nutzen nur wenige Actions, die zusammen
+    # in einem PR schneller durchzusehen sind.
+    groups:
+      github-actions:
+        patterns: ["*"]

@@ -1,7 +1,20 @@
+# Ruff kommt bewusst aus dem Projekt-venv (uv.lock) statt aus einem eigenen
+# pre-commit-Environment. Sonst gaebe es eine zweite Ruff-Version, die hier
+# per Hand gepflegt werden muesste und von der CI-Version abdriftet -- fuer
+# pre-commit-Revisionen gibt es keine Dependabot-Updates.
 repos:
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.15.12
+  - repo: local
     hooks:
       - id: ruff-check
-        args: [--fix]
+        name: ruff check
+        entry: uv run ruff check --fix --force-exclude
+        language: system
+        types_or: [python, pyi]
+        require_serial: true
+
       - id: ruff-format
+        name: ruff format
+        entry: uv run ruff format --force-exclude
+        language: system
+        types_or: [python, pyi]
+        require_serial: true
