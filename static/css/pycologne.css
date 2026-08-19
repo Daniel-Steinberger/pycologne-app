@@ -452,7 +452,10 @@
     margin-block: 0 var(--space-6);
     display: flex;
     align-items: baseline;
-    gap: var(--space-4);
+    /* Umbruch, damit eine Nebenaktion (s. u.) auf schmalen Schirmen unter
+       den Titel rutscht statt ihn zu quetschen. */
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-4);
     position: relative;
   }
   .section-header::before {
@@ -468,6 +471,13 @@
   .section-header h1, .section-header h2 {
     margin: 0;
     font-size: var(--fs-2xl);
+  }
+  /* Nebenaktion rechts neben dem Abschnittstitel, etwa das Feed-Abo auf
+     /news. Gehoert nach oben, weil man einen Abo-Knopf am Seitenende erst
+     nach dem Scrollen findet. */
+  .section-header__action {
+    margin-inline-start: auto;
+    flex: none;
   }
 
   /* ---- Tile-System ----------------------------------------------------

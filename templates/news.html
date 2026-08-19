@@ -6,6 +6,9 @@
   <section class="news">
     <header class="section-header">
       <h1>News</h1>
+      <a href="{{ url_for('news_feed') }}" class="btn btn--small section-header__action">
+        <span aria-hidden="true">📡</span> Atom-Feed abonnieren
+      </a>
     </header>
 
     {% if entries %}
@@ -32,12 +35,6 @@
       keinen eigenen Termin hat. Noch ist nichts eingetragen.
     </p>
     {% endif %}
-
-    <p class="upcoming-list__feed">
-      <a href="{{ url_for('news_feed') }}" class="btn btn--small">
-        <span aria-hidden="true">📡</span> Als Atom-Feed abonnieren
-      </a>
-    </p>
   </section>
 </div>
 {% endblock %}
