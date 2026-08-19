@@ -1247,6 +1247,16 @@
     margin-block: var(--space-12);
   }
 
+  /* Verlinkter Inline-Code, etwa ein News-Eintrag, der auf die Zeile im
+     Quelltext zeigt. Die Unterstreichung zeichnet sonst das umgebende <a>,
+     und der eigene Hintergrund des Codes deckt sie wieder ab: der Link waere
+     dann nur noch an der Farbe zu erkennen, was als einziges Merkmal zu
+     wenig ist. */
+  .prose a code {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
   /* ---- Karte (eingebettet in /join via Inline-HTML im Markdown) ------- */
   #map {
     height: clamp(280px, 50vh, 480px);
