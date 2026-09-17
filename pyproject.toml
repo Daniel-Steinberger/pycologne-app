@@ -14,16 +14,13 @@ dependencies = [
     # linkify-Extra: ohne linkify-it-py ignoriert markdown-it-py die
     # linkify-Option stillschweigend, Adressen im Text blieben dann Text.
     #
-    # Die Untergrenze bleibt absichtlich bei 3 und richtet sich nicht nach
-    # dem, was uv.lock installiert: Auf dem Server kommen die Pakete aus
-    # nixpkgs, und der dort gepinnte Kanal nixos-25.11 liefert
-    # markdown-it-py 3.0.0. Eine hoehere Untergrenze laesst die CI gruen und
-    # macht die Anforderung beim Deployment zugleich unerfuellbar.
-    # Angehoben wird, sobald der Server auf einem Kanal mit 4er-Version
-    # laeuft (nixos-26.05 hat 4.0.0, 4.2.0 steht in unstable und wird
-    # regulaer mit 26.11 stabil). Dann passt ">=4", nicht ">=4.2.0",
-    # das erfuellt auch 26.05 noch nicht.
-    "markdown-it-py[linkify]>=3",
+    # Die Untergrenze richtet sich nach dem Server, nicht nach dem, was
+    # uv.lock installiert: dort kommen die Pakete aus nixpkgs. Seit dem
+    # Platform-Upgrade am 16.09.2026 laeuft der Server auf nixos-26.05 und
+    # damit auf markdown-it-py 4.0.0, deshalb steht die Grenze jetzt bei 4.
+    # Nicht hoeher: ">=4.2.0" waere in der CI gruen und beim Deployment
+    # zugleich unerfuellbar, denn 4.2.0 steht bis 26.11 nur in unstable.
+    "markdown-it-py[linkify]>=4",
     "python-dateutil>=2.9",
     "babel>=2.16",
     "pygments>=2.20.0",
