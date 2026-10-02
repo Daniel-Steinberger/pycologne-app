@@ -116,9 +116,17 @@ Drei Regeln halten das ehrlich:
 | Zen-Zitat | Startseite | `sayings.get_saying()` | das gerade geloste Tupel |
 | Protokollsuche | Suche | `search.build_query()` | den FTS5-Ausdruck der laufenden Suche, serverseitig gerendert |
 | Kalender-Abo | Termine | `webapp._ics_fold()` | keine, hier trägt der Code allein |
+| Terminvorschau | Termine | `webapp.upcoming_events()` | `[e.title for e in upcoming_events() if e.special]`, also die gerade erkannten Sonderveranstaltungen (seit Oktober 2026) |
 
 Bewusst ohne Griff: Hero und "Was wir bieten" (redaktioneller Text) sowie
 die Fußzeile (zeigt bereits Versionen und Content-Commit).
+
+Die fünfte Kachel kam mit den Sonderveranstaltungen dazu: Seit die
+Terminvorschau nicht mehr nur `meeting_dates()` zeigt, sondern regelmäßige
+Treffen und Termine mit eigener Datei mischt, steckt hinter ihr eine eigene
+Funktion. Die REPL-Zeile zeigt bewusst nur die Sonderveranstaltungen, weil
+das der Teil ist, den die Funktion selbst herausfindet. Die Liste daneben
+zeigt den Rest ohnehin.
 
 ### Rückseite: Palette "Phosphor"
 

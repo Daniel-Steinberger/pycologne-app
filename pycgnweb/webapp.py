@@ -10,6 +10,7 @@ import re
 import sys
 import textwrap
 from collections.abc import Callable
+from dataclasses import dataclass
 from datetime import datetime
 from functools import lru_cache, partial
 from importlib.metadata import PackageNotFoundError, version
@@ -75,11 +76,12 @@ def _make_reveal(func: Callable[..., Any]) -> dict[str, str]:
 def get_code_reveals() -> dict[str, dict[str, str]]:
     """Das Register der Flip-Kacheln: Kennung zu Rueckseite.
 
-    Bewusst lazy (erster Request statt Importzeit), weil _ics_fold weiter
-    unten in diesem Modul definiert ist.
+    Bewusst lazy (erster Request statt Importzeit), weil _ics_fold und
+    upcoming_events weiter unten in diesem Modul definiert sind.
     """
     return {
         "meeting": _make_reveal(meeting_dates),
+        "upcoming": _make_reveal(upcoming_events),
         "saying": _make_reveal(get_saying),
         "query": _make_reveal(build_query),
         "ics": _make_reveal(_ics_fold),
@@ -306,8 +308,11 @@ def _protocol_topics(md_text: str) -> list[str]:
     return topics
 
 
+# Ein Backslash am Zeilenende ist ein harter Umbruch im Markdown, kein Teil
+# der Adresse.
 _ORT_LINE = re.compile(
-    r"^\*\*Ort:\*\*\s*(?P<loc>.+?)\s*(?:\(\[[^\]]*\]\([^)]*\)\))?\s*$", re.MULTILINE
+    r"^\*\*Ort:\*\*\s*(?P<loc>.+?)\s*(?:\(\[[^\]]*\]\([^)]*\)\))?\s*\\?\s*$",
+    re.MULTILINE,
 )
 
 DEFAULT_LOCATION = "DVS AG, Schanzenstraße 30, 51063 Köln"
@@ -447,6 +452,92 @@ def group_meetings_by_year(
     for meeting in meetings:
         grouped.setdefault(meeting["date"].year, []).append(meeting)
     return sorted(grouped.items(), reverse=True)
+
+
+@dataclass(frozen=True)
+class UpcomingEvent:
+    """Ein kommender Termin: regulaeres Treffen oder Sonderveranstaltung."""
+
+    start: datetime
+    title: str
+    url: str
+    special: bool = False
+
+
+_CLOCK = re.compile(r"\b(\d{1,2}):(\d{2})\b")
+
+
+def _event_start(day: datetime, md_text: str) -> datetime:
+    """Startzeit aus der '**Datum:**'-Zeile, ersatzweise 19:00 wie bei den Treffen."""
+    for line in md_text.splitlines():
+        if line.startswith("**Datum:**"):
+            found = _CLOCK.search(line)
+            if found:
+                return day.replace(hour=int(found[1]), minute=int(found[2]))
+            break
+    return day.replace(hour=19, minute=0)
+
+
+_special_events_cache: dict[tuple[Any, ...], list[UpcomingEvent]] = {}
+
+
+def get_special_events(reference: datetime) -> list[UpcomingEvent]:
+    """Kommende Termine mit eigener Datei, die auf keinen regulaeren Mittwoch fallen.
+
+    Die Datei selbst ist das ganze Signal, es braucht kein Frontmatter und
+    kein Register: Datum aus dem Dateinamen, Titel aus der Ueberschrift,
+    Uhrzeit aus der Datum-Zeile. So legt eine Sonderveranstaltung an, wer
+    auch ein Protokoll anlegen kann.
+    """
+    events_dir = os.path.join(app.template_folder or "", "md", "events")
+    if not os.path.isdir(events_dir):
+        return []
+
+    cache_key = (_dir_state(events_dir), reference.date())
+    cached = _special_events_cache.get(cache_key)
+    if cached is not None:
+        return cached
+
+    regular = {meeting.date() for meeting in meeting_dates(count=24)}
+    events = []
+    for name in sorted(os.listdir(events_dir)):
+        stem, ext = os.path.splitext(name)
+        if ext != ".md":
+            continue
+        try:
+            day = datetime.strptime(stem, "%Y-%m-%d")
+        except ValueError:
+            continue
+        if day.date() < reference.date() or day.date() in regular:
+            continue
+        with open(os.path.join(events_dir, name), encoding="utf-8") as file_:
+            md_text = file_.read()
+        events.append(
+            UpcomingEvent(
+                start=_event_start(day, md_text),
+                title=first_heading(md_text, "PyCologne"),
+                url=f"/events/{stem}",
+                special=True,
+            )
+        )
+    _special_events_cache.clear()
+    _special_events_cache[cache_key] = events
+    return events
+
+
+def upcoming_events(count: int = 7) -> list[UpcomingEvent]:
+    """Die naechsten regulaeren Treffen, Sonderveranstaltungen dazwischen.
+
+    Eine Sonderveranstaltung zaehlt nur bis zum letzten gezeigten Treffen,
+    sonst wuerde die Liste beliebig weit in die Zukunft greifen.
+    """
+    meetings = [
+        UpcomingEvent(start=day, title="PyCologne Treffen", url=f"/events/{day:%Y-%m-%d}")
+        for day in meeting_dates(count=count)
+    ]
+    horizon = meetings[-1].start
+    specials = [event for event in get_special_events(datetime.now()) if event.start <= horizon]
+    return sorted(meetings + specials, key=lambda event: event.start)
 
 
 # News-Eintraege liegen als md/news/JJJJ-MM-TT-slug.md im Content-Repo.
@@ -676,9 +767,11 @@ def join() -> str:
 @app.route("/events")
 def events() -> str:
     """Serve events page with list of upcoming meetings."""
-    # eines fuer den Hero, sechs fuer die Terminvorschau
-    meetings = meeting_dates(count=7)
-    next_meeting = next(meetings)
+    # Der Hero bleibt beim naechsten regulaeren Treffen, darauf muss sich
+    # verlassen koennen, wer jeden Monat kommt. Sonderveranstaltungen stehen
+    # in der Vorschau dazwischen.
+    upcoming = upcoming_events()
+    next_meeting = next(event.start for event in upcoming if not event.special)
     # get manually added extra events from Markdown file
     events_ = get_template("md", "events.md")
     # curry date formatting function
@@ -691,7 +784,9 @@ def events() -> str:
     return render_template(
         "/events.html",
         act="events",
-        meetings=meetings,
+        preview=[event for event in upcoming if event.start != next_meeting],
+        # REPL-Zeile der Vorschau-Kachel: derselbe Ausdruck, live ausgewertet
+        specials_repr=repr([event.title for event in upcoming if event.special]),
         next_meeting=next_meeting,
         next_meeting_url=next_meeting_url,
         next_meeting_teaser=get_next_meeting_teaser(next_meeting),
@@ -711,16 +806,23 @@ def events_date(date: str) -> str:
     Platzhalter statt eines 404. Frueher entstand dafuer beim ersten
     Seitenaufruf eine Datei im Template-Ordner, s. meeting_placeholder().
     """
-    content = get_template("md", "events", f"{date}.md")
-    if content == "":
-        try:
-            wanted = datetime.strptime(date, "%Y-%m-%d").date()
-        except ValueError:
-            abort(404)
-        upcoming = {meeting.date(): meeting for meeting in meeting_dates(count=12)}
-        if wanted not in upcoming:
-            abort(404)
-        content = cast(str, _md.render(meeting_placeholder(upcoming[wanted])))
+    path = os.path.join(app.template_folder or "", "md", "events", f"{date}.md")
+    if os.path.isfile(path):
+        with open(path, encoding="utf-8") as file_:
+            md_text = file_.read()
+        # Wer eine Terminseite teilt, soll in der Vorschau den Termin sehen
+        # und nicht nur den Seitennamen.
+        return render_content(
+            "event", cast(str, _md.render(md_text)), og_title=first_heading(md_text, "PyCologne")
+        )
+    try:
+        wanted = datetime.strptime(date, "%Y-%m-%d").date()
+    except ValueError:
+        abort(404)
+    upcoming = {meeting.date(): meeting for meeting in meeting_dates(count=12)}
+    if wanted not in upcoming:
+        abort(404)
+    content = cast(str, _md.render(meeting_placeholder(upcoming[wanted])))
     return render_content("event", content)
 
 
@@ -1011,7 +1113,7 @@ def _ics_fold(line: str) -> str:
 
 @app.route("/events.ics")
 def events_feed() -> Response:
-    """iCalendar-Feed mit den naechsten zwoelf Treffen.
+    """iCalendar-Feed: die naechsten zwoelf Treffen, Sonderveranstaltungen dazwischen.
 
     Standard-iCalendar-Format (RFC 5545), CRLF-Zeilenumbrueche,
     Europe/Berlin-Wallclock-Zeiten. Subscription-fertig fuer Apple
@@ -1035,8 +1137,8 @@ def events_feed() -> Response:
         "X-WR-TIMEZONE:Europe/Berlin",
     ]
 
-    for date in meeting_dates(count=12):
-        end = date + timedelta(hours=2)
+    for event in upcoming_events(count=12):
+        date = event.start
         event_url = url_for("events_date", date=date.strftime("%Y-%m-%d"), _external=True)
         # Steht das Programm schon in der Termin-Datei, kommt es vor den
         # immer gleichen Hinweistext. Abonnenten sehen das Thema direkt
@@ -1044,16 +1146,26 @@ def events_feed() -> Response:
         # ICS-DESCRIPTION ist Klartext, kein HTML: die von get_next_meeting_teaser
         # gerenderten Tags (<strong> etc.) wieder entfernen, statt sie roh zu zeigen.
         teaser = _untag(get_next_meeting_teaser(date))
-        description = _ics_escape(f"{teaser}\n\n{boilerplate}" if teaser else boilerplate)
+        if event.special:
+            # Eigene UID-Form: faellt eine Sonderveranstaltung doch einmal
+            # auf einen Treffenstag, kollidieren die beiden Eintraege nicht.
+            uid = f"event-{date:%Y-%m-%d}@pycologne.de"
+            end = date + timedelta(hours=3)
+            details = f"Programm und Anmeldung: {event_url}"
+            description = _ics_escape(f"{teaser}\n\n{details}" if teaser else details)
+        else:
+            uid = f"meeting-{date:%Y-%m-%d}@pycologne.de"
+            end = date + timedelta(hours=2)
+            description = _ics_escape(f"{teaser}\n\n{boilerplate}" if teaser else boilerplate)
         location = _ics_escape(get_meeting_location(date))
         lines.extend(
             [
                 "BEGIN:VEVENT",
-                f"UID:meeting-{date:%Y-%m-%d}@pycologne.de",
+                f"UID:{uid}",
                 f"DTSTAMP:{now_stamp}",
                 f"DTSTART;TZID=Europe/Berlin:{date:%Y%m%dT%H%M%S}",
                 f"DTEND;TZID=Europe/Berlin:{end:%Y%m%dT%H%M%S}",
-                "SUMMARY:PyCologne Treffen",
+                f"SUMMARY:{_ics_escape(event.title)}",
                 f"LOCATION:{location}",
                 f"DESCRIPTION:{description}",
                 f"URL:{event_url}",

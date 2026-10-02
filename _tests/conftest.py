@@ -5,7 +5,8 @@ Die Inhalte der Webseite (Termine, Protokolle, Bilder) liegen seit August
 sich deshalb einen kleinen Bestand selbst, der jeden Fall einmal abbildet:
 ein Protokoll mit ``###``-Themen, eines nur mit Teaser, ein altes mit
 ``## Programm``-Liste, dazu ein anstehender Termin mit angekuendigtem
-Programm und einer mit abweichendem Ort.
+Programm, einer mit abweichendem Ort und eine Sonderveranstaltung abseits
+der regulaeren Mittwoche.
 
 Zwei Gruende dafuer. Erstens bleibt die CI dieses Repos unabhaengig vom
 Content-Repo, eine reine Textaenderung dort kann die Code-CI hier also
@@ -18,7 +19,7 @@ Die anstehenden Termine werden hier stattdessen zur Laufzeit aus
 
 import pathlib
 import shutil
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import pytest
 
@@ -149,6 +150,21 @@ Ausweichtermin im Cologne Game Lab.
 """
 
 
+SPECIAL_TITLE = "PyCologne #99"
+
+
+def _special_event(date: datetime) -> str:
+    """Sonderveranstaltung: eigene Uhrzeit, eigener Ort, harte Zeilenumbrueche."""
+    return f"""# {SPECIAL_TITLE}
+
+**Datum:** Do, {date:%d.%m.%Y}, ab 18:00 Uhr\\
+**Ort:** REWE digital, Schanzenstraße 6-20, Arena One\\
+**Anmeldung:** [über Meetup](https://www.meetup.com/pycologne/)
+
+Ein Vortragsabend mit Raketenwissenschaft und Pinguinen.
+"""
+
+
 @pytest.fixture(scope="session")
 def upcoming() -> list[datetime]:
     """Die naechsten Termine, wie der ICS-Feed sie auch berechnet."""
@@ -156,7 +172,13 @@ def upcoming() -> list[datetime]:
 
 
 @pytest.fixture(scope="session")
-def template_root(tmp_path_factory, upcoming) -> pathlib.Path:
+def special_day(upcoming) -> datetime:
+    """Tag der Sonderveranstaltung im Testbestand, mit ihrer Startzeit 18:00."""
+    return (upcoming[0] + timedelta(days=1)).replace(hour=18, minute=0)
+
+
+@pytest.fixture(scope="session")
+def template_root(tmp_path_factory, upcoming, special_day) -> pathlib.Path:
     """Template-Ordner aus echten HTML-Templates und erfundenen Inhalten.
 
     Die HTML-Templates sind Code und liegen in diesem Repo, sie werden
@@ -189,5 +211,10 @@ def template_root(tmp_path_factory, upcoming) -> pathlib.Path:
     )
     (events / f"{upcoming[1]:%Y-%m-%d}.md").write_text(
         _upcoming_elsewhere(upcoming[1]), encoding="utf-8"
+    )
+    # Einen Tag nach dem naechsten Treffen: ein Donnerstag, also kein
+    # regulaerer Termin, und sicher vor dem uebernaechsten.
+    (events / f"{special_day:%Y-%m-%d}.md").write_text(
+        _special_event(special_day), encoding="utf-8"
     )
     return root

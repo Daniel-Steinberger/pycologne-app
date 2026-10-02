@@ -91,14 +91,30 @@
       <header class="section-header">
         <h2>Terminvorschau</h2>
       </header>
-      <ul class="upcoming-list">
-        {% for date in meetings %}
-        <li class="upcoming-list__item">
-          <time class="upcoming-list__date">{{ format_date(date) }}</time>
-          <span class="upcoming-list__label">PyCologne Treffen</span>
-        </li>
-        {% endfor %}
-      </ul>
+      <div class="flip flip--roomy">
+        <article class="card flip__face flip__face--front">
+          <p class="eyebrow">Die nächsten Termine</p>
+          <ul class="upcoming-list">
+            {% for event in preview %}
+            {% if event.special %}
+            <li class="upcoming-list__item upcoming-list__item--special">
+              <a class="past-link" href="{{ event.url }}">
+                <time class="upcoming-list__date">{{ format_date(event.start) }}</time>
+                <span class="upcoming-list__label">{{ event.title }}</span>
+              </a>
+            </li>
+            {% else %}
+            <li class="upcoming-list__item">
+              <time class="upcoming-list__date">{{ format_date(event.start) }}</time>
+              <span class="upcoming-list__label">{{ event.title }}</span>
+            </li>
+            {% endif %}
+            {% endfor %}
+          </ul>
+          {{ flip.chip(code_reveals["upcoming"]) }}
+        </article>
+        {{ flip.back(code_reveals["upcoming"], "[e.title for e in upcoming_events() if e.special]", specials_repr) }}
+      </div>
       <div class="flip flip--roomy">
         <article class="card flip__face flip__face--front">
           <p class="eyebrow">Kalender-Abo</p>

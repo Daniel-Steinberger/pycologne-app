@@ -234,7 +234,11 @@ def test_events_ics_feed_carries_program(client):
     unfolded = body.replace("\r\n ", "")
     seen_program = False
     for event in unfolded.split("BEGIN:VEVENT")[1:]:
-        date = re.search(r"UID:meeting-(\d{4}-\d{2}-\d{2})@", event).group(1)
+        match = re.search(r"UID:meeting-(\d{4}-\d{2}-\d{2})@", event)
+        if match is None:
+            # Sonderveranstaltungen haben eigene Tests, s. test_special_events.py
+            continue
+        date = match.group(1)
         # ICS-DESCRIPTION ist Klartext, HTML-Tags werden dort entfernt
         teaser = re.sub(
             r"<[^>]+>", "", get_next_meeting_teaser(datetime.strptime(date, "%Y-%m-%d"))
@@ -261,7 +265,11 @@ def test_events_ics_feed_carries_actual_location(client):
     events = unfolded.split("BEGIN:VEVENT")[1:]
     found_deviation = False
     for event in events:
-        date = re.search(r"UID:meeting-(\d{4}-\d{2}-\d{2})@", event).group(1)
+        match = re.search(r"UID:meeting-(\d{4}-\d{2}-\d{2})@", event)
+        if match is None:
+            # Sonderveranstaltungen haben eigene Tests, s. test_special_events.py
+            continue
+        date = match.group(1)
         location = get_meeting_location(datetime.strptime(date, "%Y-%m-%d"))
         # LOCATION ist ICS-escaped (Komma), Vergleich also am ersten Wort genug
         assert f"LOCATION:{location.split(',')[0]}" in event

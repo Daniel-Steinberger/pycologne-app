@@ -871,6 +871,20 @@
     color: var(--accent);
   }
 
+  /* Sonderveranstaltung in der Terminvorschau: hervorgehoben und, anders
+     als die regulaeren Treffen dort, klickbar */
+  .upcoming-list__item--special {
+    padding: 0;
+    border-color: var(--accent);
+  }
+  .upcoming-list__item--special .upcoming-list__label {
+    color: var(--text);
+    font-weight: 600;
+  }
+  .upcoming-list__item--special:hover .upcoming-list__date {
+    color: var(--accent);
+  }
+
   .past-more { margin-top: var(--space-4); }
   .past-more > summary {
     cursor: pointer;

@@ -18,10 +18,10 @@ def client(template_root):
     return app.test_client()
 
 
-def test_registry_covers_all_four_tiles():
-    """Das Register kennt genau die vier Kandidaten aus dem Konzept."""
+def test_registry_covers_all_five_tiles():
+    """Das Register kennt die vier Kacheln aus dem Konzept plus die Terminvorschau."""
     reveals = get_code_reveals()
-    assert set(reveals) == {"meeting", "saying", "query", "ics"}
+    assert set(reveals) == {"meeting", "upcoming", "saying", "query", "ics"}
     for reveal in reveals.values():
         # Quelltext kommt gehighlightet im Matrix-Stil
         assert 'class="mx-highlight"' in reveal["html"]
@@ -91,11 +91,12 @@ def test_back_brings_its_own_close_control(client):
     assert html.count("mx__close") == 2
 
 
-def test_events_page_flips_meeting_and_ics(client):
-    """Termine: Termin-Karte und Kalender-Abo tragen ihre Rueckseiten."""
+def test_events_page_flips_meeting_preview_and_ics(client):
+    """Termine: Termin-Karte, Terminvorschau und Kalender-Abo tragen ihre Rueckseiten."""
     html = client.get("/events").get_data(as_text=True)
-    assert html.count("flip__face--back") == 2
+    assert html.count("flip__face--back") == 3
     assert "_ics_fold" in html
+    assert "upcoming_events" in html
     assert "pycgnweb/webapp.py" in html
     # die alte details-Mechanik ist ersetzt
     assert "code-reveal" not in html
@@ -123,3 +124,14 @@ def test_about_keeps_its_terminal(client):
     assert "mx__bar" in html
     assert "pycgnweb/sayings.py" in html
     assert "Zitate-Generator" in html
+
+
+def test_preview_tile_evaluates_its_repl_line_live(client):
+    """Die Rueckseite der Vorschau zeigt, was der Ausdruck wirklich liefert.
+
+    Der Testbestand enthaelt genau eine Sonderveranstaltung, die REPL-Zeile
+    muss also ihren Titel ausgeben und nicht etwa eine leere Liste.
+    """
+    html = client.get("/events").get_data(as_text=True)
+    assert "[e.title for e in upcoming_events() if e.special]" in html
+    assert "[&#39;PyCologne #99&#39;]" in html
